@@ -4,11 +4,10 @@
 	<parent>
 		<groupId>com.demos</groupId>
 		<artifactId>com-middle-ware</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<groupId>com.demos</groupId>
 	<artifactId>infinispan-demo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	
 	<name>infinispan-demo</name>
 	<url>http://maven.apache.org</url>
 	<properties>
