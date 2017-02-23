@@ -1,4 +1,7 @@
 package org.zookeeper.proxy;
+
+import org.apache.zookeeper.ZooKeeper;
+
 /**
 *Describetion:
 *@author  Devonmusa
@@ -8,36 +11,34 @@ package org.zookeeper.proxy;
 */
 public class ZkProxy implements IZookeeper{
 	
-	private IZookeeper zookeeper = null;
-	private final String zookeeperUrl;
+	//private IZookeeper zookeeper = null;
+	private final String zooKeeperUrl;
+	private  ZooKeeper zooKeeper;
+	ZookeeperImpl zookeeperImpl;
 	
-	public ZkProxy(String zookeeperUrl) {
-		this.zookeeperUrl = zookeeperUrl;
+	public ZkProxy(String zooKeeperUrl) {
+		this.zooKeeperUrl = zooKeeperUrl;
+		zookeeperImpl  = ZookeeperImpl.getInstance();
+		zookeeperImpl.setZooKeeperUrl(zooKeeperUrl);
 	}
 
-	public void init() {
-		// TODO Auto-generated method stub
-		
+	
+	public  void init() {
+		 zookeeperImpl.init();
 	}
 
-	public void connect() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	@Override
 	public void reTryConnect() {
-		// TODO Auto-generated method stub
 		
 	}
 
-	public void createNodeOfPersistent() {
+	@Override
+	public void createNodeOfPersistent(String path) {
 		// TODO Auto-generated method stub
-		
 	}
-
+	
+	@Override
 	public void close() {
 		// TODO Auto-generated method stub
-		
 	}
-	
 }

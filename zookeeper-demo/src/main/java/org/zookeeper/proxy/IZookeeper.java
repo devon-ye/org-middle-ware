@@ -10,11 +10,9 @@ public interface IZookeeper {
 	
 	public void init();
 	
-	public void connect();
-	
 	public void reTryConnect();
 	
-	public void createNodeOfPersistent();
+	public void createNodeOfPersistent(String path);
 	
 	public void close();
 	
