@@ -34,9 +34,9 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<!-- <modules>
+	<modules>
 		<module>infinispan-demo</module>
 		<module>Kafka-demo</module>
 		<module>zookeeper-demo</module>
-	</modules> -->
+	</modules>
 </project>
