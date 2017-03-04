@@ -27,7 +27,7 @@ public class ZkClientTest {
 		zkClient.deleteNode(path);	
 		zkClient.deleteNode("/mynode");		
 		
-		Thread.sleep(1000 * 50);
+		Thread.sleep(1000 * 10);
 		
 	}
 

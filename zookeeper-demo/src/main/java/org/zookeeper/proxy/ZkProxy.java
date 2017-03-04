@@ -11,10 +11,9 @@ import org.apache.zookeeper.ZooKeeper;
 */
 public class ZkProxy implements IZookeeper{
 	
-	//private IZookeeper zookeeper = null;
 	private final String zooKeeperUrl;
 	private  ZooKeeper zooKeeper;
-	ZookeeperImpl zookeeperImpl;
+	private ZookeeperImpl zookeeperImpl;
 	
 	public ZkProxy(String zooKeeperUrl) {
 		this.zooKeeperUrl = zooKeeperUrl;
@@ -27,18 +26,27 @@ public class ZkProxy implements IZookeeper{
 		 zookeeperImpl.init();
 	}
 
-	@Override
 	public void reTryConnect() {
 		
 	}
 
-	@Override
 	public void createNodeOfPersistent(String path) {
-		// TODO Auto-generated method stub
+		zookeeperImpl.createNodeOfPersistent(path);
 	}
 	
-	@Override
-	public void close() {
-		// TODO Auto-generated method stub
+	public void createNodeOfPersistentSequential(String path) {
+		zookeeperImpl.createNodeOfPersistentSequential(path);
+	}
+	
+	public void createNodeOfEphemeral(String path) {
+		zookeeperImpl.createNodeOfEphemeral(path);
+	}
+	
+	public void createNodeOfEphemeralSequential(String path) {
+		zookeeperImpl.createNodeOfPersistentSequential(path);
+	}
+	
+	public boolean close() {
+		return zookeeperImpl.close();
 	}
 }

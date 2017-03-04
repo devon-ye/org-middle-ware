@@ -14,6 +14,6 @@ public interface IZookeeper {
 	
 	public void createNodeOfPersistent(String path);
 	
-	public void close();
+	public boolean close();
 	
 }
