@@ -6,10 +6,10 @@ import org.junit.Test;
 import org.zookeeper.client.ZkClient;
 
 /**
-*Describetion:
+*@see Describetion:
 *@author  Devonmusa
 *@version
-*2017年2月18日 下午4:24:38
+*@date 2017年2月18日 下午4:24:38
 *
 */
 public class ZkClientTest {
