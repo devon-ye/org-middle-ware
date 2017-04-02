@@ -11,9 +11,6 @@ import org.apache.zookeeper.Watcher.Event.KeeperState;
 import org.apache.zookeeper.proto.WatcherEvent;
 import org.apache.zookeeper.server.quorum.Election;
 
-import ch.qos.logback.core.joran.action.NewRuleAction;
-import ch.qos.logback.core.joran.conditional.ElseAction;
-
 /**
  * Describetion:
  * 

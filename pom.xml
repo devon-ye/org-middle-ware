@@ -12,7 +12,7 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
+		<!-- <dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
 			<version>1.2.0</version>
@@ -32,11 +32,12 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<scope>test</scope>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 	<modules>
 		<module>infinispan-util</module>
 		<module>kafka-util</module>
 		<module>zookeeper-util</module>
+		<module>dubbo-util</module>
 	</modules>
 </project>
