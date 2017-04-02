@@ -39,5 +39,6 @@
 		<module>kafka-util</module>
 		<module>zookeeper-util</module>
 		<module>dubbo-util</module>
+		<module>ice-util</module>
 	</modules>
 </project>
