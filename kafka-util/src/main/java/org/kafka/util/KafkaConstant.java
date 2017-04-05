@@ -9,22 +9,22 @@ public class KafkaConstant {
 	/**
 	 * producer config
 	 */
-	public static final String metadata_broker_list="metadata.broker.list";
-	public static final String request_required_acks="acks";
-	public static final String topic_name="topic.name";
-	public static final String partitioner_class="partitioner.class";
-	public static final String producer_type="producer.type";
-	public static final String message_send_max_retries="message.send.max.retries";
-	public static final String key_serializer_class="key.serializer.class";
+	public static final String METADATA_BROKER_LIST="metadata.broker.list";
+	public static final String REQUEST_REQUIRED_ACKS="acks";
+	public static final String TOPIC_NAME="topic.name";
+	public static final String PARTITIONER_CLASS="partitioner.class";
+	public static final String PRODUCER_TYPE="producer.type";
+	public static final String MESSAGE_SEND_MAX_RETRIES="message.send.max.retries";
+	public static final String KEY_SERIALIZER_CLASS="key.serializer.class";
 	
 	/**
 	 * consumer config
 	 */
-	public static final String zookeeper_connect="zookeeper.connect";
-	public static final String zookeeper_connect_timeout="zookeeper.connect.timeout";
-	public static final String consumer_recover_offset="consumer.recover.offset";
-	public static final String group_id="group.id";
-	public static final String auto_commit_interval_ms = "auto.commit.interval.ms";
-	public static final String consumer_thread_num = "consumer.thread.num";
-	public static final String header_decode_class = "header.decode.class";
+	public static final String ZOOKEEPER_CONNECT="zookeeper.connect";
+	public static final String ZOOKEEPER_CONNECT_TIMEOUT="zookeeper.connect.timeout";
+	public static final String CONSUMER_RECOVER_OFFSET="consumer.recover.offset";
+	public static final String GROUP_ID="group.id";
+	public static final String AUTO_COMMIT_INTERVAL_MS = "auto.commit.interval.ms";
+	public static final String CONSUMER_THREAD_NUM = "consumer.thread.num";
+	public static final String HEADER_DECODE_CLASS = "header.decode.class";
 }
