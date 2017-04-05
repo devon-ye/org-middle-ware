@@ -5,5 +5,6 @@ package org.infinispan.cache.manager;
 *@date 2017年4月3日
 */
 public class CacheManager {
-
+	
+	
 }

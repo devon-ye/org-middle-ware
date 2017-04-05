@@ -4,6 +4,6 @@ package org.kafka.codec;
 *@author  Devonmusa
 *@date 2017年4月2日
 */
-public class MessageDecode {
+public class MessageHeaderDecode {
 
 }
