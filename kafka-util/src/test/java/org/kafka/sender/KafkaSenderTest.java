@@ -19,7 +19,7 @@ public class KafkaSenderTest {
 	
 	@Before
 	public void setUp() {
-		kafkaSender = new KafkaSender(props,KafkaSendMode.Sync);
+		kafkaSender = new KafkaSender(props,KafkaSendMode.Async);
 	}
 	
 	@Test

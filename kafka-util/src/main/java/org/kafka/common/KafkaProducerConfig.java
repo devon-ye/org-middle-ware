@@ -11,6 +11,7 @@ public class KafkaProducerConfig {
 	private String topic;
 	private Properties props;
 	private final long  DEFAULT_SESSION_TIMEOUT = 3 * 1000;
+	private final int   RETRY_SEND_TIMES = 5;
 	private String  zookeeperUrl;
 	
 	public KafkaProducerConfig(Properties props){

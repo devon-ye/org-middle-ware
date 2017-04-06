@@ -15,7 +15,7 @@ public class KafkaSender {
 	private KafkaSenderStrategy senderStrategy;
 	
 	public KafkaSender(Properties props,KafkaSendMode sendMode){
-		if(sendMode.Async.value==1){
+		if(sendMode.value==1){
 			setSenderStrategy(new KafkaAsyncProducer(props));
 		}else{
 			setSenderStrategy(new KafkaProducer(props));
