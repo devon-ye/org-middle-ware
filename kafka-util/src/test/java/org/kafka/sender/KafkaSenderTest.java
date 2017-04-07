@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.kafka.async.common.MessageHeader;
+import org.kafka.common.KafkaProducerConfig;
 
 /**
 *@see
@@ -13,19 +14,27 @@ import org.kafka.async.common.MessageHeader;
 *@date 2017年4月2日
 */
 public class KafkaSenderTest {
+	private KafkaProducerConfig producerConfig;
 	private KafkaSender kafkaSender;
 	private Properties props;
 	private MessageHeader header;
 	
 	@Before
-	public void setUp() {
-		kafkaSender = new KafkaSender(props,KafkaSendMode.Async);
+	public void setUp() {	
+		producerConfig = KafkaProducerConfig.getInstance();
+		producerConfig.setTopic("TEST.Q");
+		producerConfig.setZookeeperUrl("192.168.1.8:2181");
+		kafkaSender = new KafkaSender(producerConfig,KafkaSendMode.Sync);
 	}
 	
 	@Test
 	public void sendTest(){
-		byte[] data ="ss".getBytes();
-		kafkaSender.send(header, data);
+		int i = 0;
+		while(i < 10){
+			byte[] data =("message" + i).getBytes();
+			kafkaSender.send(header, data);
+			i++;
+		}
 	}
 	
 	@After

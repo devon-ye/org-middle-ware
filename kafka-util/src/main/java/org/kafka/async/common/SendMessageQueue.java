@@ -23,7 +23,7 @@ public class SendMessageQueue{
 	private final LinkedTransferQueue<SendMessage> messageQueue = new LinkedTransferQueue<SendMessage>();
 	
 	public SendMessageQueue(Properties props){
-		producerConfig = new KafkaProducerConfig(props);
+		//producerConfig = new KafkaProducerConfig(props);
 		if(producer != null){
 			this.connect();
 		}

@@ -21,8 +21,9 @@ public class ProducerRecordWrapper {
 	
 	private ProducerRecord<MessageHeader, byte[]>	producerRecord = null;
 	
-	public ProducerRecordWrapper(SendMessage sendMessage){
-		this.sendMessage = sendMessage;
+	public ProducerRecordWrapper(MessageHeader messageHeader,byte[] value){
+		this.messageHeader = messageHeader;
+		this.value = value;
 	}
 	
 	public ProducerRecord<MessageHeader,byte[]> getProducerRecord(){

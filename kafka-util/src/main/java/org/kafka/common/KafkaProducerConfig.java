@@ -9,21 +9,50 @@ import java.util.Properties;
 */
 public class KafkaProducerConfig {
 	private String topic;
-	private Properties props;
-	private final long  DEFAULT_SESSION_TIMEOUT = 3 * 1000;
-	private final int   RETRY_SEND_TIMES = 5;
 	private String  zookeeperUrl;
 	
-	public KafkaProducerConfig(Properties props){
-		this.props = props;	
-	}
+	private final long  DEFAULT_SESSION_TIMEOUT = 3 * 1000;
+	private final int   RETRY_SEND_TIMES = 5;
+	private Properties properties = new Properties();
 	
-	private void  doConfig(){
+	private static final KafkaProducerConfig producerConfig = new KafkaProducerConfig();
+	 
+	private KafkaProducerConfig(){
 		
 	}
 	
-	public Properties getConfig(){
-		return props;
+	public static KafkaProducerConfig getInstance(){
+			return producerConfig;
 	}
+	
+	public String getTopic() {
+		return topic;
+	}
+
+	public String getZookeeperUrl() {
+		return zookeeperUrl;
+	}
+
+	public void setTopic(String topic) {
+		this.topic = topic;
+	}
+
+	public void setZookeeperUrl(String zookeeperUrl) {
+		this.zookeeperUrl = zookeeperUrl;
+	}
+	
+	public Properties getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Properties properties) {
+		this.properties = properties;
+	}
+
+	public void addProperty(String key,String value){
+		properties.setProperty(key, value);
+	}
+	
+	
 	
 }

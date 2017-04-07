@@ -5,6 +5,7 @@ import java.util.Properties;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.kafka.async.common.MessageHeader;
 import org.kafka.async.common.SendMessageQueue;
+import org.kafka.common.KafkaProducerConfig;
 import org.kafka.sender.KafkaSenderStrategy;
 
 import kafka.common.Config;
@@ -17,10 +18,11 @@ import kafka.common.Config;
 *
 */
 public class KafkaAsyncProducer extends KafkaSenderStrategy{
-	
+	private Properties props;
 	private SendMessageQueue sendMessageQueue;
 	
-	public KafkaAsyncProducer(Properties props) {
+	public KafkaAsyncProducer(KafkaProducerConfig config) {
+		props = config.getProperties();
 		sendMessageQueue = new  SendMessageQueue(props);
 	}
 	

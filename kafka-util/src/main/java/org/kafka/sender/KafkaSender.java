@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import org.kafka.async.common.MessageHeader;
 import org.kafka.async.producer.KafkaAsyncProducer;
+import org.kafka.common.KafkaProducerConfig;
 import org.kafka.producer.KafkaProducer;
 
 /**
@@ -14,11 +15,11 @@ import org.kafka.producer.KafkaProducer;
 public class KafkaSender {
 	private KafkaSenderStrategy senderStrategy;
 	
-	public KafkaSender(Properties props,KafkaSendMode sendMode){
+	public KafkaSender(KafkaProducerConfig config,KafkaSendMode sendMode){
 		if(sendMode.value==1){
-			setSenderStrategy(new KafkaAsyncProducer(props));
+			setSenderStrategy(new KafkaAsyncProducer(config));
 		}else{
-			setSenderStrategy(new KafkaProducer(props));
+			setSenderStrategy(new KafkaProducer(config));
 		}
 	}
 	
