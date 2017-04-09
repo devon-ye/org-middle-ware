@@ -1,4 +1,4 @@
-package org.kafka.sender;
+package org.kafka.util;
 /**
 *@see
 *@author  Devonmusa

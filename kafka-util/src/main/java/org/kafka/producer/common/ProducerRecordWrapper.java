@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.kafka.async.common.MessageHeader;
 import org.kafka.async.common.SendMessage;
+import org.kafka.common.MessageHeader;
 
 /**
 *@see

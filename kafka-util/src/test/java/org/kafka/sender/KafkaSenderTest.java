@@ -5,8 +5,9 @@ import java.util.Properties;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.kafka.async.common.MessageHeader;
 import org.kafka.common.KafkaProducerConfig;
+import org.kafka.common.MessageHeader;
+import org.kafka.util.KafkaSendMode;
 
 /**
 *@see

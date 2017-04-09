@@ -2,9 +2,9 @@ package org.kafka.producer;
 
 import java.util.Properties;
 
-import org.kafka.async.common.MessageHeader;
 import org.kafka.common.KafkaProducerConfig;
 import org.kafka.common.KafkaSendWrapper;
+import org.kafka.common.MessageHeader;
 import org.kafka.producer.common.ProducerRecordWrapper;
 import org.kafka.sender.KafkaSenderStrategy;
 
@@ -16,10 +16,10 @@ import org.kafka.sender.KafkaSenderStrategy;
 */
 public class KafkaProducer extends KafkaSenderStrategy{
 	private ProducerRecordWrapper producerRecordWrapper;
-	private KafkaProducerConfig producerConfig;
+	//private KafkaProducerConfig producerConfig;
 	private KafkaSendWrapper sendWrapper;
 	
-	public  KafkaProducer(KafkaProducerConfig config){
+	public  KafkaProducer(KafkaProducerConfig producerConfig){
 		
 		sendWrapper = new KafkaSendWrapper(producerConfig);
 	}

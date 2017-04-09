@@ -1,6 +1,6 @@
 package org.kafka.sender;
 
-import org.kafka.async.common.MessageHeader;
+import org.kafka.common.MessageHeader;
 
 /**
 *@see

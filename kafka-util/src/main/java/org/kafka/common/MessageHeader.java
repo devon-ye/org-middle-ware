@@ -1,4 +1,4 @@
-package org.kafka.async.common;
+package org.kafka.common;
 
 import java.util.Map;
 

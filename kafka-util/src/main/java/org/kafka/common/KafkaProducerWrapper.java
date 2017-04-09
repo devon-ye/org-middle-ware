@@ -1,6 +1,4 @@
-package org.kafka.async.producer;
-
-import org.kafka.common.KafkaProducerConfig;
+package org.kafka.common;
 
 /**
 *@see

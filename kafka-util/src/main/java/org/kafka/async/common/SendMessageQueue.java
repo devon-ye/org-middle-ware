@@ -6,6 +6,7 @@ import java.util.concurrent.LinkedTransferQueue;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.kafka.common.KafkaProducerConfig;
+import org.kafka.common.MessageHeader;
 
 /**
 *@see

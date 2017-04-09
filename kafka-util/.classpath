@@ -19,7 +19,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
-			<attribute name="annotationpath" value="F:/workspace/maven/repo/org/apache/kafka/kafka_2.10/0.10.2.0/kafka_2.10-0.10.2.0-sources.jar"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>

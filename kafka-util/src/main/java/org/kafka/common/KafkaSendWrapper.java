@@ -4,10 +4,12 @@ import java.util.Properties;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.kafka.async.common.MessageHeader;
 import org.kafka.producer.common.ProducerRecordWrapper;
+import org.kafka.util.KafkaConstant;
+import org.kafka.util.KafkaMetaUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +29,11 @@ public class KafkaSendWrapper {
 	
 	public KafkaSendWrapper(KafkaProducerConfig producerConfig){
 		this.producerConfig = producerConfig;
+		 try {
+			init();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -47,7 +54,6 @@ public class KafkaSendWrapper {
 	}
 	
 	private void connect() throws Exception{
-		
 		String topic = producerConfig.getTopic();
 		if(null == topic || topic.length() == 0){
 			log.error("Producer init faield ,topic is null");
@@ -58,11 +64,12 @@ public class KafkaSendWrapper {
 			log.error("Producer init faield ,topic is null");
 			throw new Exception("Kafka Producer init failed,this topic is null!!!");
 		}
+		String brokers = KafkaMetaUtils.getBrokers(zookeeperUrl);
 		props = producerConfig.getProperties();
+		props.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, brokers);
+		props.put(KafkaConstant.TOPIC_NAME, topic);
+		props.put(KafkaConstant.KEY_SERIALIZER_CLASS, kafka.serializer.DefaultEncoder);
+		//props.put(KafkaConstant, kafka.serializer.StringDecoder);
 		producer = new KafkaProducer<MessageHeader,byte[]>(props);
-	}
-	
-	private void reTryConnect(){
-		
 	}
 }

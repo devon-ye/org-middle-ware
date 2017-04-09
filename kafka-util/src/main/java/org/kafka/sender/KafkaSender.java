@@ -2,10 +2,11 @@ package org.kafka.sender;
 
 import java.util.Properties;
 
-import org.kafka.async.common.MessageHeader;
 import org.kafka.async.producer.KafkaAsyncProducer;
 import org.kafka.common.KafkaProducerConfig;
+import org.kafka.common.MessageHeader;
 import org.kafka.producer.KafkaProducer;
+import org.kafka.util.KafkaSendMode;
 
 /**
 *@see

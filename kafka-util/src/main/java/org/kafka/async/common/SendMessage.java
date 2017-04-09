@@ -1,4 +1,7 @@
 package org.kafka.async.common;
+
+import org.kafka.common.MessageHeader;
+
 /**
 *@see
 *@author Devonmusa
