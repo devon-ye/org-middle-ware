@@ -10,6 +10,7 @@ import org.infinispan.manager.DefaultCacheManager;
 public class CacheContainer {
 	
 	public DefaultCacheManager config() {
+		return null;
 		
 	}
 }
