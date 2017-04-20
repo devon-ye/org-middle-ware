@@ -1,16 +1,12 @@
 package org.zookeeper.watcher;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.LinkedBlockingDeque;
+
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.Watcher.Event.EventType;
 import org.apache.zookeeper.Watcher.Event.KeeperState;
-import org.apache.zookeeper.proto.WatcherEvent;
-import org.apache.zookeeper.server.quorum.Election;
-
 /**
  * Describetion:
  * 
@@ -29,7 +25,7 @@ public class ZkDefaultWatcher implements Watcher {
 		}
 		if (KeeperState.SyncConnected == event.getState()) {
 			if (EventType.None == event.getType() && null == event.getType()) {
-				// countDownLatch.countDown();
+				
 			} else if (EventType.NodeCreated == event.getType()) {
 				System.err.println("节点（" + event.getPath() + "）被创建");
 			} else if (EventType.NodeDeleted == event.getType()) {

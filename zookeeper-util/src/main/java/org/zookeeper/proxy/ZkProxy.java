@@ -11,12 +11,9 @@ import org.apache.zookeeper.ZooKeeper;
 */
 public class ZkProxy implements IZookeeper{
 	
-	private final String zooKeeperUrl;
-	private  ZooKeeper zooKeeper;
 	private ZookeeperImpl zookeeperImpl;
 	
 	public ZkProxy(String zooKeeperUrl) {
-		this.zooKeeperUrl = zooKeeperUrl;
 		zookeeperImpl  = ZookeeperImpl.getInstance();
 		zookeeperImpl.setZooKeeperUrl(zooKeeperUrl);
 	}
