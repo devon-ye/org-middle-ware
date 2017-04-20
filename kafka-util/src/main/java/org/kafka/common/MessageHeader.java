@@ -19,7 +19,7 @@ public class MessageHeader {
 	
 	/**
 	 * 可用Builder构建器替代下面的多参构造方法
-	 * @author lenovo
+	 * @author devonmusa
 	 *
 	 */
 	public static class Builder{

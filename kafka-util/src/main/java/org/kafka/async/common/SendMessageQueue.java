@@ -1,29 +1,30 @@
 package org.kafka.async.common;
 
-import java.util.Map;
+
 import java.util.Properties;
 import java.util.concurrent.LinkedTransferQueue;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
-import org.kafka.common.KafkaProducerConfig;
+
 import org.kafka.common.MessageHeader;
 
 /**
 *@see
-*@author  Devonmusa
+*@author  
 *@date 2017年4月1日
 */
 public class SendMessageQueue{
 	
-	private KafkaProducerConfig producerConfig;
+	//private KafkaProducerConfig producerConfig;
 	
-	private KafkaProducer producer;
+	private KafkaProducer<MessageHeader,byte[]> producer;
 	 
 	private Properties props;
 	
 	private final LinkedTransferQueue<SendMessage> messageQueue = new LinkedTransferQueue<SendMessage>();
 	
 	public SendMessageQueue(Properties props){
+		new SendThread().start();
 		//producerConfig = new KafkaProducerConfig(props);
 		if(producer != null){
 			this.connect();

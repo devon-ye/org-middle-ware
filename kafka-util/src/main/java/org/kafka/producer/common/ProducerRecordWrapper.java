@@ -1,11 +1,8 @@
 package org.kafka.producer.common;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.kafka.async.common.SendMessage;
-import org.kafka.common.KafkaProducerConfig;
 import org.kafka.common.MessageHeader;
 
 /**

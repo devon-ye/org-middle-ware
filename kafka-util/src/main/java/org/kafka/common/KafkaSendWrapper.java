@@ -21,9 +21,9 @@ import org.slf4j.LoggerFactory;
 public class KafkaSendWrapper {
 	private static final Logger log = LoggerFactory.getLogger(KafkaSendWrapper.class);
 	private static final int CLOSE_WAIT_TIMEMS = 10;
-	private KafkaProducer producer;
+	private KafkaProducer<MessageHeader,byte[]> producer;
 	private Properties props;
-	private ProducerRecord producerRecord;
+	private ProducerRecord<MessageHeader,byte[]> producerRecord;
 	private KafkaProducerConfig producerConfig;
 	//private ProducerRecordWrapper producerRecordWrapper;
 	
@@ -59,7 +59,7 @@ public class KafkaSendWrapper {
 			log.error("Producer init faield ,topic is null");
 			throw new Exception("Kafka Producer init failed,this topic is null!!!");
 		}
-		ProducerRecordWrapper.se
+		
 		String zookeeperUrl = producerConfig.getZookeeperUrl();
 		if(null == zookeeperUrl){
 			log.error("Producer init faield ,topic is null");
@@ -76,7 +76,6 @@ public class KafkaSendWrapper {
 		props.put("buffer.memory", 33554432);
 		props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-		//props.put(KafkaConstant, kafka.serializer.StringDecoder);
 		producer = new KafkaProducer<MessageHeader,byte[]>(props);
 	}
 }
