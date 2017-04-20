@@ -26,9 +26,19 @@ public class KafkaProducer extends KafkaSenderStrategy{
 	
 	@Override
 	public void send(MessageHeader header, byte[] data) {
-		producerRecordWrapper = new ProducerRecordWrapper(header,data);
-		
-		sendWrapper.send(producerRecordWrapper);
+		try {
+			producerRecordWrapper = new ProducerRecordWrapper(header,data);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//producerRecordWrapper = producerRecordWrapper.getProducerRecord();
+		try {
+			sendWrapper.send(producerRecordWrapper);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

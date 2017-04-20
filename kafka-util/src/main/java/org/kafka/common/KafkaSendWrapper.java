@@ -38,7 +38,7 @@ public class KafkaSendWrapper {
 	
 	
 	
-	public void send(ProducerRecordWrapper producerRecordWrapper){
+	public void send(ProducerRecordWrapper producerRecordWrapper) throws Exception{
 		producerRecord = producerRecordWrapper.getProducerRecord();
 		Future future = producer.send(producerRecord);
 	}
@@ -59,6 +59,7 @@ public class KafkaSendWrapper {
 			log.error("Producer init faield ,topic is null");
 			throw new Exception("Kafka Producer init failed,this topic is null!!!");
 		}
+		ProducerRecordWrapper.se
 		String zookeeperUrl = producerConfig.getZookeeperUrl();
 		if(null == zookeeperUrl){
 			log.error("Producer init faield ,topic is null");
@@ -68,7 +69,13 @@ public class KafkaSendWrapper {
 		props = producerConfig.getProperties();
 		props.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, brokers);
 		props.put(KafkaConstant.TOPIC_NAME, topic);
-		props.put(KafkaConstant.KEY_SERIALIZER_CLASS, kafka.serializer.DefaultEncoder);
+		props.put("acks", "all");
+		props.put("retries", 0);
+		props.put("batch.size", 16384);
+		props.put("linger.ms", 1);
+		props.put("buffer.memory", 33554432);
+		props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+		props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		//props.put(KafkaConstant, kafka.serializer.StringDecoder);
 		producer = new KafkaProducer<MessageHeader,byte[]>(props);
 	}

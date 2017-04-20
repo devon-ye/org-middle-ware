@@ -26,12 +26,14 @@ public class KafkaSenderTest {
 		producerConfig.setTopic("TEST.Q");
 		producerConfig.setZookeeperUrl("192.168.1.8:2181");
 		kafkaSender = new KafkaSender(producerConfig,KafkaSendMode.Sync);
+		
 	}
 	
 	@Test
 	public void sendTest(){
 		int i = 0;
 		while(i < 10){
+			header =new MessageHeader(i, 100);
 			byte[] data =("message" + i).getBytes();
 			kafkaSender.send(header, data);
 			i++;

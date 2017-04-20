@@ -18,30 +18,30 @@ import org.slf4j.LoggerFactory;
 *@date 2017年4月3日
 */
 @Listener
-public class LoggerListener {
+public class LoggerListener implements IListener{
 	private Logger log =  LoggerFactory.getLogger(LoggerListener.class);
+
 	@CacheEntryCreated
-	 public void observeAdd(CacheEntryCreatedEvent<Object, Object> event) {
-	      if (event.isPre()){
-	         return;
-	      }
-	      log.info("Cache entry %s = %s added in cache %s", event.getKey(), event.getValue(), event.getCache());
-	 }
-	
-	@CacheEntryModified
-	public void observeModify(CacheEntryModifiedEvent<Object,Object> event){
-		 if (event.isPre()){
-	         return;
-		 }
-	      log.info("Cache entry %s = %s added in cache %s", event.getKey(), event.getValue(), event.getCache());
+	public void observeAdd(CacheEntryCreatedEvent<Object, Object> event) {
+		if (event.isPre()) {
+			return;
+		}
+		log.info("Cache entry %s = %s added in cache %s", event.getKey(), event.getValue(), event.getCache());
 	}
-	
-	
+
+	@CacheEntryModified
+	public void observeModify(CacheEntryModifiedEvent<Object, Object> event) {
+		if (event.isPre()) {
+			return;
+		}
+		log.info("Cache entry %s = %s added in cache %s", event.getKey(), event.getValue(), event.getCache());
+	}
+
 	@CacheEntryRemoved
 	public void observeRemove(CacheEntryRemovedEvent<Object, Object> event) {
-	      if (event.isPre())
-	         return;
-	      log.info("Cache entry %s removed in cache %s", event.getKey(), event.getCache());
-	   }
+		if (event.isPre())
+			return;
+		log.info("Cache entry %s removed in cache %s", event.getKey(), event.getCache());
+	}
 	
 }

@@ -5,58 +5,42 @@ import java.util.Map;
 
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.kafka.async.common.SendMessage;
+import org.kafka.common.KafkaProducerConfig;
 import org.kafka.common.MessageHeader;
 
 /**
-*@see
-*@author  Devonmusa
-*@date 2017年4月5日
-*/
+ * @see
+ * @author Devonmusa
+ * @date 2017年4月5日
+ */
 public class ProducerRecordWrapper {
-	private byte[]  value;
-	
-	private SendMessage sendMessage;
-	
+	private byte[] value;
+
 	private MessageHeader messageHeader;
-	
-	private ProducerRecord<MessageHeader, byte[]>	producerRecord = null;
-	
-	public ProducerRecordWrapper(MessageHeader messageHeader,byte[] value){
+	private String topic;
+
+	private ProducerRecord<MessageHeader, byte[]> producerRecord;
+
+	public ProducerRecordWrapper(MessageHeader messageHeader, byte[] value) throws Exception {
 		this.messageHeader = messageHeader;
 		this.value = value;
+		getProducerRecord();
 	}
-	
-	public ProducerRecord<MessageHeader,byte[]> getProducerRecord(){
-		MessageHeader header = null;
-		try{
-			messageHeader = producerRecord.key();
-			value =producerRecord.value();
-			if(null == sendMessage){
-				return null;
-			}
-			
-			header = sendMessage.getHeader();
-			if(null == header){
-				return null;
-			}
-			
-			messageHeader.setPartition(header.getPartition());
-			messageHeader.setKey(header.getKey());
-			messageHeader.setProducerId(header.getProducerId());
-			messageHeader.setType(header.getType());
-			
-			Map<String, String> headAttributeMap = header.getAttributeMap();
-			if (headAttributeMap == null) {
-				headAttributeMap = new HashMap<String, String>();	
-			}
-			messageHeader.setAttributeMap(headAttributeMap);
-			value = sendMessage.getData();
-			return producerRecord;
-			
-		}catch(Exception e){
-			
+
+	public ProducerRecord<MessageHeader, byte[]> getProducerRecord() throws Exception {
+		if(topic == null){
+			 throw new Exception("topic is null!!!");
 		}
-		return null;
+		producerRecord = new ProducerRecord<MessageHeader, byte[]>(topic, messageHeader, value);
+		return producerRecord;
+	}
+
+	public String getTopic() {
+		return topic;
+	}
+
+	public void setTopic(String topic) {
+		this.topic = topic;
 	}
 
 }
