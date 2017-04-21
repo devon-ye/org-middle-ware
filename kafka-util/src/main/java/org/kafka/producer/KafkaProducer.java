@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 public class KafkaProducer extends KafkaSenderStrategy{
 	private static final Logger logger = LoggerFactory.getLogger(KafkaProducer.class);
 	private ProducerRecordWrapper producerRecordWrapper;
-	//private KafkaProducerConfig producerConfig;
 	private KafkaSendWrapper sendWrapper;
 	
 	public  KafkaProducer(KafkaProducerConfig producerConfig){

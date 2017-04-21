@@ -1,18 +1,21 @@
 package org.kafka.sender;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Properties;
 
+import org.devonmusa.util.config.EnvironmentUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.kafka.common.KafkaProducerConfig;
 import org.kafka.common.MessageHeader;
 import org.kafka.util.KafkaSendMode;
+import org.kafka.utils.KafkaUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-*@see
 *@author  Devonmusa
 *@date 2017年4月2日
 */
@@ -24,14 +27,15 @@ public class KafkaSenderTest {
 	private MessageHeader header;
 	
 	@Before
-	public void setUp() {	
+	public void setUp() throws FileNotFoundException, IOException, Exception {
+		System.setProperty("log.home", EnvironmentUtils.getAppHome()+"/log");
+		KafkaUtils.initLogback();
 		producerConfig = KafkaProducerConfig.getInstance();
 		producerConfig.setTopic("TEST.Q");
-		producerConfig.setZookeeperUrl("192.168.1.8:2181");
+		producerConfig.setZookeeperUrl("192.168.1.12:2181");
 		props = new Properties();
 		producerConfig.setProperties(props);
 		kafkaSender = new KafkaSender(producerConfig,KafkaSendMode.Sync);
-		
 	}
 	
 	@Test
