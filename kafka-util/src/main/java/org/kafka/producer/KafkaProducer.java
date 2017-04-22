@@ -2,7 +2,6 @@ package org.kafka.producer;
 
 import java.util.List;
 
-import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.PartitionInfo;
 import org.kafka.common.KafkaProducerConfig;
 import org.kafka.common.KafkaSendWrapper;
