@@ -9,14 +9,6 @@ import java.util.Map;
 */
 public class MessageHeader {
 	
-	private long key;
-	private int type;
-	private long offset;
-	private long timetamp;
-	private int partition;
-	private long producerId;
-	private Map<String, String> attributeMap;
-	
 	/**
 	 * 可用Builder构建器替代下面的多参构造方法
 	 * @author devonmusa
@@ -65,6 +57,13 @@ public class MessageHeader {
 			attributeMap = val;
 			return this;
 		}
+		@Override
+		public String toString() {
+			StringBuilder builder = new StringBuilder();
+			builder.append("MessageHeader [key=").append(key).append(", type=").append(type).append(", offset=").append(offset).append(", timetamp=").append(timetamp).append(", partition=")
+				.append(partition).append(", producerId=").append(producerId).append(", attributeMap=").append(attributeMap).append("]");
+			return builder.toString();
+		}
 	}
 	
 	/**
@@ -72,6 +71,13 @@ public class MessageHeader {
 	 * @param key
 	 * @param type
 	 */
+	private long key;
+	private int type;
+	private long offset;
+	private long timetamp;
+	private int partition;
+	private long producerId;
+	private Map<String, String> attributeMap;
 	public MessageHeader(long key, int type) {
 		this.key = key;
 		this.type = type;
@@ -143,13 +149,5 @@ public class MessageHeader {
 
 	public void setAttributeMap(Map<String, String> attributeMap) {
 		this.attributeMap = attributeMap;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("MessageHeader [key=").append(key).append(", type=").append(type).append(", offset=").append(offset).append(", timetamp=").append(timetamp).append(", partition=")
-			.append(partition).append(", producerId=").append(producerId).append(", attributeMap=").append(attributeMap).append("]");
-		return builder.toString();
 	}
 }
