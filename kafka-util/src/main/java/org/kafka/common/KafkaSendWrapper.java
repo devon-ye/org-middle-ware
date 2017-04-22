@@ -1,5 +1,7 @@
 package org.kafka.common;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -8,6 +10,7 @@ import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
+import org.apache.kafka.common.PartitionInfo;
 import org.kafka.producer.common.ProducerRecordWrapper;
 import org.kafka.util.KafkaConstant;
 import org.kafka.util.KafkaMetaUtils;
@@ -26,9 +29,11 @@ public class KafkaSendWrapper {
 	private ProducerRecord<MessageHeader, byte[]> producerRecord;
 	private KafkaProducer<MessageHeader, byte[]> producer;
 	private KafkaProducerConfig producerConfig;
+	private List<PartitionInfo> partitionInfos = new ArrayList<>();
 	private Future<RecordMetadata> future;
-	private RecordMetadata recordMetadata;
+	private RecordMetadata recordMetadata;	
 	private Properties props;
+	private String topic;
 	private int reTryCount = 0;
 
 	public KafkaSendWrapper(KafkaProducerConfig producerConfig) {
@@ -46,13 +51,15 @@ public class KafkaSendWrapper {
 		if (producerRecord == null) {
 			return;
 		}
-
+		producerRecord.partition();
 		try {
 			future = producer.send(producerRecord);
+			log.info("send producerRecord:" + producerRecord);
 			recordMetadata = future.get();
-		} catch (Exception e) {
 			int patitionId = recordMetadata.partition();
 			long timeTamp = recordMetadata.timestamp();
+		} catch (Exception e) {
+			
 		}
 
 	}
@@ -73,10 +80,6 @@ public class KafkaSendWrapper {
 			log.error("kafka init  reConnect:" + reTryCount + " failed  end!!!");
 		} finally {
 			reTryCount = 0;
-			if (producer != null) {
-				producer.close();
-				producer = null;
-			}
 		}
 	}
 
@@ -95,7 +98,7 @@ public class KafkaSendWrapper {
 	}
 
 	private void connect() throws Exception {
-		String topic = producerConfig.getTopic();
+		 this.topic = producerConfig.getTopic();
 		if (null == topic || topic.length() == 0) {
 			log.error("Producer init faield ,topic is null");
 			throw new Exception("Kafka Producer init failed,this topic is null!!!");
@@ -118,5 +121,14 @@ public class KafkaSendWrapper {
 		props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		producer = new KafkaProducer<MessageHeader, byte[]>(props);
+	}
+	
+	public List<PartitionInfo> getPartitionInfos() {
+		if(producer != null){
+			partitionInfos = producer.partitionsFor(topic);
+			return partitionInfos;
+		}else{
+			return partitionInfos;
+		}
 	}
 }

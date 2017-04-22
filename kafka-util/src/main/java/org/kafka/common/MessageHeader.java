@@ -19,9 +19,9 @@ public class MessageHeader {
 		
 		private  int type;
 		private long offset;
-		private int partition;
 		private long timetamp;
 		private int producerId;
+		private int partition = -1;
 		private Map<String, String> attributeMap;
 		
 		public Builder(long key){
@@ -78,14 +78,17 @@ public class MessageHeader {
 	private int partition;
 	private long producerId;
 	private Map<String, String> attributeMap;
+	
+	
+	
 	public MessageHeader(long key, int type) {
 		this.key = key;
 		this.type = type;
 	}
-
-	public MessageHeader(int partition,int type) {
+	
+	public MessageHeader(long key,int partition, int type) {
+		this.key = key;
 		this.type = type;
-		this.partition = partition;
 	}
 	
 	public MessageHeader(long key, int type, Map<String, String> attributeMap) {
@@ -149,5 +152,13 @@ public class MessageHeader {
 
 	public void setAttributeMap(Map<String, String> attributeMap) {
 		this.attributeMap = attributeMap;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("MessageHeader [key=").append(key).append(", type=").append(type).append(", offset=").append(offset).append(", timetamp=").append(timetamp).append(", partition=")
+			.append(partition).append(", producerId=").append(producerId).append(", attributeMap=").append(attributeMap).append("]");
+		return builder.toString();
 	}
 }
