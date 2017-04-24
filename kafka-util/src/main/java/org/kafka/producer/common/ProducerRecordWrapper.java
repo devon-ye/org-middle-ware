@@ -32,7 +32,7 @@ public class ProducerRecordWrapper {
 		}
 
 		long key = messageHeader.getKey();
-		int partitionId = messageHeader.getPartition();
+		int partitionId = messageHeader.getPartitionId();
 		if (partitionId == -1 && partitionSize != 0) {
 			partitionId = (int) (key / partitionSize);
 		}

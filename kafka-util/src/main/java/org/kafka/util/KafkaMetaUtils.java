@@ -25,14 +25,19 @@ public class KafkaMetaUtils {
 		zkClient.setZkSerializer(new ZkStringSerializer());
 		List<String> brokerIds = zkClient.getChildren("/brokers/ids");
 		String path = "/brokers/ids";
-		for (String brokerId : brokerIds) {
+		int brokerIdSize = 0;
+		if(brokerIds != null){
+			brokerIdSize = brokerIds.size();
+		}
+		for(int i = 0;i < brokerIdSize;i++){
+			String brokerId = brokerIds.get(i);
 			boolean isExists = zkClient.exists(path+"/" + brokerId);
 			if (isExists) {
 				String brokerInfo = zkClient.readData(path + "/" + brokerId);
 				JSONObject jsonObject = JSON.parseObject(brokerInfo);
 				String host = jsonObject.getString("host");
 				String port = jsonObject.getString("port");
-				if (brokerId != brokerIds.get(brokerIds.size() - 1)) {
+				if (brokerIds.lastIndexOf(brokerId) != (brokerIdSize-1)) {
 					sockets.append(host + ":").append(port + ",");
 				} else {
 					sockets.append(host + ":").append(port);

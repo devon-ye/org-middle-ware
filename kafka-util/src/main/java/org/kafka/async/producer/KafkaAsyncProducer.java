@@ -22,7 +22,7 @@ public class KafkaAsyncProducer extends KafkaSenderStrategy{
 	
 	public KafkaAsyncProducer(KafkaProducerConfig config) {
 		props = config.getProperties();
-		sendMessageQueue = new  SendMessageQueue(props);
+		//sendMessageQueue = new  SendMessageQueue(props);
 	}
 	
 	@Override

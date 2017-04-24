@@ -7,6 +7,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.kafka.clients.CommonClientConfigs;
+import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
@@ -53,13 +54,26 @@ public class KafkaSendWrapper {
 		}
 		producerRecord.partition();
 		try {
-			future = producer.send(producerRecord);
+			future = producer.send(producerRecord, new Callback() {
+				
+				@Override
+				public void onCompletion(RecordMetadata metadata, Exception exception) {
+					if(exception != null || metadata == null){
+						System.out.println("e:" +exception + "metadata:" + metadata);
+					}
+					
+				}
+			});
+		
 			log.info("send producerRecord:" + producerRecord);
 			recordMetadata = future.get();
-			int patitionId = recordMetadata.partition();
-			long timeTamp = recordMetadata.timestamp();
+			if(recordMetadata != null){
+				
+			}
+		//	int patitionId = recordMetadata.partition();
+		//	long timeTamp = recordMetadata.timestamp();
 		} catch (Exception e) {
-			
+			log.error("Exception:" +e ) ;
 		}
 
 	}

@@ -19,9 +19,9 @@ public class MessageHeader {
 		
 		private  int type;
 		private long offset;
-		private long timetamp;
+		private long timestamp;
 		private int producerId;
-		private int partition = -1;
+		private int partitionId = -1;
 		private Map<String, String> attributeMap;
 		
 		public Builder(long key){
@@ -34,7 +34,7 @@ public class MessageHeader {
 		}
 		
 		public Builder partition(int val){
-			partition = val;
+			partitionId = val;
 			return this;
 		}
 		
@@ -44,7 +44,7 @@ public class MessageHeader {
 		}
 		
 		public Builder timetamp(int val){
-			timetamp = val;
+			timestamp = val;
 			return this;
 		}
 		
@@ -60,8 +60,8 @@ public class MessageHeader {
 		@Override
 		public String toString() {
 			StringBuilder builder = new StringBuilder();
-			builder.append("MessageHeader [key=").append(key).append(", type=").append(type).append(", offset=").append(offset).append(", timetamp=").append(timetamp).append(", partition=")
-				.append(partition).append(", producerId=").append(producerId).append(", attributeMap=").append(attributeMap).append("]");
+			builder.append("MessageHeader [key=").append(key).append(", type=").append(type).append(", offset=").append(offset).append(", timestamp=").append(timestamp).append(", partitionId=")
+				.append(partitionId).append(", producerId=").append(producerId).append(", attributeMap=").append(attributeMap).append("]");
 			return builder.toString();
 		}
 	}
@@ -74,8 +74,8 @@ public class MessageHeader {
 	private long key;
 	private int type;
 	private long offset;
-	private long timetamp;
-	private int partition;
+	private long timestamp;
+	private int partitionId;
 	private long producerId;
 	private Map<String, String> attributeMap;
 	
@@ -111,11 +111,11 @@ public class MessageHeader {
 	}
 
 	public long getTimetamp() {
-		return timetamp;
+		return timestamp;
 	}
 
-	public int getPartition() {
-		return partition;
+	public int getPartitionId() {
+		return partitionId;
 	}
 
 	public long getProducerId() {
@@ -138,12 +138,12 @@ public class MessageHeader {
 		this.offset = offset;
 	}
 
-	public void setTimetamp(long timetamp) {
-		this.timetamp = timetamp;
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;
 	}
 
-	public void setPartition(int partition) {
-		this.partition = partition;
+	public void setPartition(int partitionId) {
+		this.partitionId = partitionId;
 	}
 
 	public void setProducerId(long producerId) {
@@ -157,8 +157,8 @@ public class MessageHeader {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("MessageHeader [key=").append(key).append(", type=").append(type).append(", offset=").append(offset).append(", timetamp=").append(timetamp).append(", partition=")
-			.append(partition).append(", producerId=").append(producerId).append(", attributeMap=").append(attributeMap).append("]");
+		builder.append("MessageHeader [key=").append(key).append(", type=").append(type).append(", offset=").append(offset).append(", timetamp=").append(timestamp).append(", partition=")
+			.append(partitionId).append(", producerId=").append(producerId).append(", attributeMap=").append(attributeMap).append("]");
 		return builder.toString();
 	}
 }
