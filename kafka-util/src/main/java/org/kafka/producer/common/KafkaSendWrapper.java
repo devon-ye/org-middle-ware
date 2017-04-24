@@ -1,4 +1,4 @@
-package org.kafka.common;
+package org.kafka.producer.common;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.PartitionInfo;
-import org.kafka.producer.common.ProducerRecordWrapper;
+import org.kafka.common.MessageHeader;
 import org.kafka.util.KafkaConstant;
 import org.kafka.util.KafkaMetaUtils;
 import org.slf4j.Logger;

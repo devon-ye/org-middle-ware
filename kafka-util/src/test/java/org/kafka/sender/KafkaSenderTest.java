@@ -8,50 +8,80 @@ import org.devonmusa.util.config.EnvironmentUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.kafka.common.KafkaProducerConfig;
 import org.kafka.common.MessageHeader;
+import org.kafka.producer.common.KafkaProducerConfig;
 import org.kafka.util.KafkaSendMode;
 import org.kafka.utils.KafkaUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-*@author  Devonmusa
-*@date 2017年4月2日
-*/
+ * @author Devonmusa
+ * @date 2017年4月2日
+ */
 public class KafkaSenderTest {
-	private static final Logger  logger = LoggerFactory.getLogger(KafkaSenderTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(KafkaSenderTest.class);
 	private KafkaProducerConfig producerConfig;
 	private KafkaSender kafkaSender;
 	private Properties props;
 	private MessageHeader header;
-	
+
 	@Before
 	public void setUp() throws FileNotFoundException, IOException, Exception {
-		System.setProperty("log.home", EnvironmentUtils.getAppHome()+"/log");
+		System.setProperty("log.home", EnvironmentUtils.getAppHome() + "/log");
 		KafkaUtils.initLogback();
 		producerConfig = KafkaProducerConfig.getInstance();
 		producerConfig.setTopic("TEST.Q");
 		producerConfig.setZookeeperUrl("192.168.1.12:2181");
 		props = new Properties();
 		producerConfig.setProperties(props);
-		kafkaSender = new KafkaSender(producerConfig,KafkaSendMode.Sync);
 	}
-	
+
+	long syncStartTime = System.nanoTime();
+
 	@Test
-	public void sendTest(){
+	public void syncSendTest() {
+		kafkaSender = new KafkaSender(producerConfig, KafkaSendMode.Sync);
 		int i = 0;
-		while(i < 10){
-			header =new MessageHeader(i, 100);
-			byte[] data =("message" + i).getBytes();
+		while (i < 10) {
+			header = new MessageHeader(i, 100);
+			byte[] data = ("message" + i).getBytes();
 			kafkaSender.send(header, data);
 			logger.info("header:" + header);
 			i++;
 		}
+		performancePrint(syncEndTime, syncStartTime);
 	}
-	
+
+	long syncEndTime = System.nanoTime();
+
+	long asyncStartTime = System.nanoTime();
+
+	@Test
+	public void asyncSendTest() {
+		kafkaSender = new KafkaSender(producerConfig, KafkaSendMode.Async);
+		int i = 0;
+		while (i < 10) {
+			header = new MessageHeader(i, 100);
+			byte[] data = ("message" + i).getBytes();
+			kafkaSender.send(header, data);
+			logger.info("header:" + header);
+			i++;
+		}
+		performancePrint(asyncEndTime, asyncStartTime);
+	}
+
+	long asyncEndTime = System.nanoTime();
+
 	@After
-	public void tearDown(){
+	public void tearDown() {
+
 		kafkaSender.close();
+	}
+
+	private void performancePrint(long start, long end) {
+		long usedTimeNS = end - start;
+		long usedTimeMS = usedTimeNS / 1000000;
+		logger.info("usedTimeNS:" + usedTimeNS + ", usedTimeMS:" + usedTimeMS);
 	}
 }

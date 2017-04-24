@@ -1,4 +1,4 @@
-package org.kafka.common;
+package org.kafka.producer.common;
 
 import java.util.Properties;
 

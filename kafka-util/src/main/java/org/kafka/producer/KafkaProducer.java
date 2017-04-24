@@ -3,9 +3,9 @@ package org.kafka.producer;
 import java.util.List;
 
 import org.apache.kafka.common.PartitionInfo;
-import org.kafka.common.KafkaProducerConfig;
-import org.kafka.common.KafkaSendWrapper;
 import org.kafka.common.MessageHeader;
+import org.kafka.producer.common.KafkaProducerConfig;
+import org.kafka.producer.common.KafkaSendWrapper;
 import org.kafka.producer.common.ProducerRecordWrapper;
 import org.kafka.sender.KafkaSenderStrategy;
 import org.slf4j.Logger;

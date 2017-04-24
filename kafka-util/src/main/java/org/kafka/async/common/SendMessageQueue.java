@@ -7,6 +7,7 @@ import java.util.concurrent.LinkedTransferQueue;
 import org.apache.kafka.clients.producer.KafkaProducer;
 
 import org.kafka.common.MessageHeader;
+import org.kafka.producer.common.KafkaProducerConfig;
 
 /**
 *@see
@@ -15,36 +16,36 @@ import org.kafka.common.MessageHeader;
 */
 public class SendMessageQueue{
 	
-	//private KafkaProducerConfig producerConfig;
+	private KafkaProducerConfig producerConfig;
 	
 	private KafkaProducer<MessageHeader,byte[]> producer;
 	 
-//	private Properties props;
+	private Properties props;
 	
 	private final LinkedTransferQueue<SendMessage> messageQueue = new LinkedTransferQueue<SendMessage>();
 	
-//	public SendMessageQueue(Properties props){
-//	//	new SendThread().start();
-//		//producerConfig = new KafkaProducerConfig(props);
-//		if(producer != null){
-//			this.connect();
-//		}
-//	}
+	public SendMessageQueue(Properties props){
+		new SendThread().start();
+		///producerConfig = 
+		if(producer != null){
+			this.connect();
+		}
+	}
 	
 	public void sendMessage(MessageHeader header,byte[] data){
 		SendMessage sendMessage = new SendMessage(header, data);
 		messageQueue.put(sendMessage);
 	}
 	
-//	private class SendThread extends Thread{
-//		
-//		public void run(){
-//			
-//		}
-//	}
+	private class SendThread extends Thread{
+		
+		public void run(){
+			
+		}
+	}
 	
 	private void connect(){
-	//	producer = new KafkaProducer<>(props);
+		producer = new KafkaProducer<>(props);
 	}
 	
 }
