@@ -9,18 +9,23 @@ import org.infinispan.Cache;
 *@author  Devonmusa
 *@date 2017年4月3日
 */
-public class CacheWrapper implements Serializable, Comparable<CacheWrapper>{
+public class CacheWrapper<K,V> implements Serializable, Comparable<CacheWrapper<K,V>>{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private int mod;
 	
-	private Cache cache;
+	private Cache<K, V> cache;
 	
 	private String cacheName;
 	
 	private long eventTimeDay;
 	
 
-	private CacheWrapper cacheWrapper;
+	private CacheWrapper<K,V> cacheWrapper;
 	
 	
 
@@ -28,7 +33,7 @@ public class CacheWrapper implements Serializable, Comparable<CacheWrapper>{
 		return mod;
 	}
 
-	public Cache getCache() {
+	public Cache<K,V> getCache() {
 		return cache;
 	}
 
@@ -36,7 +41,7 @@ public class CacheWrapper implements Serializable, Comparable<CacheWrapper>{
 		return cacheName;
 	}
 
-	public CacheWrapper getCacheWrapper() {
+	public CacheWrapper<K,V> getCacheWrapper() {
 		return cacheWrapper;
 	}
 
@@ -44,7 +49,7 @@ public class CacheWrapper implements Serializable, Comparable<CacheWrapper>{
 		this.mod = mod;
 	}
 
-	public void setCache(Cache cache) {
+	public void setCache(Cache<K,V> cache) {
 		this.cache = cache;
 	}
 
@@ -60,16 +65,16 @@ public class CacheWrapper implements Serializable, Comparable<CacheWrapper>{
 		this.eventTimeDay = eventTimeDay;
 	}
 
-	public void setCacheWrapper(CacheWrapper cacheWrapper) {
+	public void setCacheWrapper(CacheWrapper<K,V> cacheWrapper) {
 		this.cacheWrapper = cacheWrapper;
 	}
 
 	@Override
-	public int compareTo(CacheWrapper o) {
+	public int compareTo(CacheWrapper<K,V> o) {
 		return order(o) * -1;
 	}
 	
-	private int order(CacheWrapper o) {
+	private int order(CacheWrapper<K,V> o) {
 		if (this.eventTimeDay > o.getEventTimeDay()) {
 			return 1;
 		} else if (this.eventTimeDay == o.getEventTimeDay()) {
