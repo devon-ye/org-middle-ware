@@ -1,10 +1,10 @@
 package org.kafka.proxy;
 
 
+import org.kafka.common.KafkaExecuteMode;
 import org.kafka.consumer.async.KafkaAsyncConsumer;
 import org.kafka.consumer.common.KafkaConsumerConfig;
 import org.kafka.consumer.sync.KafkaSyncConsumer;
-import org.kafka.util.KafkaSendMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,9 +21,9 @@ public class KafkaReceiveProxy {
 	*/
 	private KafkaReceiveStrategegy receiveStrategegy;
 	
-	public KafkaReceiveProxy(KafkaConsumerConfig config, KafkaSendMode sendMode) {
+	public KafkaReceiveProxy(KafkaConsumerConfig config, KafkaExecuteMode executeMode) {
 		try {
-			switch (sendMode) {
+			switch (executeMode) {
 			case Async:
 				setReceiveStrategey(new KafkaAsyncConsumer());
 				break;

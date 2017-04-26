@@ -8,10 +8,11 @@ import org.devonmusa.util.config.EnvironmentUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.kafka.common.KafkaExecuteMode;
 import org.kafka.common.MessageHeader;
 import org.kafka.producer.common.KafkaProducerConfig;
 import org.kafka.proxy.KafkaSenderProxy;
-import org.kafka.util.KafkaSendMode;
+
 import org.kafka.utils.KafkaUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +43,7 @@ public class KafkaSenderTest {
 
 	@Test
 	public void syncSendTest() {
-		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaSendMode.Sync);
+		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaExecuteMode.Sync);
 		int i = 0;
 		while (i < 10) {
 			header = new MessageHeader(i, 100);
@@ -60,7 +61,7 @@ public class KafkaSenderTest {
 
 	@Test
 	public void asyncSendTest() {
-		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaSendMode.Async);
+		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaExecuteMode.Async);
 		int i = 0;
 		while (i < 10) {
 			header = new MessageHeader(i, 100);

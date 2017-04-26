@@ -1,10 +1,9 @@
-package org.kafka.async.producer;
+package org.kafka.producer.async;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedTransferQueue;
-
 
 import org.apache.kafka.common.PartitionInfo;
 
@@ -14,16 +13,19 @@ import org.kafka.producer.common.KafkaSendWrapper;
 import org.kafka.producer.common.ProducerRecordWrapper;
 import org.kafka.producer.common.SendDataThread;
 import org.kafka.proxy.KafkaSenderStrategy;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Devonmusa 2017年2月18日 上午1:43:32
- *
+ * @author Devonmusa
+ * @date 2017年4月27日
  */
 public class KafkaAsyncProducer extends KafkaSenderStrategy {
+
 	private static final Logger log = LoggerFactory.getLogger(KafkaAsyncProducer.class);
+
 	private LinkedTransferQueue<ProducerRecordWrapper> linkedTransferQueue;
 	private ProducerRecordWrapper producerRecordWrapper;
 	private List<PartitionInfo> partitionInfos;
@@ -37,7 +39,7 @@ public class KafkaAsyncProducer extends KafkaSenderStrategy {
 			log.error("KafkaAsyncProducer instaned fail, Exception:" + producerConfig);
 			return;
 		}
-		
+
 		try {
 			sendWrapper = new KafkaSendWrapper(producerConfig);
 			partitionInfos = sendWrapper.getPartitionInfos();
@@ -55,7 +57,7 @@ public class KafkaAsyncProducer extends KafkaSenderStrategy {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		int partitionId = producerRecordWrapper.getPartitionId();
 
 		linkedTransferQueue = PARTITION_SENDQUEU_MAP.get(partitionId);
@@ -71,6 +73,6 @@ public class KafkaAsyncProducer extends KafkaSenderStrategy {
 	@Override
 	public void close() {
 		sendWrapper.close();
-		
+
 	}
 }

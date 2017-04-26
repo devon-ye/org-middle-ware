@@ -1,10 +1,13 @@
 package org.kafka.proxy;
 
-import org.kafka.async.producer.KafkaAsyncProducer;
+
+import org.kafka.common.KafkaExecuteMode;
 import org.kafka.common.MessageHeader;
-import org.kafka.producer.KafkaProducer;
+import org.kafka.producer.async.KafkaAsyncProducer;
 import org.kafka.producer.common.KafkaProducerConfig;
-import org.kafka.util.KafkaSendMode;
+import org.kafka.producer.sync.KafkaSycnProducer;
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,14 +19,14 @@ public class KafkaSenderProxy {
 	private Logger logger = LoggerFactory.getLogger(KafkaSenderProxy.class);
 	private KafkaSenderStrategy senderStrategy;
 
-	public KafkaSenderProxy(KafkaProducerConfig config, KafkaSendMode sendMode) {
+	public KafkaSenderProxy(KafkaProducerConfig config, KafkaExecuteMode executeMode) {
 		try {
-			switch (sendMode) {
+			switch (executeMode) {
 			case Async:
 				setSenderStrategy(new KafkaAsyncProducer(config));
 				break;
 			case Sync:
-				setSenderStrategy(new KafkaProducer(config));
+				setSenderStrategy(new KafkaSycnProducer(config));
 				break;
 			default:
 				break;
