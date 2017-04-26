@@ -18,6 +18,7 @@ public class ProducerRecordWrapper {
 
 	private ProducerRecord<MessageHeader, byte[]> producerRecord;
 	private int partitionSize;
+	private int partitionId;
 	private String topic;
 
 	public ProducerRecordWrapper(String topic, List<PartitionInfo> partitionInfos) throws Exception {
@@ -32,11 +33,11 @@ public class ProducerRecordWrapper {
 		}
 
 		long key = messageHeader.getKey();
-		int partitionId = messageHeader.getPartitionId();
-		if (partitionId == -1 && partitionSize != 0) {
-			partitionId = (int) (key / partitionSize);
+		int tempPartitionId = messageHeader.getPartitionId();
+		if (tempPartitionId == -1 && partitionSize != 0) {
+			tempPartitionId = (int) (key / partitionSize);
 		}
-
+		this.partitionId = tempPartitionId;
 		long timestamp = System.currentTimeMillis();
 		producerRecord = new ProducerRecord<MessageHeader, byte[]>(topic, partitionId, timestamp, messageHeader, value);
 		return this;
@@ -46,4 +47,11 @@ public class ProducerRecordWrapper {
 		return producerRecord;
 	}
 
+	public int getPartitionId() {
+		return partitionId;
+	}
+
+	public void setPartitionId(int partitionId) {
+		this.partitionId = partitionId;
+	}
 }

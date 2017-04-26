@@ -4,10 +4,10 @@ package org.kafka.async.common;
 import java.util.Properties;
 import java.util.concurrent.LinkedTransferQueue;
 
-import org.apache.kafka.clients.producer.KafkaProducer;
+
 
 import org.kafka.common.MessageHeader;
-import org.kafka.producer.common.KafkaProducerConfig;
+
 
 /**
 *@see
@@ -16,20 +16,19 @@ import org.kafka.producer.common.KafkaProducerConfig;
 */
 public class SendMessageQueue{
 	
-	private KafkaProducerConfig producerConfig;
 	
-	private KafkaProducer<MessageHeader,byte[]> producer;
-	 
-	private Properties props;
+//	private KafkaProducer<MessageHeader,byte[]> producer;
+//	 
+//	private Properties props;
 	
 	private final LinkedTransferQueue<SendMessage> messageQueue = new LinkedTransferQueue<SendMessage>();
 	
 	public SendMessageQueue(Properties props){
 		new SendThread().start();
-		///producerConfig = 
-		if(producer != null){
-			this.connect();
-		}
+//		///producerConfig = 
+//		if(producer != null){
+//			this.connect();
+//		}
 	}
 	
 	public void sendMessage(MessageHeader header,byte[] data){
@@ -44,8 +43,8 @@ public class SendMessageQueue{
 		}
 	}
 	
-	private void connect(){
-		producer = new KafkaProducer<>(props);
-	}
+//	private void connect(){
+//		producer = new KafkaProducer<>(props);
+//	}
 	
 }
