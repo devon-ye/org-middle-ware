@@ -1,7 +1,5 @@
 package org.kafka.proxy;
 
-import org.kafka.common.MessageHeader;
-
 /**
 *
 *@author Devonmusa
