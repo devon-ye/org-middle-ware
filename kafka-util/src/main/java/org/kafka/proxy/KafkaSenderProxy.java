@@ -1,4 +1,4 @@
-package org.kafka.sender;
+package org.kafka.proxy;
 
 import org.kafka.async.producer.KafkaAsyncProducer;
 import org.kafka.common.MessageHeader;
@@ -12,11 +12,11 @@ import org.slf4j.LoggerFactory;
  * @author Devonmusa
  * @date 2017年4月2日
  */
-public class KafkaSender {
-	private Logger logger = LoggerFactory.getLogger(KafkaSender.class);
+public class KafkaSenderProxy {
+	private Logger logger = LoggerFactory.getLogger(KafkaSenderProxy.class);
 	private KafkaSenderStrategy senderStrategy;
 
-	public KafkaSender(KafkaProducerConfig config, KafkaSendMode sendMode) {
+	public KafkaSenderProxy(KafkaProducerConfig config, KafkaSendMode sendMode) {
 		try {
 			switch (sendMode) {
 			case Async:

@@ -13,7 +13,7 @@ import org.kafka.producer.common.KafkaProducerConfig;
 import org.kafka.producer.common.KafkaSendWrapper;
 import org.kafka.producer.common.ProducerRecordWrapper;
 import org.kafka.producer.common.SendDataThread;
-import org.kafka.sender.KafkaSenderStrategy;
+import org.kafka.proxy.KafkaSenderStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

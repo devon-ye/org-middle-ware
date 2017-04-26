@@ -1,4 +1,4 @@
-package org.kafka.sender;
+package org.kafka.proxy;
 
 import org.kafka.common.MessageHeader;
 

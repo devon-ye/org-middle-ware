@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.kafka.common.MessageHeader;
 import org.kafka.producer.common.KafkaProducerConfig;
+import org.kafka.proxy.KafkaSenderProxy;
 import org.kafka.util.KafkaSendMode;
 import org.kafka.utils.KafkaUtils;
 import org.slf4j.Logger;
@@ -22,13 +23,13 @@ import org.slf4j.LoggerFactory;
 public class KafkaSenderTest {
 	private static final Logger logger = LoggerFactory.getLogger(KafkaSenderTest.class);
 	private KafkaProducerConfig producerConfig;
-	private KafkaSender kafkaSender;
+	private KafkaSenderProxy kafkaSender;
 	private Properties props;
 	private MessageHeader header;
 
 	@Before
 	public void setUp() throws FileNotFoundException, IOException, Exception {
-		System.setProperty("log.home", EnvironmentUtils.getAppHome() + "/log");
+		System.setProperty("log.home", System.getProperty("user.dir")+ "/log");
 		KafkaUtils.initLogback();
 		producerConfig = KafkaProducerConfig.getInstance();
 		producerConfig.setTopic("TEST.Q");
@@ -41,7 +42,7 @@ public class KafkaSenderTest {
 
 	@Test
 	public void syncSendTest() {
-		kafkaSender = new KafkaSender(producerConfig, KafkaSendMode.Sync);
+		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaSendMode.Sync);
 		int i = 0;
 		while (i < 10) {
 			header = new MessageHeader(i, 100);
@@ -59,7 +60,7 @@ public class KafkaSenderTest {
 
 	@Test
 	public void asyncSendTest() {
-		kafkaSender = new KafkaSender(producerConfig, KafkaSendMode.Async);
+		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaSendMode.Async);
 		int i = 0;
 		while (i < 10) {
 			header = new MessageHeader(i, 100);
