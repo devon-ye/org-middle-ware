@@ -11,6 +11,9 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jdk.version>1.8</jdk.version>
+		<zookeeper.version>3.4.9</zookeeper.version>
+		<junit.version>4.12</junit.version>
 	</properties>
 	<dependencies>
 		<!-- <dependency>
@@ -23,16 +26,16 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.2.0</version>
 		</dependency> -->
-		<!-- <dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>${junit.version}</version>
 			<scope>test</scope>
-		</dependency> -->
+		</dependency>
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
 			<artifactId>zookeeper</artifactId>
-			<version>3.4.9</version>
+			<version>${zookeeper.version}</version>
 		</dependency>
 		<!-- <dependency>
 			<groupId>com.101tec</groupId>

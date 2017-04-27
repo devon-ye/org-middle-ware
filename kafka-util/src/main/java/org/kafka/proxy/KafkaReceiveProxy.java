@@ -15,10 +15,7 @@ import org.slf4j.LoggerFactory;
 */
 public class KafkaReceiveProxy {
 	private static final Logger log = LoggerFactory.getLogger(KafkaReceiveProxy.class);
-	/**
-	*@function:
-	*
-	*/
+	
 	private KafkaReceiveStrategegy receiveStrategegy;
 	
 	public KafkaReceiveProxy(KafkaConsumerConfig config, KafkaExecuteMode executeMode) {
