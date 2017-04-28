@@ -17,9 +17,11 @@ import ch.qos.logback.classic.joran.JoranConfigurator;
 *@date 2017年4月21日
 */
 public class KafkaUtils {
-	private static final Logger log = LoggerFactory.getLogger(KafkaUtils.class);
+	
+	private static final Logger LOG = LoggerFactory.getLogger(KafkaUtils.class);
+	
 	public static void initLogback() throws FileNotFoundException, IOException, Exception {
-		log.info("init logback");
+		LOG.info("start init logback!");
 		String appHome = EnvironmentUtils.getAppHome();
 		String logBackConfig = appHome + "/config/logback.xml";
 		File logBackConfigFile = new File(logBackConfig);
@@ -30,5 +32,6 @@ public class KafkaUtils {
 			loggerContext.reset();
 			configurator.doConfigure(logBackConfig);
 		}
+		LOG.info("end init logback");
 	}
 }

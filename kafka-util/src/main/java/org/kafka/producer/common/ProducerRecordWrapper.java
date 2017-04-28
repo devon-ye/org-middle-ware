@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
  * @date 2017年4月5日
  */
 public class ProducerRecordWrapper {
+	
 	private static final Logger log = LoggerFactory.getLogger(ProducerRecordWrapper.class);
 
 	private ProducerRecord<MessageHeader, byte[]> producerRecord;

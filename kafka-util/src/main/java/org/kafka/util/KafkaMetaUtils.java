@@ -16,7 +16,9 @@ import com.alibaba.fastjson.JSONObject;
  * @date 2017年4月8日
  */
 public class KafkaMetaUtils {
+	
 	private static final Logger logger = LoggerFactory.getLogger(KafkaMetaUtils.class);
+	
 	private static ZkClient zkClient;
 
 	public static String getBrokers(String zookeeperUrl) {

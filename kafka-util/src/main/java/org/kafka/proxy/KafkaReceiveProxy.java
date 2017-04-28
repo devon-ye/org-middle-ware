@@ -14,7 +14,8 @@ import org.slf4j.LoggerFactory;
 *@date   2017年4月27日
 */
 public class KafkaReceiveProxy {
-	private static final Logger log = LoggerFactory.getLogger(KafkaReceiveProxy.class);
+	
+	private static final Logger LOG = LoggerFactory.getLogger(KafkaReceiveProxy.class);
 	
 	private KafkaReceiveStrategegy receiveStrategegy;
 	
@@ -22,16 +23,16 @@ public class KafkaReceiveProxy {
 		try {
 			switch (executeMode) {
 			case Async:
-				setReceiveStrategey(new KafkaAsyncConsumer());
+				setReceiveStrategey(new KafkaAsyncConsumer(config));
 				break;
 			case Sync:
-				setReceiveStrategey(new KafkaSyncConsumer());
+				setReceiveStrategey(new KafkaSyncConsumer(config));
 				break;
 			default:
 				break;
 			}
 		} catch (Exception e) {
-			log.error("KafkaSender Exception:" + e);
+			LOG.error("KafkaSender Exception:" + e);
 		}
 	}
 	

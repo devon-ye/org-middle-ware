@@ -1,0 +1,18 @@
+syntax = "proto3";
+package kafka_util;
+option java_package = "org.kafka.common";
+option java_outer_classname = "ProtoMessageHeader";
+
+message MessageHeader {
+   int64 key = 1;
+  int32 type = 2;
+   int32  partitionId = 3;
+   int64 timestamp = 4;
+  int32 producerId =5;
+  int64 offset = 6;
+  repeated AttributeEntry attributeEntry = 7;
+
+  message AttributeEntry {
+	 map<string,string> attributeMap = 1;
+  }
+}

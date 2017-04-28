@@ -24,7 +24,9 @@ import org.slf4j.LoggerFactory;
  * @date 2017年4月6日
  */
 public class KafkaSendWrapper {
+	
 	private static final Logger log = LoggerFactory.getLogger(KafkaSendWrapper.class);
+	
 	private static final int CLOSE_WAIT_TIMEMS = 10;
 
 	private ProducerRecord<MessageHeader, byte[]> producerRecord;

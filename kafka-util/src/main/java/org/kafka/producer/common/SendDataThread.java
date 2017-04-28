@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
  * @date 2017年4月26日
  */
 public class SendDataThread extends Thread {
+	
 	private Logger log = LoggerFactory.getLogger(SendDataThread.class);
 
 	private LinkedTransferQueue<ProducerRecordWrapper> linkedTransferQueue;

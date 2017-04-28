@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
  */
 public class KafkaSenderProxy {
 	private Logger logger = LoggerFactory.getLogger(KafkaSenderProxy.class);
+	
 	private KafkaSenderStrategy senderStrategy;
 
 	public KafkaSenderProxy(KafkaProducerConfig config, KafkaExecuteMode executeMode) {

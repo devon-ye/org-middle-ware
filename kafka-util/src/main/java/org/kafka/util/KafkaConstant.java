@@ -1,4 +1,9 @@
 package org.kafka.util;
+
+import org.kafka.producer.common.KafkaSendWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
 *@see
 *@author  Devonmusa
@@ -6,6 +11,8 @@ package org.kafka.util;
 */
 public class KafkaConstant {
 	
+	private static final Logger log = LoggerFactory.getLogger(KafkaSendWrapper.class);
+
 	/**
 	 * producer config
 	 */

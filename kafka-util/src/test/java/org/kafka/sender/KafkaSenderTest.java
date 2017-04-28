@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * @date 2017年4月2日
  */
 public class KafkaSenderTest {
-	private static final Logger logger = LoggerFactory.getLogger(KafkaSenderTest.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(KafkaSenderTest.class);
 	private KafkaProducerConfig producerConfig;
 	private KafkaSenderProxy kafkaSender;
 	private Properties props;
@@ -48,7 +48,7 @@ public class KafkaSenderTest {
 			header = new MessageHeader(i, 100);
 			byte[] data = ("message" + i).getBytes();
 			kafkaSender.send(header, data);
-			logger.info("header:" + header);
+			LOGGER.info("header:" + header);
 			i++;
 		}
 		performancePrint(syncEndTime, syncStartTime);
@@ -66,7 +66,7 @@ public class KafkaSenderTest {
 			header = new MessageHeader(i, 100);
 			byte[] data = ("message" + i).getBytes();
 			kafkaSender.send(header, data);
-			logger.info("header:" + header);
+			LOGGER.info("header:" + header);
 			i++;
 		}
 		performancePrint(asyncEndTime, asyncStartTime);
@@ -83,6 +83,6 @@ public class KafkaSenderTest {
 	private void performancePrint(long start, long end) {
 		long usedTimeNS = end - start;
 		long usedTimeMS = usedTimeNS / 1000000;
-		logger.info("usedTimeNS:" + usedTimeNS + ", usedTimeMS:" + usedTimeMS);
+		LOGGER.info("usedTimeNS:" + usedTimeNS + ", usedTimeMS:" + usedTimeMS);
 	}
 }

@@ -2,13 +2,17 @@ package org.kafka.common;
 
 import java.util.Map;
 
+import org.kafka.codec.MessageHeaderDecode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
 *@Describetion
 *@author  Devonmusa
 *@date 2017年4月1日
 */
 public class MessageHeader {
-	
+	private static final Logger LOG = LoggerFactory.getLogger(MessageHeader.class);
 	/**
 	 * 可用Builder构建器替代下面的多参构造方法
 	 * @author devonmusa
@@ -76,7 +80,7 @@ public class MessageHeader {
 	private long offset;
 	private long timestamp;
 	private int partitionId;
-	private long producerId;
+	private int producerId;
 	private Map<String, String> attributeMap;
 	
 	
@@ -110,7 +114,7 @@ public class MessageHeader {
 		return offset;
 	}
 
-	public long getTimetamp() {
+	public long getTimestamp() {
 		return timestamp;
 	}
 
@@ -118,7 +122,7 @@ public class MessageHeader {
 		return partitionId;
 	}
 
-	public long getProducerId() {
+	public int getProducerId() {
 		return producerId;
 	}
 
@@ -142,11 +146,11 @@ public class MessageHeader {
 		this.timestamp = timestamp;
 	}
 
-	public void setPartition(int partitionId) {
+	public void setPartitionId(int partitionId) {
 		this.partitionId = partitionId;
 	}
 
-	public void setProducerId(long producerId) {
+	public void setProducerId(int producerId) {
 		this.producerId = producerId;
 	}
 

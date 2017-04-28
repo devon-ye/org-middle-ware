@@ -2,12 +2,20 @@ package org.kafka.producer.common;
 
 import java.util.Properties;
 
+import org.kafka.producer.async.KafkaAsyncProducer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
 *@see 
 *@author Devonmusa
 *@date 2017年4月1日
 */
 public class KafkaProducerConfig {
+	
+	private static final Logger log = LoggerFactory.getLogger(KafkaProducerConfig.class);
+
+	
 	private String topic;
 	private String  zookeeperUrl;
 	
