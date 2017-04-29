@@ -439,7 +439,8 @@ public final class ProtoMessageHeader {
         return result;
       }
 
-      @java.lang.Override
+      @SuppressWarnings("unchecked")
+	@java.lang.Override
       public int hashCode() {
         if (memoizedHashCode != 0) {
           return memoizedHashCode;
@@ -611,7 +612,8 @@ public final class ProtoMessageHeader {
           return result;
         }
 
-        public org.kafka.common.ProtoMessageHeader.MessageHeader.AttributeEntry buildPartial() {
+        @SuppressWarnings("unused")
+		public org.kafka.common.ProtoMessageHeader.MessageHeader.AttributeEntry buildPartial() {
           org.kafka.common.ProtoMessageHeader.MessageHeader.AttributeEntry result = new org.kafka.common.ProtoMessageHeader.MessageHeader.AttributeEntry(this);
           int from_bitField0_ = bitField0_;
           result.attributeMap_ = internalGetAttributeMap();
@@ -857,7 +859,8 @@ public final class ProtoMessageHeader {
 
     }
 
-    private int bitField0_;
+    @SuppressWarnings("unused")
+	private int bitField0_;
     public static final int KEY_FIELD_NUMBER = 1;
     private long key_;
     /**
@@ -1048,7 +1051,8 @@ public final class ProtoMessageHeader {
       return result;
     }
 
-    @java.lang.Override
+    @SuppressWarnings("unchecked")
+	@java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -1231,7 +1235,8 @@ public final class ProtoMessageHeader {
         return result;
       }
 
-      public org.kafka.common.ProtoMessageHeader.MessageHeader buildPartial() {
+      @SuppressWarnings("unused")
+	public org.kafka.common.ProtoMessageHeader.MessageHeader buildPartial() {
         org.kafka.common.ProtoMessageHeader.MessageHeader result = new org.kafka.common.ProtoMessageHeader.MessageHeader(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;

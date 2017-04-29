@@ -2,7 +2,6 @@ package org.kafka.common;
 
 import java.util.Map;
 
-import org.kafka.codec.MessageHeaderDecode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -100,6 +99,7 @@ public class MessageHeader {
 		this.key = key;
 		this.type = type;
 		this.attributeMap = attributeMap;
+	
 	}
 
 	public long getKey() {
