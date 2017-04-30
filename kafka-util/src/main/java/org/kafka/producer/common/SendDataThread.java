@@ -1,5 +1,6 @@
 package org.kafka.producer.common;
 
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.LinkedTransferQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -16,6 +17,7 @@ public class SendDataThread extends Thread {
 	private Logger LOG = LoggerFactory.getLogger(SendDataThread.class);
 
 	private LinkedTransferQueue<ProducerRecordWrapper> linkedTransferQueue;
+	private LinkedBlockingQueue<ProducerRecordWrapper> linkedBlockingQueue;
 	private ProducerRecordWrapper producerRecordWrapper;
 	private KafkaSendWrapper kafkaSendWrapper;
 	private int queueSize;
@@ -26,27 +28,47 @@ public class SendDataThread extends Thread {
 		this.isRunning = true;
 		this.kafkaSendWrapper = kafkaSendWrapper;
 	}
-
+	
+	public SendDataThread(LinkedBlockingQueue<ProducerRecordWrapper> linkedBlockingQueue, KafkaSendWrapper kafkaSendWrapper) {
+		this.linkedBlockingQueue = linkedBlockingQueue;
+		this.isRunning = true;
+		this.kafkaSendWrapper = kafkaSendWrapper;
+	}
+	
+//	@Override
+//	public void run()  {
+//		while (isRunning) {
+//			queueSize = linkedTransferQueue.size();
+//			try {
+//				producerRecordWrapper = linkedTransferQueue.take();
+//				//producerRecordWrapper = linkedTransferQueue.poll(100,TimeUnit.MILLISECONDS);
+//				LOG.info("linkedTransferQueue="+linkedTransferQueue+"queueSize=" + queueSize);
+//			} catch (InterruptedException e) {
+//				LOG.error("currntThreadName=" + Thread.currentThread() + ",queueSize=" + queueSize + ", isRunning=" + isRunning);
+//			}
+//			if (producerRecordWrapper != null) {
+//				send();
+//			} 
+//		}
+//	}
+	
 	@Override
 	public void run()  {
 		while (isRunning) {
-			queueSize = linkedTransferQueue.size();
+			queueSize = linkedBlockingQueue.size();
 			try {
-				producerRecordWrapper = linkedTransferQueue.poll(100,TimeUnit.MILLISECONDS);
+				producerRecordWrapper = linkedBlockingQueue.take();
+				//producerRecordWrapper = linkedBlockingQueue.poll(100,TimeUnit.MILLISECONDS);
+				//LOG.info("linkedBlockingQueue="+linkedBlockingQueue+"queueSize=" + queueSize);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.error("currntThreadName=" + Thread.currentThread() + ",queueSize=" + queueSize + ", isRunning=" + isRunning);
 			}
 			if (producerRecordWrapper != null) {
-			//	LOG.info("currntThreadName=" + Thread.currentThread() + ",queueSize=" + queueSize + ", isRunning=" + isRunning);
 				send();
 			} 
-//			else {
-//				LOG.info("currntThreadName=" + Thread.currentThread() + ",linkedTransferQueue=" + linkedTransferQueue + "producerRecordWrapper=" + producerRecordWrapper);
-//			}
 		}
 	}
-
+	
 	public void send() {
 		try {
 			kafkaSendWrapper.send(producerRecordWrapper);

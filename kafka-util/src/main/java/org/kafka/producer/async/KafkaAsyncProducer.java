@@ -63,53 +63,40 @@ public class KafkaAsyncProducer extends KafkaSenderStrategy {
 		int partitionId = producerRecordWrapper.getPartitionId();
 
 		linkedTransferQueue = PARTITION_SENDQUEU_MAP.get(partitionId);
-		if(linkedTransferQueue != null) {
+		if (linkedTransferQueue != null) {
 			linkedTransferQueue.put(producerRecordWrapper);
 		}
 		if (linkedTransferQueue == null) {
 			linkedTransferQueue = new LinkedTransferQueue<>();
 			PARTITION_SENDQUEU_MAP.put(partitionId, linkedTransferQueue);
 			sendWrapper = this.sendWrapper.clone();
-			
+
 			sendDataThread = new SendDataThread(linkedTransferQueue, sendWrapper);
-			sendDataThread.setName("sendData-" + partitionId);
+			sendDataThread.setName("sendDataThread-" + partitionId);
 			sendDataThread.start();
 			sendDataThreads.add(sendDataThread);
 			linkedTransferQueue.put(producerRecordWrapper);
 		}
-		
+
 	}
 
 	@SuppressWarnings("static-access")
 	@Override
 	public void close() {
 		int queueSize = sendDataThreads.size();
-		for(int i = 0; i < queueSize; i++){
-			sendDataThread= sendDataThreads.get(i);
-			if(sendDataThread.getQueueSize() == 0) {
+		for (int i = 0; i < queueSize; i++) {
+			sendDataThread = sendDataThreads.get(i);
+			if (sendDataThread.getQueueSize() == 0) {
 				sendDataThread.dispose();
 				sendDataThreads.remove(sendDataThread);
 				queueSize = sendDataThreads.size();
-				LOG.info(" Thread close info, " +sendDataThread.currentThread() + "is stop, will need to close thread=" + sendDataThreads);
-			}else if(queueSize != 0){
-				i=0;
-			}else{
+				LOG.info(" Thread close info, " + sendDataThread.currentThread() + "is stop, will need to close thread=" + sendDataThreads);
+			} else if (queueSize != 0) {
+				i = 0;
+			} else {
 				break;
 			}
 		}
-
-//		for(SendDataThread sendDataThread:sendDataThreads) {
-//			int queueSize = sendDataThreads.size();
-//			if(sendDataThread.getQueueSize() == 0) {
-//				sendDataThread.dispose();
-//				sendDataThreads.remove(sendDataThread);
-//			}else if(queueSize != 0){
-//				continue;
-//			}else{
-//				break;
-//			}
-//		}
-		
 		sendWrapper.close();
 	}
 }

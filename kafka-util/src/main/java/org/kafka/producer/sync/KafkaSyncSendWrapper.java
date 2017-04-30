@@ -1,98 +1,118 @@
-package org.kafka.producer.common;
+package org.kafka.producer.sync;
 
+/**
+*
+*@author Devonmusa
+*@date   2017年4月30日
+*/
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.kafka.clients.CommonClientConfigs;
-import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.PartitionInfo;
 import org.kafka.common.MessageHeader;
+import org.kafka.producer.common.KafkaProducerConfig;
+import org.kafka.producer.common.ProducerRecordWrapper;
 import org.kafka.util.KafkaConstant;
 import org.kafka.util.KafkaMetaUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- *
- * @author Devonmusa
- * @date 2017年4月6日
- */
-public class KafkaSendWrapper implements Cloneable {
+public class KafkaSyncSendWrapper implements Cloneable {
 
-	private static final Logger log = LoggerFactory.getLogger(KafkaSendWrapper.class);
-
+	private static final Logger LOG = LoggerFactory.getLogger(KafkaSyncSendWrapper.class);
+	
+	private Map<Long,ProducerRecordWrapper> reSendMessageCache = new HashMap<>();
+	private List<PartitionInfo> partitionInfos = new ArrayList<>();
 	private static final int CLOSE_WAIT_TIMEMS = 10;
+	private static final int MAX_SEND_TIMES = 5;
 
 	private ProducerRecord<MessageHeader, byte[]> producerRecord;
 	private KafkaProducer<MessageHeader, byte[]> producer;
 	private KafkaProducerConfig producerConfig;
-	private List<PartitionInfo> partitionInfos = new ArrayList<>();
-	private Future<RecordMetadata> future;
-	private RecordMetadata recordMetadata;
+	
+	private boolean sendResult = false;
 	private Properties props;
 	private String topic;
 	private int reTryCount = 0;
 
-	public KafkaSendWrapper(KafkaProducerConfig producerConfig) {
+	public KafkaSyncSendWrapper(KafkaProducerConfig producerConfig) {
 		this.producerConfig = producerConfig;
 		try {
 			init();
 		} catch (Exception e) {
-			log.error(" init() failed!!! Exception:" + e + reTryCount);
+			LOG.error(" init() failed!!! Exception:" + e + reTryCount);
 		}
 	}
 
-	public KafkaSendWrapper clone() {
+	public KafkaSyncSendWrapper clone() {
 		Object object = null;
 		try {
 			object = super.clone();
-			return (KafkaSendWrapper) object;
+			return (KafkaSyncSendWrapper) object;
 		} catch (CloneNotSupportedException e) {
-			log.error(" clone() failed!!! Exception:" + e);
+			LOG.error(" clone() failed!!! Exception:" + e);
 			return null;
 		}
 
 	}
 
-	public  void send(ProducerRecordWrapper producerRecordWrapper) {
+	public void send(ProducerRecordWrapper producerRecordWrapper) {
+		
+		long key = producerRecordWrapper.getProducerRecord().key().getKey();
+		reSendMessageCache.put(key, producerRecordWrapper);
 		producerRecord = producerRecordWrapper.getProducerRecord();
 		if (producerRecord == null) {
 			return;
 		}
 		producerRecord.partition();
+		Future<RecordMetadata> sendRecordFuture = null;
+		RecordMetadata recordMetadata = null;
+		long offset = -1;
+		int keySize = -1;
+		int valueSize = -1;
 		try {
-			future = producer.send(producerRecord, new Callback() {
-
-				@Override
-				public void onCompletion(RecordMetadata metadata, Exception exception) {
-					
-					if (exception != null || metadata == null) {
-						System.out.println("e:" + exception + "metadata:" + metadata);
-					}
-
-				}
-			});
-//			Future<RecordMetadata> sendMessageFuture = producer.send(producerRecord);
-//
-//			RecordMetadata recordMetadata = sendMessageFuture.get();
-//			recordMetadata.
-//			keySize = recordMetadata.serializedKeySize();
-//			valueSize = recordMetadata.serializedValueSize();
-//			partition = recordMetadata.partition();
-//			offset = recordMetadata.offset();
-
+			sendRecordFuture = producer.send(producerRecord);
+			recordMetadata = sendRecordFuture.get();
+			keySize = recordMetadata.serializedKeySize();
+			valueSize = recordMetadata.serializedValueSize();
+			offset = recordMetadata.offset();
+			sendResult = true;
 		} catch (Exception e) {
-			// int patitionId = recordMetadata.partition();
-			// long timeTamp = recordMetadata.timestamp();
-			log.error("Exception:" + e + ", future =" + future);
+			LOG.error("Exception:" + e + ", producerRecord=" + producerRecord + ", sendRecordFuture=" + sendRecordFuture);
+			reSend(key);
+
+		} finally {
+			if(sendResult){
+				LOG.info("send message success! producerRecord=" + producerRecord + ", offset=" + offset + ", keySize=" + keySize + ", valueSize" + valueSize);
+			}
+			if(reTryCount> 0 && reTryCount <= MAX_SEND_TIMES ){
+				reTryCount = 0;
+				reSendMessageCache.remove(key);
+			}
+			
 		}
 
+	}
+
+	public void reSend(long key) {
+		reTryCount ++;
+		if(reTryCount > MAX_SEND_TIMES){
+			sendResult  = false;
+			return;
+		}
+		ProducerRecordWrapper	producerRecordWrapper = reSendMessageCache.get(key);		
+		LOG.info("reSendding  message ! reTryCount=" + reTryCount);
+		send(producerRecordWrapper);
+		
 	}
 
 	public void close() {
@@ -106,9 +126,9 @@ public class KafkaSendWrapper implements Cloneable {
 				this.connect();
 			}
 		} catch (Exception e) {
-			log.error("kafka init  failed " + 3000 * reTryCount + "s after, prepare to reConnect!");
+			LOG.error("kafka init  failed " + 3000 * reTryCount + "s after, prepare to reConnect!");
 			reConnect();
-			log.error("kafka init  reConnect:" + reTryCount + " failed  end!!!");
+			LOG.error("kafka init  reConnect:" + reTryCount + " failed  end!!!");
 		} finally {
 			reTryCount = 0;
 		}
@@ -123,7 +143,7 @@ public class KafkaSendWrapper implements Cloneable {
 			Thread.sleep(3000 * reTryCount);
 			connect();
 		} catch (Exception e) {
-			log.error("kafka init failed! trying to reConnect:" + reTryCount);
+			LOG.error("kafka init failed! trying to reConnect:" + reTryCount);
 			reConnect();
 		}
 	}
@@ -131,13 +151,13 @@ public class KafkaSendWrapper implements Cloneable {
 	private void connect() throws Exception {
 		this.topic = producerConfig.getTopic();
 		if (null == topic || topic.length() == 0) {
-			log.error("Producer init faield ,topic is null");
+			LOG.error("Producer init faield ,topic is null");
 			throw new Exception("Kafka Producer init failed,this topic is null!!!");
 		}
 
 		String zookeeperUrl = producerConfig.getZookeeperUrl();
 		if (null == zookeeperUrl || zookeeperUrl.length() == 0) {
-			log.error("Producer init faield ,topic is null");
+			LOG.error("Producer init faield ,topic is null");
 			throw new Exception("Kafka Producer init failed,this topic is null!!!");
 		}
 		String brokers = KafkaMetaUtils.getBrokers(zookeeperUrl);
@@ -166,7 +186,7 @@ public class KafkaSendWrapper implements Cloneable {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("KafkaSendWrapper [producerRecord=");
+		builder.append("KafkaSyncSendWrapper [producerRecord=");
 		builder.append(producerRecord);
 		builder.append(", producer=");
 		builder.append(producer);
@@ -174,10 +194,6 @@ public class KafkaSendWrapper implements Cloneable {
 		builder.append(producerConfig);
 		builder.append(", partitionInfos=");
 		builder.append(partitionInfos);
-		builder.append(", future=");
-		builder.append(future);
-		builder.append(", recordMetadata=");
-		builder.append(recordMetadata);
 		builder.append(", props=");
 		builder.append(props);
 		builder.append(", topic=");
