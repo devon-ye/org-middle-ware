@@ -23,10 +23,10 @@ import org.slf4j.LoggerFactory;
  * @author Devonmusa
  * @date 2017年4月6日
  */
-public class KafkaSendWrapper {
-	
+public class KafkaSendWrapper implements Cloneable {
+
 	private static final Logger log = LoggerFactory.getLogger(KafkaSendWrapper.class);
-	
+
 	private static final int CLOSE_WAIT_TIMEMS = 10;
 
 	private ProducerRecord<MessageHeader, byte[]> producerRecord;
@@ -34,7 +34,7 @@ public class KafkaSendWrapper {
 	private KafkaProducerConfig producerConfig;
 	private List<PartitionInfo> partitionInfos = new ArrayList<>();
 	private Future<RecordMetadata> future;
-	private RecordMetadata recordMetadata;	
+	private RecordMetadata recordMetadata;
 	private Properties props;
 	private String topic;
 	private int reTryCount = 0;
@@ -44,12 +44,23 @@ public class KafkaSendWrapper {
 		try {
 			init();
 		} catch (Exception e) {
-			log.error(" init() failed!!! Exception:" + reTryCount);
-			e.printStackTrace();
+			log.error(" init() failed!!! Exception:" + e + reTryCount);
 		}
 	}
 
-	public void send(ProducerRecordWrapper producerRecordWrapper) throws Exception {
+	public KafkaSendWrapper clone() {
+		Object object = null;
+		try {
+			object = super.clone();
+			return (KafkaSendWrapper) object;
+		} catch (CloneNotSupportedException e) {
+			log.error(" clone() failed!!! Exception:" + e);
+			return null;
+		}
+
+	}
+
+	public  void send(ProducerRecordWrapper producerRecordWrapper) {
 		producerRecord = producerRecordWrapper.getProducerRecord();
 		if (producerRecord == null) {
 			return;
@@ -57,25 +68,24 @@ public class KafkaSendWrapper {
 		producerRecord.partition();
 		try {
 			future = producer.send(producerRecord, new Callback() {
-				
+
 				@Override
 				public void onCompletion(RecordMetadata metadata, Exception exception) {
-					if(exception != null || metadata == null){
-						System.out.println("e:" +exception + "metadata:" + metadata);
+					if (exception != null || metadata == null) {
+						System.out.println("e:" + exception + "metadata:" + metadata);
 					}
-					
+
 				}
 			});
-		
-			log.info("send producerRecord:" + producerRecord);
 			recordMetadata = future.get();
-			if(recordMetadata != null){
-				
-			}
-		//	int patitionId = recordMetadata.partition();
-		//	long timeTamp = recordMetadata.timestamp();
+//			if (recordMetadata != null) {
+//				log.info("response recordMetadata=" + recordMetadata);
+//			}
+
 		} catch (Exception e) {
-			log.error("Exception:" +e ) ;
+			// int patitionId = recordMetadata.partition();
+			// long timeTamp = recordMetadata.timestamp();
+			log.error("Exception:" + e + ", future =" + future);
 		}
 
 	}
@@ -114,7 +124,7 @@ public class KafkaSendWrapper {
 	}
 
 	private void connect() throws Exception {
-		 this.topic = producerConfig.getTopic();
+		this.topic = producerConfig.getTopic();
 		if (null == topic || topic.length() == 0) {
 			log.error("Producer init faield ,topic is null");
 			throw new Exception("Kafka Producer init failed,this topic is null!!!");
@@ -131,20 +141,45 @@ public class KafkaSendWrapper {
 		props.put(KafkaConstant.TOPIC_NAME, topic);
 		props.put("acks", "all");
 		props.put("retries", 0);
-		props.put("batch.size", 16384);
+		props.put("batch.size", 384);
 		props.put("linger.ms", 1);
 		props.put("buffer.memory", 33554432);
-		props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-		props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+		props.put("key.serializer", "org.kafka.codec.MessageHeaderEncode");
+		props.put("value.serializer", "org.apache.kafka.common.serialization.ByteArraySerializer");
 		producer = new KafkaProducer<MessageHeader, byte[]>(props);
 	}
-	
+
 	public List<PartitionInfo> getPartitionInfos() {
-		if(producer != null){
+		if (producer != null) {
 			partitionInfos = producer.partitionsFor(topic);
 			return partitionInfos;
-		}else{
+		} else {
 			return partitionInfos;
 		}
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("KafkaSendWrapper [producerRecord=");
+		builder.append(producerRecord);
+		builder.append(", producer=");
+		builder.append(producer);
+		builder.append(", producerConfig=");
+		builder.append(producerConfig);
+		builder.append(", partitionInfos=");
+		builder.append(partitionInfos);
+		builder.append(", future=");
+		builder.append(future);
+		builder.append(", recordMetadata=");
+		builder.append(recordMetadata);
+		builder.append(", props=");
+		builder.append(props);
+		builder.append(", topic=");
+		builder.append(topic);
+		builder.append(", reTryCount=");
+		builder.append(reTryCount);
+		builder.append("]");
+		return builder.toString();
 	}
 }

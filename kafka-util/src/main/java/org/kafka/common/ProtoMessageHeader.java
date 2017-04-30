@@ -1824,7 +1824,8 @@ public final class ProtoMessageHeader {
       internal_static_kafka_util_MessageHeader_AttributeEntry_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_kafka_util_MessageHeader_AttributeEntry_AttributeMapEntry_descriptor;
-  private static final 
+  @SuppressWarnings("unused")
+private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_kafka_util_MessageHeader_AttributeEntry_AttributeMapEntry_fieldAccessorTable;
 

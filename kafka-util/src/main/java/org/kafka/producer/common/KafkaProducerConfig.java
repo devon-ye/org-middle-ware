@@ -2,10 +2,6 @@ package org.kafka.producer.common;
 
 import java.util.Properties;
 
-import org.kafka.producer.async.KafkaAsyncProducer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
 *@see 
 *@author Devonmusa
@@ -13,7 +9,7 @@ import org.slf4j.LoggerFactory;
 */
 public class KafkaProducerConfig {
 	
-	private static final Logger log = LoggerFactory.getLogger(KafkaProducerConfig.class);
+//	private static final Logger LOG = LoggerFactory.getLogger(KafkaProducerConfig.class);
 
 	
 	private String topic;

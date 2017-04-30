@@ -2,8 +2,6 @@ package org.kafka.common;
 
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
 *@Describetion
@@ -11,7 +9,7 @@ import org.slf4j.LoggerFactory;
 *@date 2017年4月1日
 */
 public class MessageHeader {
-	private static final Logger LOG = LoggerFactory.getLogger(MessageHeader.class);
+//	private static final Logger LOG = LoggerFactory.getLogger(MessageHeader.class);
 	/**
 	 * 可用Builder构建器替代下面的多参构造方法
 	 * @author devonmusa
@@ -78,7 +76,7 @@ public class MessageHeader {
 	private int type;
 	private long offset;
 	private long timestamp;
-	private int partitionId;
+	private int partitionId = -1;
 	private int producerId;
 	private Map<String, String> attributeMap;
 	
@@ -89,9 +87,10 @@ public class MessageHeader {
 		this.type = type;
 	}
 	
-	public MessageHeader(long key,int partition, int type) {
+	public MessageHeader(long key,int partitionId, int type) {
 		this.key = key;
 		this.type = type;
+		this.partitionId = partitionId;
 	}
 	
 	public MessageHeader(long key, int type, Map<String, String> attributeMap) {

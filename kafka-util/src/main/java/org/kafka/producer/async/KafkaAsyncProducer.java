@@ -1,5 +1,6 @@
 package org.kafka.producer.async;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,10 +25,12 @@ import org.slf4j.LoggerFactory;
  */
 public class KafkaAsyncProducer extends KafkaSenderStrategy {
 
-	private static final Logger log = LoggerFactory.getLogger(KafkaAsyncProducer.class);
+	private static final Logger LOG = LoggerFactory.getLogger(KafkaAsyncProducer.class);
 
-	private LinkedTransferQueue<ProducerRecordWrapper> linkedTransferQueue;
+	private volatile LinkedTransferQueue<ProducerRecordWrapper> linkedTransferQueue;
 	private ProducerRecordWrapper producerRecordWrapper;
+	private final List<SendDataThread> sendDataThreads = new ArrayList<>();
+	private SendDataThread sendDataThread;
 	private List<PartitionInfo> partitionInfos;
 	private KafkaSendWrapper sendWrapper;
 	private String topic;
@@ -36,7 +39,7 @@ public class KafkaAsyncProducer extends KafkaSenderStrategy {
 
 	public KafkaAsyncProducer(KafkaProducerConfig producerConfig) {
 		if (producerConfig == null) {
-			log.error("KafkaAsyncProducer instaned fail, Exception:" + producerConfig);
+			LOG.error("KafkaAsyncProducer instaned fail, Exception:" + producerConfig);
 			return;
 		}
 
@@ -46,7 +49,7 @@ public class KafkaAsyncProducer extends KafkaSenderStrategy {
 			topic = producerConfig.getTopic();
 			producerRecordWrapper = new ProducerRecordWrapper(topic, partitionInfos);
 		} catch (Exception e) {
-			log.error("KafkaAsyncProducer instaned fail, Exception:" + producerConfig);
+			LOG.error("KafkaAsyncProducer instaned fail, Exception:" + producerConfig);
 		}
 	}
 
@@ -55,24 +58,58 @@ public class KafkaAsyncProducer extends KafkaSenderStrategy {
 		try {
 			producerRecordWrapper = producerRecordWrapper.getProducerRecordWrapper(header, data);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error("send before constract producerRecordWrapper  is null ");
 		}
-
 		int partitionId = producerRecordWrapper.getPartitionId();
 
 		linkedTransferQueue = PARTITION_SENDQUEU_MAP.get(partitionId);
+		if(linkedTransferQueue != null) {
+			linkedTransferQueue.put(producerRecordWrapper);
+		}
 		if (linkedTransferQueue == null) {
 			linkedTransferQueue = new LinkedTransferQueue<>();
 			PARTITION_SENDQUEU_MAP.put(partitionId, linkedTransferQueue);
-			SendDataThread sendDataThread = new SendDataThread(linkedTransferQueue);
+			sendWrapper = this.sendWrapper.clone();
+			
+			sendDataThread = new SendDataThread(linkedTransferQueue, sendWrapper);
+			sendDataThread.setName("sendData-" + partitionId);
 			sendDataThread.start();
+			sendDataThreads.add(sendDataThread);
+			linkedTransferQueue.put(producerRecordWrapper);
 		}
-		linkedTransferQueue.put(producerRecordWrapper);
+		
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void close() {
-		sendWrapper.close();
+		int queueSize = sendDataThreads.size();
+		for(int i = 0; i < queueSize; i++){
+			sendDataThread= sendDataThreads.get(i);
+			if(sendDataThread.getQueueSize() == 0) {
+				sendDataThread.dispose();
+				sendDataThreads.remove(sendDataThread);
+				queueSize = sendDataThreads.size();
+				LOG.info(" Thread close info, " +sendDataThread.currentThread() + "is stop, will need to close thread=" + sendDataThreads);
+			}else if(queueSize != 0){
+				i=0;
+			}else{
+				break;
+			}
+		}
 
+//		for(SendDataThread sendDataThread:sendDataThreads) {
+//			int queueSize = sendDataThreads.size();
+//			if(sendDataThread.getQueueSize() == 0) {
+//				sendDataThread.dispose();
+//				sendDataThreads.remove(sendDataThread);
+//			}else if(queueSize != 0){
+//				continue;
+//			}else{
+//				break;
+//			}
+//		}
+		
+		sendWrapper.close();
 	}
 }

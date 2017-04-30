@@ -12,28 +12,38 @@ import org.slf4j.LoggerFactory;
  * @date 2017年4月26日
  */
 public class SendDataThread extends Thread {
-	
-	private Logger log = LoggerFactory.getLogger(SendDataThread.class);
+
+	private Logger LOG = LoggerFactory.getLogger(SendDataThread.class);
 
 	private LinkedTransferQueue<ProducerRecordWrapper> linkedTransferQueue;
 	private ProducerRecordWrapper producerRecordWrapper;
 	private KafkaSendWrapper kafkaSendWrapper;
+	private int queueSize;
+	private volatile boolean isRunning = false;
 
-	public SendDataThread(LinkedTransferQueue<ProducerRecordWrapper> linkedTransferQueue) {
+	public SendDataThread(LinkedTransferQueue<ProducerRecordWrapper> linkedTransferQueue, KafkaSendWrapper kafkaSendWrapper) {
 		this.linkedTransferQueue = linkedTransferQueue;
-	}
-
-	public void init(KafkaSendWrapper kafkaSendWrapper) {
+		this.isRunning = true;
 		this.kafkaSendWrapper = kafkaSendWrapper;
 	}
 
-	public void run() {
-		try {
-			producerRecordWrapper = linkedTransferQueue.poll(100, TimeUnit.MILLISECONDS);
-			send();
-
-		} catch (InterruptedException e) {
-			log.info("run Exception:" + e);
+	@Override
+	public void run()  {
+		while (isRunning) {
+			queueSize = linkedTransferQueue.size();
+			try {
+				producerRecordWrapper = linkedTransferQueue.poll(100,TimeUnit.MILLISECONDS);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (producerRecordWrapper != null) {
+			//	LOG.info("currntThreadName=" + Thread.currentThread() + ",queueSize=" + queueSize + ", isRunning=" + isRunning);
+				send();
+			} 
+//			else {
+//				LOG.info("currntThreadName=" + Thread.currentThread() + ",linkedTransferQueue=" + linkedTransferQueue + "producerRecordWrapper=" + producerRecordWrapper);
+//			}
 		}
 	}
 
@@ -41,11 +51,16 @@ public class SendDataThread extends Thread {
 		try {
 			kafkaSendWrapper.send(producerRecordWrapper);
 		} catch (Exception e) {
-			log.info("send Exception:" + e);
+			LOG.info("send Exception:" + e + "kafkaSendWrapper=" + kafkaSendWrapper);
 		}
 	}
+	
 
 	public void dispose() {
-		
+		isRunning = false;
+	}
+	
+	public int getQueueSize() {
+		return queueSize;
 	}
 }

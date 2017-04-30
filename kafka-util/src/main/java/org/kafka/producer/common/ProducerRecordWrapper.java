@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ProducerRecordWrapper {
 	
-	private static final Logger log = LoggerFactory.getLogger(ProducerRecordWrapper.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ProducerRecordWrapper.class);
 
 	private ProducerRecord<MessageHeader, byte[]> producerRecord;
 	private int partitionSize;
@@ -29,19 +29,20 @@ public class ProducerRecordWrapper {
 
 	public ProducerRecordWrapper getProducerRecordWrapper(MessageHeader messageHeader, byte[] value) throws Exception {
 		if (topic == null) {
-			log.error("getProducerRecordWrapper, topic is null!!!");
+			LOG.error("getProducerRecordWrapper, topic is null!!!");
 			throw new Exception("topic is null!!!");
 		}
 
 		long key = messageHeader.getKey();
 		int tempPartitionId = messageHeader.getPartitionId();
 		if (tempPartitionId == -1 && partitionSize != 0) {
-			tempPartitionId = (int) (key / partitionSize);
+			tempPartitionId = (int) (key % partitionSize);
 		}
-		this.partitionId = tempPartitionId;
+		setPartitionId(tempPartitionId);
 		long timestamp = System.currentTimeMillis();
 		producerRecord = new ProducerRecord<MessageHeader, byte[]>(topic, partitionId, timestamp, messageHeader, value);
 		return this;
+		
 	}
 
 	public ProducerRecord<MessageHeader, byte[]> getProducerRecord() {

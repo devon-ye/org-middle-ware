@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 */
 public class KafkaConstant {
 	
-	private static final Logger log = LoggerFactory.getLogger(KafkaSendWrapper.class);
+	private static final Logger LOG = LoggerFactory.getLogger(KafkaSendWrapper.class);
 
 	/**
 	 * producer config
