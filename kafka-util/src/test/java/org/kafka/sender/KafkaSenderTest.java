@@ -46,7 +46,7 @@ public class KafkaSenderTest {
 	public void syncSendTest() {
 		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaExecuteMode.Sync);
 		int i = 0;
-		while (i < 10000) {
+		while (i < 100000) {
 			header = new MessageHeader(i, 100);
 			byte[] data = ("message" + i).getBytes();
 			kafkaSender.send(header, data);
@@ -60,7 +60,7 @@ public class KafkaSenderTest {
 	public void asyncSendTest() {
 		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaExecuteMode.Async);
 		int i = 0;
-		while (i < 1000) {
+		while (i < 100000) {
 			header = new MessageHeader(i, 100);
 		//	header = new MessageHeader(i, 6, 1);
 			byte[] data = ("message" + i).getBytes();

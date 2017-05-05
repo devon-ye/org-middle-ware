@@ -7,7 +7,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.kafka.clients.CommonClientConfigs;
-import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
@@ -22,11 +21,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-*
-*@author Devonmusa
-*@date   2017年4月30日
-*/
-public class KafkaAsyncSendWrapper {
+ *
+ * @author Devonmusa
+ * @date 2017年4月30日
+ */
+public class KafkaAsyncSendWrapper extends KafkaSendWrapper implements Cloneable {
+
 	private static final Logger LOG = LoggerFactory.getLogger(KafkaAsyncSendWrapper.class);
 
 	private static final int CLOSE_WAIT_TIMEMS = 10;
@@ -35,7 +35,7 @@ public class KafkaAsyncSendWrapper {
 	private KafkaProducer<MessageHeader, byte[]> producer;
 	private KafkaProducerConfig producerConfig;
 	private List<PartitionInfo> partitionInfos = new ArrayList<>();
-	private Future<RecordMetadata> future;
+	private Future<RecordMetadata> sendMessagefuture;
 	private RecordMetadata recordMetadata;
 	private Properties props;
 	private String topic;
@@ -50,11 +50,11 @@ public class KafkaAsyncSendWrapper {
 		}
 	}
 
-	public KafkaSendWrapper clone() {
+	public KafkaAsyncSendWrapper clone() {
 		Object object = null;
 		try {
 			object = super.clone();
-			return (KafkaSendWrapper) object;
+			return (KafkaAsyncSendWrapper) object;
 		} catch (CloneNotSupportedException e) {
 			LOG.error(" clone() failed!!! Exception:" + e);
 			return null;
@@ -62,30 +62,17 @@ public class KafkaAsyncSendWrapper {
 
 	}
 
-	public  void send(ProducerRecordWrapper producerRecordWrapper) {
+	public void send(ProducerRecordWrapper producerRecordWrapper) {
 		producerRecord = producerRecordWrapper.getProducerRecord();
 		if (producerRecord == null) {
 			return;
 		}
 		producerRecord.partition();
 		try {
-			future = producer.send(producerRecord, new Callback() {
-
-				@Override
-				public void onCompletion(RecordMetadata metadata, Exception exception) {
-					
-					if (exception != null || metadata == null) {
-						LOG.error("e:" + exception + "metadata:" + metadata);
-					}else{
-						LOG.info("send success message ! metadata=" + metadata);
-					}
-
-				}
-			});
-
-
+			sendMessagefuture = producer.send(producerRecord);
+			producerRecordWrapper.setFuture(sendMessagefuture);
 		} catch (Exception e) {
-			LOG.error("Exception:" + e + ", future =" + future);
+			LOG.error("Exception:" + e + ", sendMessagefuture =" + sendMessagefuture);
 		}
 
 	}
@@ -101,9 +88,9 @@ public class KafkaAsyncSendWrapper {
 				this.connect();
 			}
 		} catch (Exception e) {
-			LOG.error("kafka init  failed " + 3000 * reTryCount + "s after, prepare to reConnect!");
+			LOG.error("kafka init failed " + 3000 * reTryCount + "s after, prepare to reConnect!");
 			reConnect();
-			LOG.error("kafka init  reConnect:" + reTryCount + " failed  end!!!");
+			LOG.error("kafka init reConnect:" + reTryCount + " failed end!!!");
 		} finally {
 			reTryCount = 0;
 		}
@@ -169,8 +156,6 @@ public class KafkaAsyncSendWrapper {
 		builder.append(producerConfig);
 		builder.append(", partitionInfos=");
 		builder.append(partitionInfos);
-		builder.append(", future=");
-		builder.append(future);
 		builder.append(", recordMetadata=");
 		builder.append(recordMetadata);
 		builder.append(", props=");

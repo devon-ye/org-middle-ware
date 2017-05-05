@@ -1,10 +1,5 @@
 package org.kafka.producer.sync;
 
-/**
-*
-*@author Devonmusa
-*@date   2017年4月30日
-*/
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,17 +15,23 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.PartitionInfo;
 import org.kafka.common.MessageHeader;
 import org.kafka.producer.common.KafkaProducerConfig;
+import org.kafka.producer.common.KafkaSendWrapper;
 import org.kafka.producer.common.ProducerRecordWrapper;
 import org.kafka.util.KafkaConstant;
 import org.kafka.util.KafkaMetaUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class KafkaSyncSendWrapper implements Cloneable {
+/**
+ *
+ * @author Devonmusa
+ * @date 2017年4月30日
+ */
+public class KafkaSyncSendWrapper extends KafkaSendWrapper implements Cloneable {
 
 	private static final Logger LOG = LoggerFactory.getLogger(KafkaSyncSendWrapper.class);
-	
-	private Map<Long,ProducerRecordWrapper> reSendMessageCache = new HashMap<>();
+
+	private Map<Long, ProducerRecordWrapper> reSendMessageCache = new HashMap<>();
 	private List<PartitionInfo> partitionInfos = new ArrayList<>();
 	private static final int CLOSE_WAIT_TIMEMS = 10;
 	private static final int MAX_SEND_TIMES = 5;
@@ -38,7 +39,7 @@ public class KafkaSyncSendWrapper implements Cloneable {
 	private ProducerRecord<MessageHeader, byte[]> producerRecord;
 	private KafkaProducer<MessageHeader, byte[]> producer;
 	private KafkaProducerConfig producerConfig;
-	
+
 	private boolean sendResult = false;
 	private Properties props;
 	private String topic;
@@ -66,7 +67,7 @@ public class KafkaSyncSendWrapper implements Cloneable {
 	}
 
 	public void send(ProducerRecordWrapper producerRecordWrapper) {
-		
+
 		long key = producerRecordWrapper.getProducerRecord().key().getKey();
 		reSendMessageCache.put(key, producerRecordWrapper);
 		producerRecord = producerRecordWrapper.getProducerRecord();
@@ -91,28 +92,28 @@ public class KafkaSyncSendWrapper implements Cloneable {
 			reSend(key);
 
 		} finally {
-			if(sendResult){
-				LOG.info("send message success! producerRecord=" + producerRecord + ", offset=" + offset + ", keySize=" + keySize + ", valueSize" + valueSize);
+			if (sendResult) {
+				LOG.info("send message success! producerRecord=" + producerRecord + ", offset=" + offset + ", keySize=" + keySize + ", valueSize=" + valueSize);
 			}
-			if(reTryCount> 0 && reTryCount <= MAX_SEND_TIMES ){
+			if (reTryCount > 0 && reTryCount <= MAX_SEND_TIMES) {
 				reTryCount = 0;
 				reSendMessageCache.remove(key);
 			}
-			
+
 		}
 
 	}
 
 	public void reSend(long key) {
-		reTryCount ++;
-		if(reTryCount > MAX_SEND_TIMES){
-			sendResult  = false;
+		reTryCount++;
+		if (reTryCount > MAX_SEND_TIMES) {
+			sendResult = false;
 			return;
 		}
-		ProducerRecordWrapper	producerRecordWrapper = reSendMessageCache.get(key);		
+		ProducerRecordWrapper producerRecordWrapper = reSendMessageCache.get(key);
 		LOG.info("reSendding  message ! reTryCount=" + reTryCount);
 		send(producerRecordWrapper);
-		
+
 	}
 
 	public void close() {
@@ -186,7 +187,7 @@ public class KafkaSyncSendWrapper implements Cloneable {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("KafkaSyncSendWrapper [producerRecord=");
+		builder.append("KafkaSendWrapper [producerRecord=");
 		builder.append(producerRecord);
 		builder.append(", producer=");
 		builder.append(producer);
@@ -203,4 +204,5 @@ public class KafkaSyncSendWrapper implements Cloneable {
 		builder.append("]");
 		return builder.toString();
 	}
+
 }

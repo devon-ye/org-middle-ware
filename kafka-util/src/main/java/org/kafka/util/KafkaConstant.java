@@ -1,6 +1,5 @@
 package org.kafka.util;
 
-import org.kafka.producer.common.KafkaSendWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +10,7 @@ import org.slf4j.LoggerFactory;
 */
 public class KafkaConstant {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(KafkaSendWrapper.class);
+	private static final Logger LOG = LoggerFactory.getLogger(KafkaConstant.class);
 
 	/**
 	 * producer config
