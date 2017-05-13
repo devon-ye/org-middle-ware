@@ -6,30 +6,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-*
-*@author Devonmusa
-*@date   2017年4月27日
-*/
+ *
+ * @author Devonmusa
+ * @date 2017年4月27日
+ */
 public class KafkaAsyncConsumer extends KafkaReceiveStrategegy {
 	private static final Logger LOG = LoggerFactory.getLogger(KafkaAsyncConsumer.class);
-	private KafkaConsumerConfig consumerConfig;
+
+	private KafkaAsyncReceiverWrapper kafkaAsyncReceiverWrapper;
+
 	public KafkaAsyncConsumer(KafkaConsumerConfig conumerConfig) {
-		this.consumerConfig = consumerConfig;
+		kafkaAsyncReceiverWrapper = new KafkaAsyncReceiverWrapper(conumerConfig);
 	}
-	
+
 	@Override
 	public void receive() {
-		// TODO Auto-generated method stub
-
+		kafkaAsyncReceiverWrapper.receive();
 	}
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
-
+		kafkaAsyncReceiverWrapper.close();
 	}
-	/**
-	*@function:
-	*
-	*/
+
 }

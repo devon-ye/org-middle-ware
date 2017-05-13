@@ -22,13 +22,12 @@ public class KafkaSyncConsumer extends KafkaReceiveStrategegy {
 	
 	@Override
 	public void receive() {
-		// TODO Auto-generated method stub
+		
 
 	}
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
 
 	}
 	
