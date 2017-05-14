@@ -21,7 +21,9 @@ public class KafkaAsyncConsumer extends KafkaReceiveStrategegy {
 
 	@Override
 	public void receive() {
+		LOG.info("Consumer start recevier...");
 		kafkaAsyncReceiverWrapper.receive();
+	
 	}
 
 	@Override

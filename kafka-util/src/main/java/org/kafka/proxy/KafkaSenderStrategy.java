@@ -9,7 +9,7 @@ import org.kafka.common.MessageHeader;
 */
 public abstract class KafkaSenderStrategy {
 	 
-	public abstract void send(MessageHeader header,byte[] data);
+	public abstract void send(MessageHeader header,byte[] value);
 	
 	public abstract void close();
 }

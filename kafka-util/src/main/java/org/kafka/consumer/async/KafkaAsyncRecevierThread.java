@@ -14,7 +14,7 @@ public class KafkaAsyncRecevierThread extends  Thread {
 
 	private KafkaConsumer<MessageHeader, byte[]> kafkaConsumer;
 	private ConsumerRecords<MessageHeader, byte[]> consumerRecords;
-	public volatile boolean isRunning = false;
+	private volatile boolean isRunning = false;
 	
 	public KafkaAsyncRecevierThread(KafkaAsyncReceiverWrapper asyncReceiverWrapper){
 		this.kafkaConsumer = asyncReceiverWrapper.getKafkaConsumer();

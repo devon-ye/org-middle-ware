@@ -33,4 +33,9 @@ public class KafkaConstant {
 	public static final String AUTO_COMMIT_INTERVAL_MS = "auto.commit.interval.ms";
 	public static final String CONSUMER_THREAD_NUM = "consumer.thread.num";
 	public static final String HEADER_DECODE_CLASS = "header.decode.class";
+	
+	/**
+	 * server config
+	 */
+	//public static final String 
 }

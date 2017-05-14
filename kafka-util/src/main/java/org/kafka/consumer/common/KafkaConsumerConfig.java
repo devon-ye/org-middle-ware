@@ -21,7 +21,7 @@ public class KafkaConsumerConfig {
 	private static KafkaConsumerConfig instance = new KafkaConsumerConfig();
 	
 	private KafkaConsumerConfig(){
-		
+		init();
 	}
 	
 	public KafkaConsumerConfig getInstance() {
@@ -62,6 +62,21 @@ public class KafkaConsumerConfig {
 
 	public void addProperty(String key,String value) {
 		properties.put(key, value);
+	}
+	
+	private void init() {
+		
+	}
+	
+	private Properties getConsumerConfig() {
+		Properties props = new Properties();
+		
+		//TODO read  default consumer config
+		
+		if(properties != null) {
+			props.putAll(properties);
+		}
+		return props;
 	}
 	
 }
