@@ -1,7 +1,7 @@
 package org.kafka.proxy;
 
 
-import org.kafka.common.KafkaExecuteMode;
+import org.kafka.common.KafkaExecuteStrategy;
 import org.kafka.consumer.async.KafkaAsyncConsumer;
 import org.kafka.consumer.common.KafkaConsumerConfig;
 import org.kafka.consumer.sync.KafkaSyncConsumer;
@@ -19,7 +19,7 @@ public class KafkaReceiveProxy {
 	
 	private KafkaReceiveStrategegy receiveStrategegy;
 	
-	public KafkaReceiveProxy(KafkaConsumerConfig config, KafkaExecuteMode executeMode) {
+	public KafkaReceiveProxy(KafkaConsumerConfig config, KafkaExecuteStrategy executeMode) {
 		try {
 			switch (executeMode) {
 			case Async:

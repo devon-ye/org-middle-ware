@@ -29,6 +29,7 @@ public class KafkaAsyncConsumer extends KafkaReceiveStrategegy {
 	@Override
 	public void close() {
 		kafkaAsyncReceiverWrapper.close();
+		LOG.info("Consumer finished closed...");
 	}
 
 }

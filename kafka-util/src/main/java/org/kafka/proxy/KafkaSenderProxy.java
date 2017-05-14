@@ -1,7 +1,7 @@
 package org.kafka.proxy;
 
 
-import org.kafka.common.KafkaExecuteMode;
+import org.kafka.common.KafkaExecuteStrategy;
 import org.kafka.common.MessageHeader;
 import org.kafka.producer.async.KafkaAsyncProducer;
 import org.kafka.producer.common.KafkaProducerConfig;
@@ -20,7 +20,7 @@ public class KafkaSenderProxy {
 	
 	private KafkaSenderStrategy senderStrategy;
 
-	public KafkaSenderProxy(KafkaProducerConfig config, KafkaExecuteMode executeMode) {
+	public KafkaSenderProxy(KafkaProducerConfig config, KafkaExecuteStrategy executeMode) {
 		try {
 			switch (executeMode) {
 			case Async:

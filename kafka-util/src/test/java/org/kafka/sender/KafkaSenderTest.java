@@ -7,7 +7,7 @@ import java.util.Properties;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.kafka.common.KafkaExecuteMode;
+import org.kafka.common.KafkaExecuteStrategy;
 import org.kafka.common.MessageHeader;
 import org.kafka.producer.common.KafkaProducerConfig;
 import org.kafka.proxy.KafkaSenderProxy;
@@ -44,7 +44,7 @@ public class KafkaSenderTest {
 
 	@Test
 	public void syncSendTest() {
-		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaExecuteMode.Sync);
+		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaExecuteStrategy.Sync);
 		int i = 0;
 		while (i < 100000) {
 			header = new MessageHeader(i, 100);
@@ -58,7 +58,7 @@ public class KafkaSenderTest {
 
 	@Test
 	public void asyncSendTest() {
-		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaExecuteMode.Async);
+		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaExecuteStrategy.Async);
 		int i = 0;
 		while (i < 100000) {
 			header = new MessageHeader(i, 100);
