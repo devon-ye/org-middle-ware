@@ -14,16 +14,17 @@ import org.slf4j.LoggerFactory;
 public class KafkaSyncConsumer extends KafkaReceiveStrategegy {
 	private static final Logger LOG = LoggerFactory.getLogger(KafkaAsyncConsumer.class);
 	
-	private KafkaConsumerConfig consumerConfig;
+	private KafkaSyncRecevier kafkaSyncRecevier;
 	
 	public KafkaSyncConsumer(KafkaConsumerConfig consumerConfig) {
-		this.consumerConfig = consumerConfig;
+		kafkaSyncRecevier = new KafkaSyncRecevier(consumerConfig);
+		LOG.info(" init finshed");
 	}
 	
 	@Override
 	public void receive() {
 		
-
+		kafkaSyncRecevier.receive();
 	}
 
 	@Override

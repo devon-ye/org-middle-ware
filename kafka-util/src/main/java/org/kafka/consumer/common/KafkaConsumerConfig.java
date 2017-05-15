@@ -65,7 +65,7 @@ public class KafkaConsumerConfig {
 	}
 	
 	private void init() {
-		
+		getConsumerConfig();
 	}
 	
 	private Properties getConsumerConfig() {
@@ -78,5 +78,23 @@ public class KafkaConsumerConfig {
 		}
 		return props;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("KafkaConsumerConfig [offSet=");
+		builder.append(offSet);
+		builder.append(", topic=");
+		builder.append(topic);
+		builder.append(", partitionId=");
+		builder.append(partitionId);
+		builder.append(", properties=");
+		builder.append(properties);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
+	
 	
 }

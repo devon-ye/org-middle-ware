@@ -11,5 +11,9 @@ import org.slf4j.LoggerFactory;
 */
 public class MesssageListener implements IListener {
 	private static final Logger LOG = LoggerFactory.getLogger(MesssageListener.class);
+	
+	public MesssageListener() {
+		LOG.info("costrctrue  method init!!!");
+	}
 
 }

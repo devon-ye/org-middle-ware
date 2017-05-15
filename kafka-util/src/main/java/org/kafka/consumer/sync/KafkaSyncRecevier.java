@@ -1,4 +1,7 @@
 package org.kafka.consumer.sync;
+
+import org.kafka.consumer.common.KafkaConsumerConfig;
+
 /**
 *
 *@author Devonmusa
@@ -6,4 +9,11 @@ package org.kafka.consumer.sync;
 */
 public class KafkaSyncRecevier {
 	
+	public KafkaSyncRecevier(KafkaConsumerConfig consumerConfi){
+		
+	}
+	
+	public void receive(){
+		
+	}
 }
