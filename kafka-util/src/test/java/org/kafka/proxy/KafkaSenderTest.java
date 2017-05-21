@@ -1,4 +1,4 @@
-package org.kafka.sender;
+package org.kafka.proxy;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
