@@ -40,7 +40,7 @@ public class KafkaConstant {
 	public static final String BROKER_SERVERS = "bootstrap.servers";
 	
 	public static void initProducerConfig(){
-		
+		LOG.info("initProducerConfig start");
 	}
 	
 	public static void initConsumerConfig() {

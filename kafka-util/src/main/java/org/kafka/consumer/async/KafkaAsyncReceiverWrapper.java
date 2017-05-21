@@ -26,14 +26,19 @@ public class KafkaAsyncReceiverWrapper implements Cloneable {
 	
 	private KafkaConsumerConfig consumerConfig;
 	
-	private volatile int reTryCount = 0;
+	private  int reTryCount = 0;
 
 	private final static int MAX_RECONNET_TIMES = 5;
 	
 
 	public KafkaAsyncReceiverWrapper(KafkaConsumerConfig consumerConfig) {
 		this.consumerConfig = consumerConfig;
-		init();
+		try {
+			init();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	protected void receive() {
@@ -48,13 +53,13 @@ public class KafkaAsyncReceiverWrapper implements Cloneable {
 		return kafkaConsumer;
 	}
 
-	private void init() {
+	private void init() throws Exception {
 		connect();
 		getPartitionInfos();
 
 	}
 
-	private void connect() {
+	private void connect() throws Exception {
 		if (kafkaConsumer != null) {
 			kafkaConsumer = null;
 		}
@@ -75,7 +80,12 @@ public class KafkaAsyncReceiverWrapper implements Cloneable {
 			kafkaConsumer = null;
 		}
 		if (reTryCount <= MAX_RECONNET_TIMES) {
-			connect();
+			try {
+				connect();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
 			LOG.error("Kafka Consumer reConncet  " + reTryCount + "  failed");
 		}

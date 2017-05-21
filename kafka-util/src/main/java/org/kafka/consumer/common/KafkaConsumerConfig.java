@@ -83,7 +83,7 @@ public class KafkaConsumerConfig {
 		return properties;
 	}
 	
-	public void put(String key, String value) {
+	public void put(String key, String value) throws Exception {
 		checkProperty(key, value);
 		properties.put(key, value);
 	}
@@ -114,9 +114,9 @@ public class KafkaConsumerConfig {
 		return properties;
 	}
 
-	private void checkProperty(String key, String value) {
+	private void checkProperty(String key, String value) throws Exception{
 		if (key == null || value == null) {
-			new NullPointerException("key=" + key + " ,value=" + value + " is null");
+		//	new NullPointerException("key=" + key + " ,value=" + value + " is null");
 		}
 		return;
 	}
