@@ -37,5 +37,17 @@ public class KafkaConstant {
 	/**
 	 * server config
 	 */
-	//public static final String 
+	public static final String BROKER_SERVERS = "bootstrap.servers";
+	
+	public static void initProducerConfig(){
+		
+	}
+	
+	public static void initConsumerConfig() {
+		
+	}
+	
+	public static void initServerConfig() {
+		
+	}
 }

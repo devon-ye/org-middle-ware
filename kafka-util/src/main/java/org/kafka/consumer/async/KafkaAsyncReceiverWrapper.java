@@ -6,6 +6,8 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.PartitionInfo;
 import org.kafka.common.MessageHeader;
 import org.kafka.consumer.common.KafkaConsumerConfig;
+import org.kafka.util.KafkaConstant;
+import org.kafka.util.KafkaMetaUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,13 +17,19 @@ import org.slf4j.LoggerFactory;
  * @date 2017年5月13日
  */
 public class KafkaAsyncReceiverWrapper implements Cloneable {
-	private final static Logger LOG = LoggerFactory.getLogger(KafkaAsyncReceiverWrapper.class);
-	private KafkaConsumer<MessageHeader, byte[]> kafkaConsumer;
-	private List<PartitionInfo> partitionInfos;
-	private KafkaConsumerConfig consumerConfig;
-	private volatile int reTryCount = 0;
 	
+	private final static Logger LOG = LoggerFactory.getLogger(KafkaAsyncReceiverWrapper.class);
+	
+	private KafkaConsumer<MessageHeader, byte[]> kafkaConsumer;
+	
+	private List<PartitionInfo> partitionInfos;
+	
+	private KafkaConsumerConfig consumerConfig;
+	
+	private volatile int reTryCount = 0;
+
 	private final static int MAX_RECONNET_TIMES = 5;
+	
 
 	public KafkaAsyncReceiverWrapper(KafkaConsumerConfig consumerConfig) {
 		this.consumerConfig = consumerConfig;
@@ -41,15 +49,20 @@ public class KafkaAsyncReceiverWrapper implements Cloneable {
 	}
 
 	private void init() {
-
 		connect();
 		getPartitionInfos();
 
 	}
 
 	private void connect() {
+		if (kafkaConsumer != null) {
+			kafkaConsumer = null;
+		}
+
+		String brokers = KafkaMetaUtils.getBrokers(consumerConfig.getZookeeperUrl());
+		consumerConfig.put(KafkaConstant.BROKER_SERVERS, brokers);
 		try {
-			kafkaConsumer = new KafkaConsumer<>(consumerConfig.getProperties());
+			kafkaConsumer = new KafkaConsumer<>(consumerConfig.getConsumerConfig());
 		} catch (Exception e) {
 			reTryConnect();
 		}
@@ -61,10 +74,10 @@ public class KafkaAsyncReceiverWrapper implements Cloneable {
 		if (kafkaConsumer != null) {
 			kafkaConsumer = null;
 		}
-		if(reTryCount <= MAX_RECONNET_TIMES) {
+		if (reTryCount <= MAX_RECONNET_TIMES) {
 			connect();
-		}else{
-			LOG.error("Kafka Consumer reConncet  +"+reTryCount+"+ failed");
+		} else {
+			LOG.error("Kafka Consumer reConncet  " + reTryCount + "  failed");
 		}
 
 	}

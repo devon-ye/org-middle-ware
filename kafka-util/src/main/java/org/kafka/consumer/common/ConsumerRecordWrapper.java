@@ -1,6 +1,7 @@
-package org.kafka.common;
+package org.kafka.consumer.common;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.kafka.common.MessageHeader;
 
 /**
 *

@@ -19,9 +19,9 @@ public class KafkaReceiveProxy {
 	
 	private KafkaReceiveStrategegy receiveStrategegy;
 	
-	public KafkaReceiveProxy(KafkaConsumerConfig config, KafkaExecuteStrategy executeMode) {
+	public KafkaReceiveProxy(KafkaConsumerConfig config, KafkaExecuteStrategy executeStrategy) {
 		try {
-			switch (executeMode) {
+			switch (executeStrategy) {
 			case Async:
 				setReceiveStrategey(new KafkaAsyncConsumer(config));
 				break;
@@ -32,7 +32,7 @@ public class KafkaReceiveProxy {
 				break;
 			}
 		} catch (Exception e) {
-			LOG.error("KafkaSender Exception:" + e);
+			LOG.error("KafkaReceiver Exception:" + e);
 		}
 	}
 	
