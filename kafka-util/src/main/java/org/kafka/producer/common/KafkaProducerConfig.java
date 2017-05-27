@@ -7,37 +7,38 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.kafka.common.AbstractConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-*@see 
-*@author Devonmusa
-*@date 2017年4月1日
-*/
+ * @see
+ * @author Devonmusa
+ * @date 2017年4月1日
+ */
 public class KafkaProducerConfig {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(KafkaProducerConfig.class);
 
-	
 	private String topic;
-	private String  zookeeperUrl;
-	
+	private String zookeeperUrl;
+
 	private Properties properties = new Properties();
-	
+
 	private static final KafkaProducerConfig producerConfig = new KafkaProducerConfig();
-	 
-	private KafkaProducerConfig(){
+
+	private KafkaProducerConfig() {
 		init();
 	}
-	
+
 	private void init() {
 		getProducerDefaultConfig();
 	}
-	public static KafkaProducerConfig getInstance(){
-			return producerConfig;
+
+	public static KafkaProducerConfig getInstance() {
+		return producerConfig;
 	}
-	
+
 	public String getTopic() {
 		return topic;
 	}
@@ -53,19 +54,19 @@ public class KafkaProducerConfig {
 	public void setZookeeperUrl(String zookeeperUrl) {
 		this.zookeeperUrl = zookeeperUrl;
 	}
-	
+
 	public Properties getProperties() {
 		return properties;
 	}
 
 	public void setProperties(Properties properties) {
-		this.properties = properties;
+		this.properties.putAll(properties);
 	}
 
-	public void addProperty(String key,String value){
+	public void addProperty(String key, String value) {
 		properties.setProperty(key, value);
 	}
-	
+
 	private Properties getProducerDefaultConfig() {
 
 		InputStream inputStream = null;
@@ -80,9 +81,9 @@ public class KafkaProducerConfig {
 			properties.load(inputStream);
 
 		} catch (FileNotFoundException e) {
-			LOG.error("load consumer default config file Exception:" + e);
+			LOG.error("load consumer default config FileNotFoundException:" + e);
 		} catch (IOException e) {
-			LOG.error("load consumer default config file Exception:" + e);
+			LOG.error("load consumer default config file IOException:" + e);
 		}
 
 		return properties;
