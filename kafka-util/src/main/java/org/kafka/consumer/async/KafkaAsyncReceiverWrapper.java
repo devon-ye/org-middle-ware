@@ -20,6 +20,8 @@ public class KafkaAsyncReceiverWrapper implements Cloneable {
 	
 	private final static Logger LOG = LoggerFactory.getLogger(KafkaAsyncReceiverWrapper.class);
 	
+	private KafkaAsyncRecevierThread kafkaAsyncRecevierThread;
+	
 	private KafkaConsumer<MessageHeader, byte[]> kafkaConsumer;
 	
 	private List<PartitionInfo> partitionInfos;
@@ -33,16 +35,12 @@ public class KafkaAsyncReceiverWrapper implements Cloneable {
 
 	public KafkaAsyncReceiverWrapper(KafkaConsumerConfig consumerConfig) {
 		this.consumerConfig = consumerConfig;
-		try {
 			init();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	protected void receive() {
-
+		kafkaAsyncRecevierThread = new KafkaAsyncRecevierThread(this);
+		kafkaAsyncRecevierThread.start();
 	}
 
 	public void close() {
@@ -53,9 +51,15 @@ public class KafkaAsyncReceiverWrapper implements Cloneable {
 		return kafkaConsumer;
 	}
 
-	private void init() throws Exception {
-		connect();
-		getPartitionInfos();
+	private void init() {
+		try{
+			connect();
+		} catch (Exception e) {
+			LOG.info("KafakConsumer init failed! tring reConnect");
+			reTryConnect();	
+		}finally{
+			getPartitionInfos();
+		}
 
 	}
 
@@ -63,7 +67,6 @@ public class KafkaAsyncReceiverWrapper implements Cloneable {
 		if (kafkaConsumer != null) {
 			kafkaConsumer = null;
 		}
-
 		String brokers = KafkaMetaUtils.getBrokers(consumerConfig.getZookeeperUrl());
 		consumerConfig.put(KafkaConstant.BROKER_SERVERS, brokers);
 		try {
@@ -81,10 +84,11 @@ public class KafkaAsyncReceiverWrapper implements Cloneable {
 		}
 		if (reTryCount <= MAX_RECONNET_TIMES) {
 			try {
+				Thread.sleep(3000 * reTryCount);
 				connect();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.error("Kafka Consumer reConncet  " + reTryCount + "  failed");
+				reTryConnect();
 			}
 		} else {
 			LOG.error("Kafka Consumer reConncet  " + reTryCount + "  failed");

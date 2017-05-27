@@ -28,6 +28,7 @@ public class KafkaReceiverTest {
 		props.put("", "");
 		kafkaConsumerConfig =KafkaConsumerConfig.getInstance();
 		kafkaConsumerConfig.setProperties(props);
+		kafkaConsumerConfig.setZookeeperUrl("192.168.1.17:2181");
 		kafkaReceiverProxy = new KafkaReceiveProxy(kafkaConsumerConfig, KafkaExecuteStrategy.Async);
 		
 	}
