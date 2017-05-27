@@ -44,7 +44,7 @@ public class KafkaReceiveProxy {
 		receiveStrategegy.close();
 	}
 	
-	public void setReceiveStrategey(KafkaReceiveStrategegy receiveStrategegy) {
+	private void setReceiveStrategey(KafkaReceiveStrategegy receiveStrategegy) {
 		this.receiveStrategegy = receiveStrategegy;
 	}
 	

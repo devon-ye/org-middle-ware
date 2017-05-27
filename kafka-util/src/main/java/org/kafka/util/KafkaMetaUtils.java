@@ -21,9 +21,9 @@ public class KafkaMetaUtils {
 	
 	private static ZkClient zkClient;
 
-	public static String getBrokers(String zookeeperUrl) {
+	public static String getBrokers(String zookeeperUrls) {
 		StringBuffer sockets = new StringBuffer();
-		zkClient = new ZkClient(zookeeperUrl, 5000);
+		zkClient = new ZkClient(zookeeperUrls, 3000);
 		zkClient.setZkSerializer(new ZkStringSerializer());
 		List<String> brokerIds = zkClient.getChildren("/brokers/ids");
 		String path = "/brokers/ids";
