@@ -5,7 +5,7 @@ option java_outer_classname = "ProtoMessageHeader";
 
 message MessageHeader {
    int64 key = 1;
-  int32 type = 2;
+   int32 type = 2;
    int32  partitionId = 3;
    int64 timestamp = 4;
   int32 producerId =5;
