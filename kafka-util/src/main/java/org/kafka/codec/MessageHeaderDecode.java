@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.apache.kafka.common.serialization.Deserializer;
 import org.kafka.common.MessageHeader;
-import org.kafka.common.NullMessageHeader;
 import org.kafka.common.ProtoMessageHeader;
 
 import org.slf4j.Logger;

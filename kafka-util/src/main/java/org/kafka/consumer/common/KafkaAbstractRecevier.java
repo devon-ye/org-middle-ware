@@ -6,4 +6,13 @@ package org.kafka.consumer.common;
 */
 public abstract class KafkaAbstractRecevier {
 	
+	protected abstract void init();
+	
+	protected abstract void connect();
+	
+	protected abstract void reTryConnect();
+	
+	protected abstract void close();
+	
+	
 }

@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.PartitionInfo;
-import org.kafka.codec.MessageHeaderEncode;
 import org.kafka.common.MessageHeader;
 import org.kafka.consumer.common.KafkaConsumerConfig;
 import org.kafka.util.KafkaConstant;
@@ -14,7 +13,6 @@ import org.kafka.util.KafkaMetaUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import scala.collection.parallel.ParIterableLike.Collect;
 
 /**
  *

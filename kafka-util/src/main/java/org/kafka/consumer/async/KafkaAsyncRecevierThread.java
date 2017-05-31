@@ -28,8 +28,6 @@ public class KafkaAsyncRecevierThread extends  Thread {
 		while(isRunning) {
 			consumerRecords = kafkaConsumer.poll(100);
 			for(ConsumerRecord<MessageHeader, byte[]> consumerRecord:consumerRecords) {
-				
-				//log.info("MessageHeader=" + header + ", value=" + value);
 				MessageHeader header = consumerRecord.key();
 				byte[] value = consumerRecord.value();
 			
