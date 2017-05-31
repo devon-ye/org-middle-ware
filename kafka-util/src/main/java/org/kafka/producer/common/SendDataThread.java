@@ -32,7 +32,6 @@ public class SendDataThread extends Thread {
 			queueSize = linkedTransferQueue.size();
 			try {
 				producerRecordWrapper = linkedTransferQueue.take();
-				LOG.info("linkedTransferQueue=" + linkedTransferQueue + "queueSize=" + queueSize);
 			} catch (InterruptedException e) {
 				LOG.error("currntThreadName=" + Thread.currentThread() + ",queueSize=" + queueSize + ", isRunning=" + isRunning);
 			}

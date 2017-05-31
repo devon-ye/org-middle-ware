@@ -44,7 +44,6 @@ public class MessageHeaderDecode implements Deserializer<MessageHeader> {
 				Map<String, String> attributeMap = new HashMap<String, String>();
 				List<ProtoMessageHeader.MessageHeader.AttributeEntry> attributeEntries = value.getAttributeEntryList();
 				for (ProtoMessageHeader.MessageHeader.AttributeEntry entry : attributeEntries) {
-
 					attributeMap.putAll(entry.getAttributeMapMap());
 				}
 				messageHeader.setAttributeMap(attributeMap);
@@ -55,7 +54,8 @@ public class MessageHeaderDecode implements Deserializer<MessageHeader> {
 		} catch (Throwable e) {
 			LOG.error("deserialize failed! Throwable:" + e);
 		}
-		return new NullMessageHeader(-1, -1);
+		LOG.error("MessageHeader deserialize failed! return null!");
+		return null;
 	}
 
 	@Override

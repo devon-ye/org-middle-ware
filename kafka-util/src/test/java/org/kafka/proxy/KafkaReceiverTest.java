@@ -25,10 +25,10 @@ public class KafkaReceiverTest {
 	public void setUp() throws FileNotFoundException, IOException, Exception {
 		KafkaUtils.initLogback();
 		props = new Properties();
-		props.put("", "");
 		kafkaConsumerConfig =KafkaConsumerConfig.getInstance();
 		kafkaConsumerConfig.setProperties(props);
-		kafkaConsumerConfig.setZookeeperUrl("192.168.1.17:2181");
+		kafkaConsumerConfig.setTopic("DEFAULT_TOPIC.Q");
+		kafkaConsumerConfig.setZookeeperUrl("123.207.161.145:2181");
 		kafkaReceiverProxy = new KafkaReceiveProxy(kafkaConsumerConfig, KafkaExecuteStrategy.Async);
 		
 	}
@@ -40,6 +40,12 @@ public class KafkaReceiverTest {
 
 	@After
 	public void tearDown() {
+		try {
+			Thread.sleep(1000 * 50);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		kafkaReceiverProxy.close();
 	}
 }

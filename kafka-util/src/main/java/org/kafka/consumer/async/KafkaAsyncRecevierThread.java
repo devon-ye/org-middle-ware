@@ -4,6 +4,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.kafka.common.MessageHeader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
 *
@@ -11,13 +13,14 @@ import org.kafka.common.MessageHeader;
 *@date   2017年5月7日
 */
 public class KafkaAsyncRecevierThread extends  Thread {
-
+	private final Logger log = LoggerFactory.getLogger(KafkaAsyncRecevierThread.class);
 	private KafkaConsumer<MessageHeader, byte[]> kafkaConsumer;
 	private ConsumerRecords<MessageHeader, byte[]> consumerRecords;
 	private volatile boolean isRunning = false;
 	
 	public KafkaAsyncRecevierThread(KafkaAsyncReceiverWrapper asyncReceiverWrapper){
 		this.kafkaConsumer = asyncReceiverWrapper.getKafkaConsumer();
+	
 	}
 	
 	public void run() {
@@ -25,8 +28,12 @@ public class KafkaAsyncRecevierThread extends  Thread {
 		while(isRunning) {
 			consumerRecords = kafkaConsumer.poll(100);
 			for(ConsumerRecord<MessageHeader, byte[]> consumerRecord:consumerRecords) {
-				consumerRecord.value();
-				consumerRecord.key();
+				
+				//log.info("MessageHeader=" + header + ", value=" + value);
+				MessageHeader header = consumerRecord.key();
+				byte[] value = consumerRecord.value();
+			
+				log.info("MessageHeader=" + header + ", value=" + value);
 			}
 			
 		}

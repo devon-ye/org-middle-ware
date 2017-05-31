@@ -3,60 +3,63 @@ package org.kafka.common;
 import java.util.Map;
 
 /**
-*@Describetion
-*@author  Devonmusa
-*@date 2017年4月1日
-*/
+ * @Describetion
+ * @author Devonmusa
+ * @date 2017年4月1日
+ */
 public class MessageHeader {
-//	private static final Logger LOG = LoggerFactory.getLogger(MessageHeader.class);
+	// private static final Logger LOG =
+	// LoggerFactory.getLogger(MessageHeader.class);
 	/**
 	 * 可用Builder构建器替代下面的多参构造方法
+	 * 
 	 * @author devonmusa
 	 *
 	 */
-	public static class Builder{
+	public static class Builder {
 		private final long key;
-		
-		private  int type;
+
+		private int type;
 		private long offset;
 		private long timestamp;
 		private int producerId;
 		private int partitionId = -1;
 		private Map<String, String> attributeMap;
-		
-		public Builder(long key){
+
+		public Builder(long key) {
 			this.key = key;
 		}
-		
-		public Builder type(int val){
+
+		public Builder type(int val) {
 			type = val;
 			return this;
 		}
-		
-		public Builder partition(int val){
+
+		public Builder partition(int val) {
 			partitionId = val;
 			return this;
 		}
-		
-		public Builder offset(int val){
+
+		public Builder offset(int val) {
 			offset = val;
 			return this;
 		}
-		
-		public Builder timetamp(int val){
+
+		public Builder timetamp(int val) {
 			timestamp = val;
 			return this;
 		}
-		
-		public Builder producerId(int val){
+
+		public Builder producerId(int val) {
 			producerId = val;
 			return this;
 		}
-		
-		public Builder attributeMap(Map<String, String> val){
+
+		public Builder attributeMap(Map<String, String> val) {
 			attributeMap = val;
 			return this;
 		}
+
 		@Override
 		public String toString() {
 			StringBuilder builder = new StringBuilder();
@@ -65,9 +68,10 @@ public class MessageHeader {
 			return builder.toString();
 		}
 	}
-	
+
 	/**
 	 * 重叠构造器可用上面构建器代替
+	 * 
 	 * @param key
 	 * @param type
 	 */
@@ -78,26 +82,20 @@ public class MessageHeader {
 	private int partitionId = -1;
 	private int producerId;
 	private Map<String, String> attributeMap;
-	
-	
-	
+
 	public MessageHeader(long key, int type) {
-		this.key = key;
-		this.type = type;
+		this(key, type, -1);
 	}
-	
-	public MessageHeader(long key,int partitionId, int type) {
+
+	public MessageHeader(long key, int type, int partitionId) {
+		this(key, type, partitionId, null);
+	}
+
+	public MessageHeader(long key, int type, int partitionId, Map<String, String> attributeMap) {
 		this.key = key;
 		this.type = type;
 		this.partitionId = partitionId;
-	}
-	
-	public MessageHeader(long key, int type, Map<String, String> attributeMap) {
-		super();
-		this.key = key;
-		this.type = type;
 		this.attributeMap = attributeMap;
-	
 	}
 
 	public long getKey() {
@@ -155,7 +153,7 @@ public class MessageHeader {
 	public void setAttributeMap(Map<String, String> attributeMap) {
 		this.attributeMap = attributeMap;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

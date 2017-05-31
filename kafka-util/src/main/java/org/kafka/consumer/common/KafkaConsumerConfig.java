@@ -65,7 +65,7 @@ public class KafkaConsumerConfig {
 	}
 
 	public void setTopic(String topic) {
-		properties.put(KafkaConstant.TOPIC_NAME, topic);
+		this.topic = topic;
 	}
 
 	public void setPartitionId(int partitionId) {

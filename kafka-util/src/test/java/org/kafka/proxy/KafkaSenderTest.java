@@ -35,8 +35,9 @@ public class KafkaSenderTest {
 		System.setProperty("log.home", System.getProperty("user.dir") + "/log");
 		KafkaUtils.initLogback();
 		producerConfig = KafkaProducerConfig.getInstance();
-		producerConfig.setTopic("TEST-M.Q");
-		producerConfig.setZookeeperUrl("192.168.1.12:2181");
+		producerConfig.setTopic("DEFAULT_TOPIC.Q");
+		//producerConfig.setZookeeperUrl("192.168.1.17:2182");
+		producerConfig.setZookeeperUrl("123.207.161.145:2182");
 		props = new Properties();
 		producerConfig.setProperties(props);
 		startTime = System.nanoTime();
@@ -46,7 +47,7 @@ public class KafkaSenderTest {
 	public void syncSendTest() {
 		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaExecuteStrategy.Sync);
 		int i = 0;
-		while (i < 100000) {
+		while (i < 10000) {
 			header = new MessageHeader(i, 100);
 			byte[] data = ("message" + i).getBytes();
 			kafkaSender.send(header, data);
@@ -60,7 +61,7 @@ public class KafkaSenderTest {
 	public void asyncSendTest() {
 		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaExecuteStrategy.Async);
 		int i = 0;
-		while (i < 100000) {
+		while (i < 10000) {
 			header = new MessageHeader(i, 100);
 		//	header = new MessageHeader(i, 6, 1);
 			byte[] data = ("message" + i).getBytes();

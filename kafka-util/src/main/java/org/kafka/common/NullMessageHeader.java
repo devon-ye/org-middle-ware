@@ -9,18 +9,16 @@ import java.util.Map;
  */
 public class NullMessageHeader extends MessageHeader {
 
-	
-	
 	public NullMessageHeader(long key, int type) {
 		super(key, type);
 	}
 
-	public NullMessageHeader(long key, int partition, int type) {
+	public NullMessageHeader(long key, int type, int partition) {
 		super(key, partition, type);
 	}
 
-	public NullMessageHeader(long key, int type, Map<String, String> attributeMap) {
-		super(key, type, attributeMap);
+	public NullMessageHeader(long key, int type, int partition, Map<String, String> attributeMap) {
+		super(key, type, partition, attributeMap);
 
 	}
 
