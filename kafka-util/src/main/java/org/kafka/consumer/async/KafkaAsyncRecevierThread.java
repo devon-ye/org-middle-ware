@@ -31,7 +31,7 @@ public class KafkaAsyncRecevierThread extends  Thread {
 				MessageHeader header = consumerRecord.key();
 				byte[] value = consumerRecord.value();
 			
-				log.info("MessageHeader=" + header + ", value=" + value);
+			//	log.info("MessageHeader=" + header + ", value=" + value);
 			}
 			
 		}
