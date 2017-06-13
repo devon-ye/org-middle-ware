@@ -16,11 +16,11 @@ public class SendDataThread extends Thread {
 
 	private LinkedTransferQueue<ProducerRecordWrapper> linkedTransferQueue;
 	private ProducerRecordWrapper producerRecordWrapper;
-	private KafkaSendWrapper kafkaSendWrapper;
+	private AbstractSendWrapper kafkaSendWrapper;
 	private int queueSize;
 	private volatile boolean isRunning = false;
 
-	public SendDataThread(LinkedTransferQueue<ProducerRecordWrapper> linkedTransferQueue, KafkaSendWrapper kafkaSendWrapper) {
+	public SendDataThread(LinkedTransferQueue<ProducerRecordWrapper> linkedTransferQueue, AbstractSendWrapper kafkaSendWrapper) {
 		this.linkedTransferQueue = linkedTransferQueue;
 		this.isRunning = true;
 		this.kafkaSendWrapper = kafkaSendWrapper;

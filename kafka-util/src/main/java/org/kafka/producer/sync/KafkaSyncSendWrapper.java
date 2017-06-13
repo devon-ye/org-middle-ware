@@ -15,7 +15,7 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.PartitionInfo;
 import org.kafka.common.MessageHeader;
 import org.kafka.producer.common.KafkaProducerConfig;
-import org.kafka.producer.common.KafkaSendWrapper;
+import org.kafka.producer.common.AbstractSendWrapper;
 import org.kafka.producer.common.ProducerRecordWrapper;
 import org.kafka.util.KafkaConstant;
 import org.kafka.util.KafkaMetaUtils;
@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Devonmusa
  * @date 2017年4月30日
  */
-public class KafkaSyncSendWrapper extends KafkaSendWrapper implements Cloneable {
+public class KafkaSyncSendWrapper extends AbstractSendWrapper implements Cloneable {
 
 	private static final Logger LOG = LoggerFactory.getLogger(KafkaSyncSendWrapper.class);
 

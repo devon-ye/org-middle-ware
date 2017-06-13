@@ -9,6 +9,7 @@ import org.apache.kafka.common.PartitionInfo;
 import org.kafka.common.ConsumerRebalanceListenerImpl;
 import org.kafka.common.MessageHeader;
 import org.kafka.consumer.common.KafkaConsumerConfig;
+import org.kafka.consumer.common.AbstrctReceiveWrapper;
 import org.kafka.util.KafkaConstant;
 import org.kafka.util.KafkaMetaUtils;
 import org.slf4j.Logger;
@@ -19,11 +20,10 @@ import org.slf4j.LoggerFactory;
  * @author Devonmusa
  * @date 2017年5月13日
  */
-public class KafkaAsyncReceiverWrapper implements Cloneable {
+public class KafkaAsyncReceiverWrapper extends AbstrctReceiveWrapper {
 
 	private final static Logger LOG = LoggerFactory.getLogger(KafkaAsyncReceiverWrapper.class);
 
-	private KafkaAsyncRecevierThread kafkaAsyncRecevierThread;
 	private ConsumerRebalanceListenerImpl consumerRebalanceListenerImpl;
 
 	private KafkaConsumer<MessageHeader, byte[]> kafkaConsumer;
@@ -41,15 +41,16 @@ public class KafkaAsyncReceiverWrapper implements Cloneable {
 		this.consumerRebalanceListenerImpl = consumerRebalanceListenerImpl;
 		init();
 	}
-
-	protected void receive() {
-		kafkaAsyncRecevierThread = new KafkaAsyncRecevierThread(this);
-		kafkaAsyncRecevierThread.start();
+	@Override
+	public void receive() {
+		// kafkaAsyncRecevierThread = new KafkaAsyncRecevierThread(this);
+		// kafkaAsyncRecevierThread.start();
 	}
 
 	public void close() {
 		if (kafkaConsumer != null) {
-			// kafkaConsumer.close();
+			kafkaConsumer.close();
+			kafkaConsumer = null;
 		}
 	}
 
@@ -65,7 +66,7 @@ public class KafkaAsyncReceiverWrapper implements Cloneable {
 			reTryConnect();
 		} finally {
 			subscriptionTopics();
-			getPartitionInfos();
+
 		}
 
 	}
@@ -79,9 +80,7 @@ public class KafkaAsyncReceiverWrapper implements Cloneable {
 		consumerConfig.put(KafkaConstant.BROKER_SERVERS, brokers);
 		try {
 			kafkaConsumer = new KafkaConsumer<>(consumerConfig.getConsumerConfig());
-			// kafkaConsumer = new
-			// KafkaConsumer<>(consumerConfig.getConsumerConfig(), new
-			// MessageHeaderEncode(), valueDeserializer)
+
 		} catch (Exception e) {
 			LOG.info("KafakConsumer init failed! tring reConnect, Exception:" + e);
 			reTryConnect();
@@ -112,12 +111,24 @@ public class KafkaAsyncReceiverWrapper implements Cloneable {
 		String topic = consumerConfig.getTopic();
 		Collection<String> topics = new ArrayList<>();
 		topics.add(topic);
-	//	kafkaConsumer.subscribe(topics);
 		kafkaConsumer.subscribe(topics, consumerRebalanceListenerImpl);
+
 	}
 
-	private List<PartitionInfo> getPartitionInfos() {
+	public List<PartitionInfo> getPartitionInfos() {
 		partitionInfos = kafkaConsumer.partitionsFor(consumerConfig.getTopic());
 		return partitionInfos;
 	}
+
+	public KafkaAsyncReceiverWrapper clone() {
+		Object object = null;
+		try {
+			object = super.clone();
+			return (KafkaAsyncReceiverWrapper) object;
+		} catch (Exception e) {
+			LOG.error("KafkaAsyncReceiverWrapper clone failed! Exception: " + e);
+		}
+		return null;
+	}
+
 }
