@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.kafka.common.PartitionInfo;
 import org.kafka.consumer.common.KafkaConsumerConfig;
-import org.kafka.consumer.common.KafkaReceiveWrapper;
+import org.kafka.consumer.common.AbstrctReceiveWrapper;
 import org.kafka.consumer.common.ReceiveDataThread;
 import org.kafka.proxy.KafkaReceiveStrategegy;
 import org.slf4j.Logger;
@@ -37,7 +37,7 @@ public class KafkaAsyncConsumer extends KafkaReceiveStrategegy {
 			int patition = partitionInfo.partition();
 			ReceiveDataThread receiveThread= partitionRreceiveThreadMap.get(patition);
 			if(receiveThread == null) {
-				KafkaReceiveWrapper receiveWrapper = kafkaAsyncReceiverWrapper.clone();
+				AbstrctReceiveWrapper receiveWrapper = kafkaAsyncReceiverWrapper.clone();
 				receiveThread  = new ReceiveDataThread(receiveWrapper);
 				receiveThread.setName("receiveThread-" + patition);
 				receiveThread.start();
@@ -50,7 +50,7 @@ public class KafkaAsyncConsumer extends KafkaReceiveStrategegy {
 
 	@Override
 	public void close() {
-		kafkaAsyncReceiverWrapper.close();
+		
 		LOG.info("Consumer finished closed...");
 	}
 
