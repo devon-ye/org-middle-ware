@@ -1,5 +1,7 @@
 package org.kafka.proxy;
 
+import org.kafka.common.IMessageListener;
+
 /**
 *
 *@author Devonmusa
@@ -10,4 +12,7 @@ public abstract class KafkaReceiveStrategegy {
 	public abstract void receive();
 	
 	public abstract void close();
+
+	public abstract void receive(IMessageListener imessageListener);
+	
 }

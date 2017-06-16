@@ -1,6 +1,7 @@
 package org.kafka.consumer.common;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.kafka.common.IMessageListener;
 import org.kafka.common.MessageHeader;
 
 /**
@@ -10,7 +11,8 @@ import org.kafka.common.MessageHeader;
 */
 public abstract class AbstrctReceiveWrapper implements Cloneable{
 
-  public abstract void receive() ;
+  public abstract void receive(IMessageListener imessageListener) ;
   
   public abstract KafkaConsumer<MessageHeader, byte[]> getKafkaConsumer();
+  
 }

@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.PartitionInfo;
 import org.kafka.common.ConsumerRebalanceListenerImpl;
+import org.kafka.common.IMessageListener;
 import org.kafka.common.MessageHeader;
 import org.kafka.consumer.common.KafkaConsumerConfig;
 import org.kafka.consumer.common.AbstrctReceiveWrapper;
@@ -27,6 +30,8 @@ public class KafkaAsyncReceiverWrapper extends AbstrctReceiveWrapper {
 	private ConsumerRebalanceListenerImpl consumerRebalanceListenerImpl;
 
 	private KafkaConsumer<MessageHeader, byte[]> kafkaConsumer;
+	
+	private ConsumerRecords<MessageHeader, byte[]> consumerRecords;
 
 	private List<PartitionInfo> partitionInfos;
 
@@ -42,9 +47,18 @@ public class KafkaAsyncReceiverWrapper extends AbstrctReceiveWrapper {
 		init();
 	}
 	@Override
-	public void receive() {
-		// kafkaAsyncRecevierThread = new KafkaAsyncRecevierThread(this);
-		// kafkaAsyncRecevierThread.start();
+	public synchronized void receive(IMessageListener imessageListener) {
+		try{
+			consumerRecords = kafkaConsumer.poll(100);
+			for (ConsumerRecord<MessageHeader, byte[]> consumerRecord : consumerRecords) {
+				MessageHeader header = consumerRecord.key();
+				byte[] value = consumerRecord.value();
+				imessageListener.onMessage(header, value);
+			}
+		}catch(Exception e) {
+			LOG.error("KafakConsumer  error !!! prefering to try reConnect, Exception:" + e);
+			init();
+		}
 	}
 
 	public void close() {
@@ -82,7 +96,7 @@ public class KafkaAsyncReceiverWrapper extends AbstrctReceiveWrapper {
 			kafkaConsumer = new KafkaConsumer<>(consumerConfig.getConsumerConfig());
 
 		} catch (Exception e) {
-			LOG.info("KafakConsumer init failed! tring reConnect, Exception:" + e);
+			LOG.error("KafakConsumer init failed! tring reConnect, Exception:" + e);
 			reTryConnect();
 		}
 
@@ -111,7 +125,8 @@ public class KafkaAsyncReceiverWrapper extends AbstrctReceiveWrapper {
 		String topic = consumerConfig.getTopic();
 		Collection<String> topics = new ArrayList<>();
 		topics.add(topic);
-		kafkaConsumer.subscribe(topics, consumerRebalanceListenerImpl);
+		kafkaConsumer.subscribe(topics);
+		//kafkaConsumer.subscribe(topics, consumerRebalanceListenerImpl);
 
 	}
 

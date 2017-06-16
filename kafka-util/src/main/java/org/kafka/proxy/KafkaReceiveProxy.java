@@ -1,6 +1,6 @@
 package org.kafka.proxy;
 
-
+import org.kafka.common.IMessageListener;
 import org.kafka.common.KafkaExecuteStrategy;
 import org.kafka.consumer.async.KafkaAsyncConsumer;
 import org.kafka.consumer.common.KafkaConsumerConfig;
@@ -9,16 +9,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-*
-*@author Devonmusa
-*@date   2017年4月27日
-*/
+ *
+ * @author Devonmusa
+ * @date 2017年4月27日
+ */
 public class KafkaReceiveProxy {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(KafkaReceiveProxy.class);
-	
+
 	private KafkaReceiveStrategegy receiveStrategegy;
-	
+
 	public KafkaReceiveProxy(KafkaConsumerConfig config, KafkaExecuteStrategy executeStrategy) {
 		try {
 			switch (executeStrategy) {
@@ -35,17 +35,21 @@ public class KafkaReceiveProxy {
 			LOG.error("KafkaReceiver Exception:" + e);
 		}
 	}
-	
-	public void receive() {
+
+	public void receive(IMessageListener imessageListener) {
+		receiveStrategegy.receive(imessageListener);
+	}
+
+	public void receive(int partitionId) {
 		receiveStrategegy.receive();
 	}
-	
+
 	public void close() {
 		receiveStrategegy.close();
 	}
-	
+
 	private void setReceiveStrategey(KafkaReceiveStrategegy receiveStrategegy) {
 		this.receiveStrategegy = receiveStrategegy;
 	}
-	
+
 }

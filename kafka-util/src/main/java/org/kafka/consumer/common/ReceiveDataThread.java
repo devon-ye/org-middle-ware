@@ -3,6 +3,7 @@ package org.kafka.consumer.common;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.kafka.common.IMessageListener;
 import org.kafka.common.MessageHeader;
 
 import org.slf4j.Logger;
@@ -18,25 +19,22 @@ public class ReceiveDataThread extends Thread {
 
 	private KafkaConsumer<MessageHeader, byte[]> kafkaConsumer;
 
-	private ConsumerRecords<MessageHeader, byte[]> consumerRecords;
+	private AbstrctReceiveWrapper receiveWrapper;
+
+	private IMessageListener imessageListener;
 
 	private volatile boolean isRunning = false;
 	
 
-	public ReceiveDataThread(AbstrctReceiveWrapper receiveWrapper) {
-		kafkaConsumer = receiveWrapper.getKafkaConsumer();
+	public ReceiveDataThread(AbstrctReceiveWrapper receiveWrapper, IMessageListener imessageListener) {
+		this.receiveWrapper = receiveWrapper;
+		this.imessageListener = imessageListener;
 	}
 
 	public void run() {
 		isRunning = true;
 		while (isRunning) {
-			consumerRecords = kafkaConsumer.poll(100);
-			for (ConsumerRecord<MessageHeader, byte[]> consumerRecord : consumerRecords) {
-				MessageHeader header = consumerRecord.key();
-				byte[] value = consumerRecord.value();
-
-				log.info("consumer MessageHeader=" + header + ", value=" + value);
-			}
+			receiveWrapper.receive(imessageListener);
 		}
 
 	}

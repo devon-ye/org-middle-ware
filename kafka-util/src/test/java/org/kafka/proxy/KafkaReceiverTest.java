@@ -7,7 +7,9 @@ import java.util.Properties;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.kafka.common.IMessageListener;
 import org.kafka.common.KafkaExecuteStrategy;
+import org.kafka.common.MessageHeader;
 import org.kafka.consumer.common.KafkaConsumerConfig;
 import org.kafka.utils.KafkaUtils;
 
@@ -19,6 +21,7 @@ import org.kafka.utils.KafkaUtils;
 public class KafkaReceiverTest {
 	private KafkaConsumerConfig kafkaConsumerConfig;
 	private KafkaReceiveProxy kafkaReceiverProxy;
+	private IMessageListener imessageListener;
 	private Properties props;
 	
 	@Before
@@ -27,22 +30,32 @@ public class KafkaReceiverTest {
 		props = new Properties();
 		kafkaConsumerConfig =KafkaConsumerConfig.getInstance();
 		kafkaConsumerConfig.setProperties(props);
-		kafkaConsumerConfig.setTopic("DEFAULT_TOPIC.Q");
-		kafkaConsumerConfig.setZookeeperUrl("192.168.1.17:2181");
+		
+		kafkaConsumerConfig.setTopic("TEST.Q");
+		//kafkaConsumerConfig.setTopic("DEFAULT_TOPIC.Q");
+		kafkaConsumerConfig.setZookeeperUrl("192.168.1.13:2181");
 		//kafkaConsumerConfig.setZookeeperUrl("123.207.161.145:2181");
 		kafkaReceiverProxy = new KafkaReceiveProxy(kafkaConsumerConfig, KafkaExecuteStrategy.Async);
+		
 		
 	}
 	
 	@Test
 	public void testAsyncReceiver() {
-		kafkaReceiverProxy.receive();
+		    kafkaReceiverProxy.receive(new IMessageListener() {
+				
+				@Override
+				public void onMessage(MessageHeader header, byte[] data) {
+					System.out.println("header:" + header +",  value:" +data);
+					
+				}
+			});	
 	}
 
 	@After
 	public void tearDown() {
 		try {
-			Thread.sleep(1000 * 50);
+			Thread.sleep(1000 * 500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -54,7 +54,7 @@
 		<discardingThreshold>0</discardingThreshold>
 		<appender-ref ref="errorAppender" />
 	</appender>
-	<root level="debug">
+	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="ASYNC_ERROR_APPENDER" />
 		<appender-ref ref="ASYNC_INFO_APPENDER" />

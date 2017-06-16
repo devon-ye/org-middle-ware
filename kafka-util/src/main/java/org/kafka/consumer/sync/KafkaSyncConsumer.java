@@ -1,5 +1,6 @@
 package org.kafka.consumer.sync;
 
+import org.kafka.common.IMessageListener;
 import org.kafka.consumer.async.KafkaAsyncConsumer;
 import org.kafka.consumer.common.KafkaConsumerConfig;
 import org.kafka.proxy.KafkaReceiveStrategegy;
@@ -30,6 +31,12 @@ public class KafkaSyncConsumer extends KafkaReceiveStrategegy {
 	@Override
 	public void close() {
 
+	}
+
+	@Override
+	public void receive(IMessageListener imessageListener) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

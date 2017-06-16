@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.kafka.common.PartitionInfo;
 import org.kafka.consumer.common.KafkaConsumerConfig;
+import org.kafka.common.IMessageListener;
 import org.kafka.consumer.common.AbstrctReceiveWrapper;
 import org.kafka.consumer.common.ReceiveDataThread;
 import org.kafka.proxy.KafkaReceiveStrategegy;
@@ -32,19 +33,19 @@ public class KafkaAsyncConsumer extends KafkaReceiveStrategegy {
 	}
 
 	@Override
-	public void receive() {
+	public void receive(final  IMessageListener imessageListener) {
 		for (PartitionInfo partitionInfo : partitionInfos) {
 			int patition = partitionInfo.partition();
 			ReceiveDataThread receiveThread= partitionRreceiveThreadMap.get(patition);
 			if(receiveThread == null) {
 				AbstrctReceiveWrapper receiveWrapper = kafkaAsyncReceiverWrapper.clone();
-				receiveThread  = new ReceiveDataThread(receiveWrapper);
+				receiveThread  = new ReceiveDataThread(receiveWrapper,imessageListener);
 				receiveThread.setName("receiveThread-" + patition);
 				receiveThread.start();
 			}
 		}
 		LOG.info("Consumer start recevier...");
-		kafkaAsyncReceiverWrapper.receive();
+		//kafkaAsyncReceiverWrapper.receive();
 
 	}
 
@@ -53,5 +54,13 @@ public class KafkaAsyncConsumer extends KafkaReceiveStrategegy {
 		
 		LOG.info("Consumer finished closed...");
 	}
+
+	@Override
+	public void receive() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 }

@@ -93,7 +93,7 @@ public class KafkaSyncSendWrapper extends AbstractSendWrapper implements Cloneab
 
 		} finally {
 			if (sendResult) {
-				LOG.info("send message success! producerRecord=" + producerRecord + ", offset=" + offset + ", keySize=" + keySize + ", valueSize=" + valueSize);
+				//LOG.info("send message success! producerRecord=" + producerRecord + ", offset=" + offset + ", keySize=" + keySize + ", valueSize=" + valueSize);
 			}
 			if (reTryCount > 0 && reTryCount <= MAX_SEND_TIMES) {
 				reTryCount = 0;
