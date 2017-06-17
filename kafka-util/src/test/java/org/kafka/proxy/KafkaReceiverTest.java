@@ -46,8 +46,7 @@ public class KafkaReceiverTest {
 				
 				@Override
 				public void onMessage(MessageHeader header, byte[] data) {
-					System.out.println("header:" + header +",  value:" +data);
-					
+					System.out.println("header:" + header +",  value:" +data);	
 				}
 			});	
 	}

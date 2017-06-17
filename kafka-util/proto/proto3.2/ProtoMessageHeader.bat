@@ -1,2 +1,2 @@
-protoc -I=./ --java_out=./code     ./ProtoMessageHeader.proto
+protoc -I=./ --java_out=../../src/main/java     ./ProtoMessageHeader.proto
 pause

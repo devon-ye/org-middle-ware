@@ -3,6 +3,9 @@ package org.kafka.producer.async;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
@@ -20,6 +23,8 @@ import org.kafka.util.KafkaMetaUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import scala.collection.Map;
+
 /**
  *
  * @author Devonmusa
@@ -30,7 +35,6 @@ public class KafkaAsyncSendWrapper extends AbstractSendWrapper implements Clonea
 	private static final Logger LOG = LoggerFactory.getLogger(KafkaAsyncSendWrapper.class);
 
 	private static final int CLOSE_WAIT_TIMEMS = 10;
-
 	private ProducerRecord<MessageHeader, byte[]> producerRecord;
 	private KafkaProducer<MessageHeader, byte[]> producer;
 	private KafkaProducerConfig producerConfig;
@@ -40,6 +44,7 @@ public class KafkaAsyncSendWrapper extends AbstractSendWrapper implements Clonea
 	private Properties props;
 	private String topic;
 	private int reTryCount = 0;
+	
 
 	public KafkaAsyncSendWrapper(KafkaProducerConfig producerConfig) {
 		this.producerConfig = producerConfig;
@@ -48,6 +53,7 @@ public class KafkaAsyncSendWrapper extends AbstractSendWrapper implements Clonea
 		} catch (Exception e) {
 			LOG.error(" init() failed!!! Exception:" + e + reTryCount);
 		}
+
 	}
 
 	public KafkaAsyncSendWrapper clone() {
@@ -67,18 +73,26 @@ public class KafkaAsyncSendWrapper extends AbstractSendWrapper implements Clonea
 		if (producerRecord == null) {
 			return;
 		}
-		producerRecord.partition();
 		try {
 			sendMessagefuture = producer.send(producerRecord);
 			producerRecordWrapper.setFuture(sendMessagefuture);
 		} catch (Exception e) {
-			LOG.error("Exception:" + e + ", sendMessagefuture =" + sendMessagefuture);
+			LOG.error("Exception:" + e + ", sendMessagefuture = " + sendMessagefuture);
 		}
 
 	}
 
 	public void close() {
-		producer.close(CLOSE_WAIT_TIMEMS, TimeUnit.SECONDS);
+		try {
+			if(producer != null){
+				 producer.close(CLOSE_WAIT_TIMEMS, TimeUnit.SECONDS);
+			}	
+		} catch (Exception  e) {
+			e.printStackTrace();
+		}
+
+	
+
 	}
 
 	private void init() throws Exception {

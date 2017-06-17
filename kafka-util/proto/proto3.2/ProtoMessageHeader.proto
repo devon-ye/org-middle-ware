@@ -8,7 +8,7 @@ message MessageHeader {
    int32 type = 2;
    int32  partitionId = 3;
    int64 timestamp = 4;
-  int32 producerId =5;
+  int64 producerId =5;
   int64 offset = 6;
   repeated AttributeEntry attributeEntry = 7;
 

@@ -32,6 +32,10 @@ public class KafkaSenderTest {
 
 	@Before
 	public void setUp() throws FileNotFoundException, IOException, Exception {
+		System.setProperty("com.sun.management.jmxremote.port", "9999");
+		System.setProperty("com.sun.management.jmxremote.ssl", "false");
+		System.setProperty("com.sun.management.jmxremote.authenticate", "false");
+		System.setProperty("java.rmi.server.hostname", "127.0.0.1");
 		System.setProperty("log.home", System.getProperty("user.dir") + "/log");
 		KafkaUtils.initLogback();
 		producerConfig = KafkaProducerConfig.getInstance();
@@ -52,7 +56,7 @@ public class KafkaSenderTest {
 			header = new MessageHeader(i, 100);
 			byte[] data = ("message" + i).getBytes();
 			kafkaSender.send(header, data);
-			LOGGER.info("header:" + header);
+			//LOGGER.info("header:" + header);
 			total++;
 			i++;
 		}
@@ -62,12 +66,12 @@ public class KafkaSenderTest {
 	public void asyncSendTest() {
 		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaExecuteStrategy.Async);
 		int i = 0;
-		while (i < 80000) {
+		while (i < 200000) {
 			header = new MessageHeader(i, 100);
 		//	header = new MessageHeader(i, 6, 1);
 			byte[] data = ("message" + i).getBytes();
 			kafkaSender.send(header, data);
-			//LOGGER.info("header:" + header);
+		//	LOGGER.info("header:" + header);
 			total++;
 			i++;
 		}

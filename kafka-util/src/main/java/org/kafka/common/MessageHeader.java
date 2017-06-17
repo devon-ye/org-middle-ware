@@ -1,6 +1,7 @@
 package org.kafka.common;
 
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @Describetion
@@ -22,7 +23,7 @@ public class MessageHeader {
 		private int type;
 		private long offset;
 		private long timestamp;
-		private int producerId;
+		private long producerId;
 		private int partitionId = -1;
 		private Map<String, String> attributeMap;
 
@@ -79,8 +80,8 @@ public class MessageHeader {
 	private int type;
 	private long offset;
 	private long timestamp;
-	private int partitionId = -1;
-	private int producerId;
+	private int partitionId =-1;
+	private long producerId = System.currentTimeMillis();
 	private Map<String, String> attributeMap;
 
 	public MessageHeader(long key, int type) {
@@ -118,8 +119,8 @@ public class MessageHeader {
 		return partitionId;
 	}
 
-	public int getProducerId() {
-		return producerId;
+	public long  getProducerId() {	
+		return producerId = System.currentTimeMillis();	
 	}
 
 	public Map<String, String> getAttributeMap() {
@@ -146,7 +147,7 @@ public class MessageHeader {
 		this.partitionId = partitionId;
 	}
 
-	public void setProducerId(int producerId) {
+	public void setProducerId(long producerId) {
 		this.producerId = producerId;
 	}
 
@@ -156,9 +157,26 @@ public class MessageHeader {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("MessageHeader [key=").append(key).append(", type=").append(type).append(", offset=").append(offset).append(", timetamp=").append(timestamp).append(", partition=")
-			.append(partitionId).append(", producerId=").append(producerId).append(", attributeMap=").append(attributeMap).append("]");
-		return builder.toString();
+		StringBuilder builder2 = new StringBuilder();
+		builder2.append("MessageHeader [key=");
+		builder2.append(key);
+		builder2.append(", type=");
+		builder2.append(type);
+		builder2.append(", offset=");
+		builder2.append(offset);
+		builder2.append(", timestamp=");
+		builder2.append(timestamp);
+		builder2.append(", partitionId=");
+		builder2.append(partitionId);
+		builder2.append(", producerId=");
+		builder2.append(producerId);
+		builder2.append(", attributeMap=");
+		builder2.append(attributeMap);
+		builder2.append("]");
+		return builder2.toString();
 	}
+	
+	
+
+	
 }

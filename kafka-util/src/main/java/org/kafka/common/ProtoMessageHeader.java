@@ -39,9 +39,9 @@ public final class ProtoMessageHeader {
     long getTimestamp();
 
     /**
-     * <code>int32 producerId = 5;</code>
+     * <code>int64 producerId = 5;</code>
      */
-    int getProducerId();
+    long getProducerId();
 
     /**
      * <code>int64 offset = 6;</code>
@@ -88,7 +88,7 @@ public final class ProtoMessageHeader {
       type_ = 0;
       partitionId_ = 0;
       timestamp_ = 0L;
-      producerId_ = 0;
+      producerId_ = 0L;
       offset_ = 0L;
       attributeEntry_ = java.util.Collections.emptyList();
     }
@@ -140,7 +140,7 @@ public final class ProtoMessageHeader {
             }
             case 40: {
 
-              producerId_ = input.readInt32();
+              producerId_ = input.readInt64();
               break;
             }
             case 48: {
@@ -439,8 +439,7 @@ public final class ProtoMessageHeader {
         return result;
       }
 
-      @SuppressWarnings("unchecked")
-	@java.lang.Override
+      @java.lang.Override
       public int hashCode() {
         if (memoizedHashCode != 0) {
           return memoizedHashCode;
@@ -612,8 +611,7 @@ public final class ProtoMessageHeader {
           return result;
         }
 
-        @SuppressWarnings("unused")
-		public org.kafka.common.ProtoMessageHeader.MessageHeader.AttributeEntry buildPartial() {
+        public org.kafka.common.ProtoMessageHeader.MessageHeader.AttributeEntry buildPartial() {
           org.kafka.common.ProtoMessageHeader.MessageHeader.AttributeEntry result = new org.kafka.common.ProtoMessageHeader.MessageHeader.AttributeEntry(this);
           int from_bitField0_ = bitField0_;
           result.attributeMap_ = internalGetAttributeMap();
@@ -859,8 +857,7 @@ public final class ProtoMessageHeader {
 
     }
 
-    @SuppressWarnings("unused")
-	private int bitField0_;
+    private int bitField0_;
     public static final int KEY_FIELD_NUMBER = 1;
     private long key_;
     /**
@@ -898,11 +895,11 @@ public final class ProtoMessageHeader {
     }
 
     public static final int PRODUCERID_FIELD_NUMBER = 5;
-    private int producerId_;
+    private long producerId_;
     /**
-     * <code>int32 producerId = 5;</code>
+     * <code>int64 producerId = 5;</code>
      */
-    public int getProducerId() {
+    public long getProducerId() {
       return producerId_;
     }
 
@@ -974,8 +971,8 @@ public final class ProtoMessageHeader {
       if (timestamp_ != 0L) {
         output.writeInt64(4, timestamp_);
       }
-      if (producerId_ != 0) {
-        output.writeInt32(5, producerId_);
+      if (producerId_ != 0L) {
+        output.writeInt64(5, producerId_);
       }
       if (offset_ != 0L) {
         output.writeInt64(6, offset_);
@@ -1006,9 +1003,9 @@ public final class ProtoMessageHeader {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(4, timestamp_);
       }
-      if (producerId_ != 0) {
+      if (producerId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(5, producerId_);
+          .computeInt64Size(5, producerId_);
       }
       if (offset_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
@@ -1051,8 +1048,7 @@ public final class ProtoMessageHeader {
       return result;
     }
 
-    @SuppressWarnings("unchecked")
-	@java.lang.Override
+    @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -1070,7 +1066,8 @@ public final class ProtoMessageHeader {
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getTimestamp());
       hash = (37 * hash) + PRODUCERID_FIELD_NUMBER;
-      hash = (53 * hash) + getProducerId();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getProducerId());
       hash = (37 * hash) + OFFSET_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getOffset());
@@ -1205,7 +1202,7 @@ public final class ProtoMessageHeader {
 
         timestamp_ = 0L;
 
-        producerId_ = 0;
+        producerId_ = 0L;
 
         offset_ = 0L;
 
@@ -1235,8 +1232,7 @@ public final class ProtoMessageHeader {
         return result;
       }
 
-      @SuppressWarnings("unused")
-	public org.kafka.common.ProtoMessageHeader.MessageHeader buildPartial() {
+      public org.kafka.common.ProtoMessageHeader.MessageHeader buildPartial() {
         org.kafka.common.ProtoMessageHeader.MessageHeader result = new org.kafka.common.ProtoMessageHeader.MessageHeader(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
@@ -1309,7 +1305,7 @@ public final class ProtoMessageHeader {
         if (other.getTimestamp() != 0L) {
           setTimestamp(other.getTimestamp());
         }
-        if (other.getProducerId() != 0) {
+        if (other.getProducerId() != 0L) {
           setProducerId(other.getProducerId());
         }
         if (other.getOffset() != 0L) {
@@ -1472,28 +1468,28 @@ public final class ProtoMessageHeader {
         return this;
       }
 
-      private int producerId_ ;
+      private long producerId_ ;
       /**
-       * <code>int32 producerId = 5;</code>
+       * <code>int64 producerId = 5;</code>
        */
-      public int getProducerId() {
+      public long getProducerId() {
         return producerId_;
       }
       /**
-       * <code>int32 producerId = 5;</code>
+       * <code>int64 producerId = 5;</code>
        */
-      public Builder setProducerId(int value) {
+      public Builder setProducerId(long value) {
         
         producerId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int32 producerId = 5;</code>
+       * <code>int64 producerId = 5;</code>
        */
       public Builder clearProducerId() {
         
-        producerId_ = 0;
+        producerId_ = 0L;
         onChanged();
         return this;
       }
@@ -1824,8 +1820,7 @@ public final class ProtoMessageHeader {
       internal_static_kafka_util_MessageHeader_AttributeEntry_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_kafka_util_MessageHeader_AttributeEntry_AttributeMapEntry_descriptor;
-  @SuppressWarnings("unused")
-private static final 
+  private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_kafka_util_MessageHeader_AttributeEntry_AttributeMapEntry_fieldAccessorTable;
 
@@ -1840,7 +1835,7 @@ private static final
       "\n\030ProtoMessageHeader.proto\022\nkafka_util\"\322" +
       "\002\n\rMessageHeader\022\013\n\003key\030\001 \001(\003\022\014\n\004type\030\002 " +
       "\001(\005\022\023\n\013partitionId\030\003 \001(\005\022\021\n\ttimestamp\030\004 " +
-      "\001(\003\022\022\n\nproducerId\030\005 \001(\005\022\016\n\006offset\030\006 \001(\003\022" +
+      "\001(\003\022\022\n\nproducerId\030\005 \001(\003\022\016\n\006offset\030\006 \001(\003\022" +
       "@\n\016attributeEntry\030\007 \003(\0132(.kafka_util.Mes" +
       "sageHeader.AttributeEntry\032\227\001\n\016AttributeE" +
       "ntry\022P\n\014attributeMap\030\001 \003(\0132:.kafka_util." +

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedTransferQueue;
 
 import org.apache.kafka.common.PartitionInfo;
@@ -27,13 +28,15 @@ public class KafkaAsyncProducer extends KafkaSenderStrategy {
 	private static final Logger LOG = LoggerFactory.getLogger(KafkaAsyncProducer.class);
 
 	private volatile LinkedTransferQueue<ProducerRecordWrapper> linkedTransferQueue;
+
 	private ProducerRecordWrapper producerRecordWrapper;
-	private final List<SendDataThread> sendDataThreads = new ArrayList<>();
+	private static CountDownLatch countDownLatch;
 	private SendDataThread sendDataThread;
 	private List<PartitionInfo> partitionInfos;
 	private KafkaAsyncSendWrapper asyncSendWrapper;
 	private String topic;
 
+	private final List<SendDataThread> sendDataThreads = new ArrayList<>();
 	public static final Map<Integer, LinkedTransferQueue<ProducerRecordWrapper>> PARTITION_SENDQUEU_MAP = new ConcurrentHashMap<>();
 
 	public KafkaAsyncProducer(KafkaProducerConfig producerConfig) {
@@ -78,24 +81,32 @@ public class KafkaAsyncProducer extends KafkaSenderStrategy {
 		}
 
 	}
-
-	@SuppressWarnings("static-access")
+	
 	@Override
 	public void close() {
-		int queueSize = sendDataThreads.size();
-		for (int i = 0; i < queueSize; i++) {
-			sendDataThread = sendDataThreads.get(i);
-			if (sendDataThread.getQueueSize() == 0) {
+		int threadSize = sendDataThreads.size();
+		countDownLatch = new CountDownLatch(threadSize);
+		LOG.info("KafkaAsyncProducer close!");
+		while (threadSize > 0) {
+			sendDataThread = sendDataThreads.get(threadSize - 1);
+			int queueSize = sendDataThread.getQueueSize();
+			//	LOG.info("current threadName = " + sendDataThread.getName() + ", queueSize = " + queueSize);
+			if (queueSize == 0) {
+				countDownLatch.countDown();
 				sendDataThread.dispose();
-				sendDataThreads.remove(sendDataThread);
-				queueSize = sendDataThreads.size();
-				LOG.info(" Thread close info, " + sendDataThread.currentThread() + "is stop, will need to close thread=" + sendDataThreads);
-			} else if (queueSize != 0) {
-				i = 0;
-			} else {
-				break;
+				LOG.info("current threadName = " + sendDataThread.getName() + ", queueSize = " + queueSize);
+				threadSize--;
+			}else{
+				
 			}
 		}
+		try {
+			LOG.info("threadSize = " + threadSize);
+			countDownLatch.await();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		asyncSendWrapper.close();
 	}
 }

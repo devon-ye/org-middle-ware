@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Devonmusa
  * @date 2017年4月30日
  */
-public class KafkaSyncSendWrapper extends AbstractSendWrapper implements Cloneable {
+public class KafkaSyncSendWrapper extends AbstractSendWrapper {
 
 	private static final Logger LOG = LoggerFactory.getLogger(KafkaSyncSendWrapper.class);
 

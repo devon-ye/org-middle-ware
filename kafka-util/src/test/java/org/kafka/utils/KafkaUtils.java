@@ -36,4 +36,8 @@ public class KafkaUtils {
 		}
 		LOG.info("end init logback");
 	}
+	
+	public static void initLog4j() {
+		
+	}
 }

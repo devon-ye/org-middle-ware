@@ -42,6 +42,7 @@ public class KafkaSenderProxy {
 	}
 
 	public void close() {
+		logger.info("KafkaSenderProxy close!");
 		senderStrategy.close();
 	}
 
