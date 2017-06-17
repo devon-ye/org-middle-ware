@@ -77,7 +77,7 @@ public class KafkaAsyncSendWrapper extends AbstractSendWrapper implements Clonea
 			sendMessagefuture = producer.send(producerRecord);
 			producerRecordWrapper.setFuture(sendMessagefuture);
 		} catch (Exception e) {
-			LOG.error("Exception:" + e + ", sendMessagefuture = " + sendMessagefuture);
+			LOG.error("Exception:" + e );
 		}
 
 	}

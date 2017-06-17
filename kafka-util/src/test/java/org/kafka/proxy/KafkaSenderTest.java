@@ -39,9 +39,9 @@ public class KafkaSenderTest {
 		System.setProperty("log.home", System.getProperty("user.dir") + "/log");
 		KafkaUtils.initLogback();
 		producerConfig = KafkaProducerConfig.getInstance();
-		producerConfig.setTopic("TEST.Q");
+		producerConfig.setTopic("YDW.Q");
 		//producerConfig.setTopic("DEFAULT_TOPIC.Q");
-		producerConfig.setZookeeperUrl("192.168.1.13:2182");
+		producerConfig.setZookeeperUrl("192.168.1.10:2182");
 		//producerConfig.setZookeeperUrl("123.207.161.145:2182");
 		props = new Properties();
 		producerConfig.setProperties(props);
@@ -50,13 +50,13 @@ public class KafkaSenderTest {
 
 	@Test
 	public void syncSendTest() {
-		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaExecuteStrategy.Sync);
+		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaExecuteStrategy.SYNC);
 		int i = 0;
 		while (i < 80000) {
 			header = new MessageHeader(i, 100);
 			byte[] data = ("message" + i).getBytes();
 			kafkaSender.send(header, data);
-			//LOGGER.info("header:" + header);
+			LOGGER.info("header:" + header);
 			total++;
 			i++;
 		}
@@ -64,14 +64,14 @@ public class KafkaSenderTest {
 
 	@Test
 	public void asyncSendTest() {
-		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaExecuteStrategy.Async);
+		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaExecuteStrategy.ASYNC);
 		int i = 0;
 		while (i < 200000) {
 			header = new MessageHeader(i, 100);
 		//	header = new MessageHeader(i, 6, 1);
 			byte[] data = ("message" + i).getBytes();
 			kafkaSender.send(header, data);
-		//	LOGGER.info("header:" + header);
+		LOGGER.info("header:" + header);
 			total++;
 			i++;
 		}

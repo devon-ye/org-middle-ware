@@ -56,7 +56,7 @@ public class KafkaAsyncReceiverWrapper extends AbstrctReceiveWrapper {
 				imessageListener.onMessage(header, value);
 			}
 		}catch(Exception e) {
-			LOG.error("KafakConsumer  error !!! prefering to try reConnect, Exception:" + e);
+			LOG.error("KafakConsumer  error !!! prefering to try reConnect!!!  Exception:" + e);
 			init();
 		}
 	}
@@ -112,11 +112,11 @@ public class KafkaAsyncReceiverWrapper extends AbstrctReceiveWrapper {
 				Thread.sleep(3000 * reTryCount);
 				connect();
 			} catch (Exception e) {
-				LOG.error("Kafka Consumer reConncet  " + reTryCount + "  failed");
+				LOG.error("Kafka Consumer reConncet  " + reTryCount + "  failed!!!");
 				reTryConnect();
 			}
 		} else {
-			LOG.error("Kafka Consumer reConncet  " + reTryCount + "  failed");
+			LOG.error("Kafka Consumer reConncet  " + reTryCount + "  failed!!!");
 		}
 
 	}
@@ -126,7 +126,7 @@ public class KafkaAsyncReceiverWrapper extends AbstrctReceiveWrapper {
 		Collection<String> topics = new ArrayList<>();
 		topics.add(topic);
 		kafkaConsumer.subscribe(topics);
-		//kafkaConsumer.subscribe(topics, consumerRebalanceListenerImpl);
+	//	kafkaConsumer.subscribe(topics, consumerRebalanceListenerImpl);
 
 	}
 

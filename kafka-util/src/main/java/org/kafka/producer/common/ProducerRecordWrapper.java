@@ -56,6 +56,8 @@ public class ProducerRecordWrapper {
 		}
 		setPartitionId(tempPartitionId);
 		long timestamp = System.currentTimeMillis();
+		messageHeader.setTimestamp(timestamp);
+		messageHeader.setPartitionId(tempPartitionId);
 		producerRecord = new ProducerRecord<MessageHeader, byte[]>(topic, partitionId, timestamp, messageHeader, value);
 		return this;
 

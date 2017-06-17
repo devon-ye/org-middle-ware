@@ -5,5 +5,5 @@ package org.kafka.common;
 *@date   2017年4月27日
 */
 public enum KafkaExecuteStrategy {
-	 Async,Sync;
+	 ASYNC,SYNC;
 }

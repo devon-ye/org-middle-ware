@@ -31,11 +31,11 @@ public class KafkaReceiverTest {
 		kafkaConsumerConfig =KafkaConsumerConfig.getInstance();
 		kafkaConsumerConfig.setProperties(props);
 		
-		kafkaConsumerConfig.setTopic("TEST.Q");
+		kafkaConsumerConfig.setTopic("YDW.Q");
 		//kafkaConsumerConfig.setTopic("DEFAULT_TOPIC.Q");
-		kafkaConsumerConfig.setZookeeperUrl("192.168.1.13:2181");
+		kafkaConsumerConfig.setZookeeperUrl("192.168.1.10:2181");
 		//kafkaConsumerConfig.setZookeeperUrl("123.207.161.145:2181");
-		kafkaReceiverProxy = new KafkaReceiveProxy(kafkaConsumerConfig, KafkaExecuteStrategy.Async);
+		kafkaReceiverProxy = new KafkaReceiveProxy(kafkaConsumerConfig, KafkaExecuteStrategy.ASYNC);
 		
 		
 	}

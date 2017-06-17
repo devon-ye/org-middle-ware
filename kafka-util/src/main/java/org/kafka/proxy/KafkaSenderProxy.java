@@ -23,10 +23,10 @@ public class KafkaSenderProxy {
 	public KafkaSenderProxy(KafkaProducerConfig config, KafkaExecuteStrategy executeMode) {
 		try {
 			switch (executeMode) {
-			case Async:
+			case ASYNC:
 				setSenderStrategy(new KafkaAsyncProducer(config));
 				break;
-			case Sync:
+			case SYNC:
 				setSenderStrategy(new KafkaSycnProducer(config));
 				break;
 			default:

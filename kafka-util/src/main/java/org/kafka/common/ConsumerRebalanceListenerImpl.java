@@ -14,7 +14,11 @@ public class ConsumerRebalanceListenerImpl implements ConsumerRebalanceListener 
 
 	@Override
 	public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
-		// TODO Auto-generated method stub
+		
+		for(TopicPartition topicPartition:partitions) {
+			//topicPartition.
+			
+		}
 
 	}
 
@@ -23,5 +27,10 @@ public class ConsumerRebalanceListenerImpl implements ConsumerRebalanceListener 
 		// TODO Auto-generated method stub
 
 	}
+	
+//	private PartitionOffset getPartitionOffset(int topicPartition) {
+//		
+//		return null;
+//	}
 
 }

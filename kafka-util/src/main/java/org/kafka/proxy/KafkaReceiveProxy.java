@@ -22,10 +22,10 @@ public class KafkaReceiveProxy {
 	public KafkaReceiveProxy(KafkaConsumerConfig config, KafkaExecuteStrategy executeStrategy) {
 		try {
 			switch (executeStrategy) {
-			case Async:
+			case ASYNC:
 				setReceiveStrategey(new KafkaAsyncConsumer(config));
 				break;
-			case Sync:
+			case SYNC:
 				setReceiveStrategey(new KafkaSyncConsumer(config));
 				break;
 			default:
