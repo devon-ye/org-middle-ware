@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 public class KafkaSenderProxy {
 	private Logger logger = LoggerFactory.getLogger(KafkaSenderProxy.class);
 	
-	private KafkaSenderStrategy senderStrategy;
+	private AbstractSenderStrategy senderStrategy;
 
 	public KafkaSenderProxy(KafkaProducerConfig config, KafkaExecuteStrategy executeMode) {
 		try {
@@ -46,7 +46,7 @@ public class KafkaSenderProxy {
 		senderStrategy.close();
 	}
 
-	private void setSenderStrategy(KafkaSenderStrategy senderStrategy) {
+	private void setSenderStrategy(AbstractSenderStrategy senderStrategy) {
 		this.senderStrategy = senderStrategy;
 	}
 }

@@ -9,7 +9,7 @@ import org.kafka.consumer.common.KafkaConsumerConfig;
 import org.kafka.common.IMessageListener;
 import org.kafka.consumer.common.AbstrctReceiveWrapper;
 import org.kafka.consumer.common.ReceiveDataThread;
-import org.kafka.proxy.KafkaReceiveStrategegy;
+import org.kafka.proxy.AbstrctReceiveStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,13 +18,13 @@ import org.slf4j.LoggerFactory;
  * @author Devonmusa
  * @date 2017年4月27日
  */
-public class KafkaAsyncConsumer extends KafkaReceiveStrategegy {
+public class KafkaAsyncConsumer extends AbstrctReceiveStrategy {
 	private static final Logger LOG = LoggerFactory.getLogger(KafkaAsyncConsumer.class);
 
 	private KafkaAsyncReceiverWrapper kafkaAsyncReceiverWrapper;
 	private List<PartitionInfo> partitionInfos;
 	
-	private Map<Integer,ReceiveDataThread> partitionRreceiveThreadMap = new HashMap<>();
+	private Map<Integer,ReceiveDataThread> partitionRreceiveThreadMap = new HashMap<>(16);
 	
 
 	public KafkaAsyncConsumer(KafkaConsumerConfig conumerConfig) {
@@ -39,7 +39,7 @@ public class KafkaAsyncConsumer extends KafkaReceiveStrategegy {
 			ReceiveDataThread receiveThread= partitionRreceiveThreadMap.get(patition);
 			if(receiveThread == null) {
 				AbstrctReceiveWrapper receiveWrapper = kafkaAsyncReceiverWrapper.clone();
-				receiveThread  = new ReceiveDataThread(receiveWrapper,imessageListener);
+				receiveThread  = new ReceiveDataThread(receiveWrapper,imessageListener,null);
 				receiveThread.setName("receiveThread-" + patition);
 				receiveThread.start();
 			}

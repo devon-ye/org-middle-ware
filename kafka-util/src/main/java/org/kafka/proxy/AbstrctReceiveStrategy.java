@@ -7,7 +7,7 @@ import org.kafka.common.IMessageListener;
 *@author Devonmusa
 *@date   2017年4月27日
 */
-public abstract class KafkaReceiveStrategegy {
+public abstract class AbstrctReceiveStrategy {
 	
 	public abstract void receive();
 	

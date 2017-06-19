@@ -39,9 +39,10 @@ public class KafkaSenderTest {
 		System.setProperty("log.home", System.getProperty("user.dir") + "/log");
 		KafkaUtils.initLogback();
 		producerConfig = KafkaProducerConfig.getInstance();
-		producerConfig.setTopic("YDW.Q");
-		//producerConfig.setTopic("DEFAULT_TOPIC.Q");
-		producerConfig.setZookeeperUrl("192.168.1.10:2182");
+		//producerConfig.setTopic("YDW.Q");
+		producerConfig.setTopic("DEFAULT_TOPIC.Q");
+		producerConfig.setZookeeperUrl("server1.xdpp.boco:3181");
+		//producerConfig.setZookeeperUrl("192.168.1.10:2182");
 		//producerConfig.setZookeeperUrl("123.207.161.145:2182");
 		props = new Properties();
 		producerConfig.setProperties(props);
@@ -52,7 +53,7 @@ public class KafkaSenderTest {
 	public void syncSendTest() {
 		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaExecuteStrategy.SYNC);
 		int i = 0;
-		while (i < 80000) {
+		while (i < 200000) {
 			header = new MessageHeader(i, 100);
 			byte[] data = ("message" + i).getBytes();
 			kafkaSender.send(header, data);
@@ -66,7 +67,7 @@ public class KafkaSenderTest {
 	public void asyncSendTest() {
 		kafkaSender = new KafkaSenderProxy(producerConfig, KafkaExecuteStrategy.ASYNC);
 		int i = 0;
-		while (i < 200000) {
+		while (i < 1000000) {
 			header = new MessageHeader(i, 100);
 		//	header = new MessageHeader(i, 6, 1);
 			byte[] data = ("message" + i).getBytes();
@@ -92,6 +93,7 @@ public class KafkaSenderTest {
 		if(usedTimeSecond ==0)
 			usedTimeSecond =1;
 		long avgSpeed = total / usedTimeSecond;
-		LOGGER.info("usedTimeNS=" + usedTimeNS + "ns, usedTimeSecond=" + usedTimeSecond +"s, total="+total+", avgSpeed=" +avgSpeed +"item/s");
+		LOGGER.info(" avgSpeed = " +avgSpeed +"item/s");
+		LOGGER.info("usedTimeSecond=" + usedTimeSecond +"s, total="+total);
 	}
 }

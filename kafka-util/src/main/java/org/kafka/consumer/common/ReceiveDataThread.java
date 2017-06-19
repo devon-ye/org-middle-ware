@@ -1,8 +1,14 @@
 package org.kafka.consumer.common;
 
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.errors.WakeupException;
+import org.kafka.common.ConsumerRebalanceListenerImpl;
 import org.kafka.common.IMessageListener;
 import org.kafka.common.MessageHeader;
 
@@ -18,28 +24,47 @@ public class ReceiveDataThread extends Thread {
 	private final Logger log = LoggerFactory.getLogger(ReceiveDataThread.class);
 
 	private KafkaConsumer<MessageHeader, byte[]> kafkaConsumer;
+	private ConsumerRebalanceListener consumerRebalanceListener;
 
 	private AbstrctReceiveWrapper receiveWrapper;
 
 	private IMessageListener imessageListener;
 
 	private volatile boolean isRunning = false;
-	
 
-	public ReceiveDataThread(AbstrctReceiveWrapper receiveWrapper, IMessageListener imessageListener) {
+	public ReceiveDataThread(AbstrctReceiveWrapper receiveWrapper, IMessageListener imessageListener,ConsumerRebalanceListener consumerRebalanceListener) {
 		this.receiveWrapper = receiveWrapper;
 		this.imessageListener = imessageListener;
+		this.consumerRebalanceListener = consumerRebalanceListener;
 	}
 
 	public void run() {
+		kafkaConsumer.subscribe( receiveWrapper.getTopics(), consumerRebalanceListener);
+		//kafkaConsumer.subscribe(Arrays.asList("topic"));
 		isRunning = true;
-		while (isRunning) {
-			receiveWrapper.receive(imessageListener);
+
+		try {
+			while (isRunning) {
+				receiveWrapper.receive(imessageListener);
+
+				ConsumerRecords records = kafkaConsumer.poll(10000);
+				// Handle new records
+			}
+		} catch (WakeupException e) {
+			// Ignore exception if closing
+			if (isRunning) {
+				throw e;
+			}
+				
+		} finally {
+			kafkaConsumer.close();
 		}
 
 	}
 
 	public boolean dispose() {
+
+		kafkaConsumer.wakeup();
 		return isRunning = false;
 	}
 }

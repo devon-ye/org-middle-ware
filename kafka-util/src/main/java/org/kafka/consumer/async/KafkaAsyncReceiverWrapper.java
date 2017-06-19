@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.PartitionInfo;
+import org.kafka.common.ConsumerOffsetCommitedThread;
 import org.kafka.common.ConsumerRebalanceListenerImpl;
 import org.kafka.common.IMessageListener;
 import org.kafka.common.MessageHeader;
@@ -27,7 +29,9 @@ public class KafkaAsyncReceiverWrapper extends AbstrctReceiveWrapper {
 
 	private final static Logger LOG = LoggerFactory.getLogger(KafkaAsyncReceiverWrapper.class);
 
-	private ConsumerRebalanceListenerImpl consumerRebalanceListenerImpl;
+	private ConsumerRebalanceListener consumerRebalanceListener;
+	
+	private ConsumerOffsetCommitedThread consumerOffsetCommitedThread;
 
 	private KafkaConsumer<MessageHeader, byte[]> kafkaConsumer;
 	
@@ -43,7 +47,7 @@ public class KafkaAsyncReceiverWrapper extends AbstrctReceiveWrapper {
 
 	public KafkaAsyncReceiverWrapper(KafkaConsumerConfig consumerConfig) {
 		this.consumerConfig = consumerConfig;
-		this.consumerRebalanceListenerImpl = consumerRebalanceListenerImpl;
+	
 		init();
 	}
 	@Override
@@ -79,7 +83,7 @@ public class KafkaAsyncReceiverWrapper extends AbstrctReceiveWrapper {
 
 			reTryConnect();
 		} finally {
-			subscriptionTopics();
+		//	subscriptionTopics();
 
 		}
 
@@ -121,14 +125,16 @@ public class KafkaAsyncReceiverWrapper extends AbstrctReceiveWrapper {
 
 	}
 
-	private void subscriptionTopics() {
-		String topic = consumerConfig.getTopic();
-		Collection<String> topics = new ArrayList<>();
-		topics.add(topic);
-		kafkaConsumer.subscribe(topics);
-	//	kafkaConsumer.subscribe(topics, consumerRebalanceListenerImpl);
-
-	}
+//	private void subscriptionTopics() {
+//		String topic = consumerConfig.getTopic();
+//		Collection<String> topics = new ArrayList<>();
+//		topics.add(topic);
+//	   consumerOffsetCommitedThread = new ConsumerOffsetCommitedThread();
+//		consumerRebalanceListener = new ConsumerRebalanceListenerImpl(consumerOffsetCommitedThread);
+//	//	kafkaConsumer.subscribe(topics);
+//		kafkaConsumer.subscribe(topics, consumerRebalanceListener);
+//
+//	}
 
 	public List<PartitionInfo> getPartitionInfos() {
 		partitionInfos = kafkaConsumer.partitionsFor(consumerConfig.getTopic());
@@ -144,6 +150,13 @@ public class KafkaAsyncReceiverWrapper extends AbstrctReceiveWrapper {
 			LOG.error("KafkaAsyncReceiverWrapper clone failed! Exception: " + e);
 		}
 		return null;
+	}
+	@Override
+	public Collection<String> getTopics() {
+		String topic = consumerConfig.getTopic();
+		Collection<String> topics = new ArrayList<>();
+		topics.add(topic);
+		return topics;
 	}
 
 }

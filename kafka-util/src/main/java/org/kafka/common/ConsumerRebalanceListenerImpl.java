@@ -1,9 +1,13 @@
 package org.kafka.common;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
 import org.apache.kafka.common.TopicPartition;
+import org.kafka.consumer.async.KafkaAsyncConsumer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -11,26 +15,42 @@ import org.apache.kafka.common.TopicPartition;
  * @date 2017年6月1日
  */
 public class ConsumerRebalanceListenerImpl implements ConsumerRebalanceListener {
-
+	private static final Logger LOG = LoggerFactory.getLogger(ConsumerRebalanceListenerImpl.class); 
+	
+	private ConsumerOffsetCommitedThread consumerOffsetCommitedThread;
+	private List<String>  topics;
+	
+	
+	
+	public ConsumerRebalanceListenerImpl(ConsumerOffsetCommitedThread consumerOffsetCommitedThread) {
+		this.consumerOffsetCommitedThread = consumerOffsetCommitedThread;
+	}
+	
 	@Override
 	public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
 		
-		for(TopicPartition topicPartition:partitions) {
-			//topicPartition.
-			
-		}
+		consumerOffsetCommitedThread.commitedOffset(partitions);
+		LOG.info("partitions = " + partitions);
+		
 
 	}
 
 	@Override
 	public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
-		// TODO Auto-generated method stub
+		
+		consumerOffsetCommitedThread.recoverOffset(partitions);
 
 	}
+
+	public List<String> getTopics() {
+		return topics;
+	}
+
+	public void setTopics(List<String> topics) {
+		this.topics = topics;
+	}
 	
-//	private PartitionOffset getPartitionOffset(int topicPartition) {
-//		
-//		return null;
-//	}
+	
+	
 
 }

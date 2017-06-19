@@ -12,7 +12,7 @@ import org.kafka.common.MessageHeader;
 import org.kafka.producer.common.KafkaProducerConfig;
 import org.kafka.producer.common.ProducerRecordWrapper;
 import org.kafka.producer.common.SendDataThread;
-import org.kafka.proxy.KafkaSenderStrategy;
+import org.kafka.proxy.AbstractSenderStrategy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author Devonmusa
  * @date 2017年4月27日
  */
-public class KafkaSycnProducer extends KafkaSenderStrategy {
+public class KafkaSycnProducer extends AbstractSenderStrategy {
 	private static final Logger LOG = LoggerFactory.getLogger(KafkaSycnProducer.class);
 
 	public static final Map<Integer, LinkedTransferQueue<ProducerRecordWrapper>> PARTITION_SENDQUEU_MAP = new ConcurrentHashMap<>();

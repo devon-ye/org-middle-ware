@@ -17,7 +17,7 @@ public class KafkaReceiveProxy {
 
 	private static final Logger LOG = LoggerFactory.getLogger(KafkaReceiveProxy.class);
 
-	private KafkaReceiveStrategegy receiveStrategegy;
+	private AbstrctReceiveStrategy receiveStrategegy;
 
 	public KafkaReceiveProxy(KafkaConsumerConfig config, KafkaExecuteStrategy executeStrategy) {
 		try {
@@ -48,7 +48,7 @@ public class KafkaReceiveProxy {
 		receiveStrategegy.close();
 	}
 
-	private void setReceiveStrategey(KafkaReceiveStrategegy receiveStrategegy) {
+	private void setReceiveStrategey(AbstrctReceiveStrategy receiveStrategegy) {
 		this.receiveStrategegy = receiveStrategegy;
 	}
 
