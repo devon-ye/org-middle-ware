@@ -29,10 +29,6 @@ public class KafkaAsyncReceiverWrapper extends AbstrctReceiveWrapper {
 
 	private final static Logger LOG = LoggerFactory.getLogger(KafkaAsyncReceiverWrapper.class);
 
-	private ConsumerRebalanceListener consumerRebalanceListener;
-	
-	private ConsumerOffsetCommitedThread consumerOffsetCommitedThread;
-
 	private KafkaConsumer<MessageHeader, byte[]> kafkaConsumer;
 	
 	private ConsumerRecords<MessageHeader, byte[]> consumerRecords;
@@ -43,7 +39,7 @@ public class KafkaAsyncReceiverWrapper extends AbstrctReceiveWrapper {
 
 	private int reTryCount = 0;
 
-	private final static int MAX_RECONNET_TIMES = 5;
+	private final static int MAX_RECONNET_TIMES = 7;
 
 	public KafkaAsyncReceiverWrapper(KafkaConsumerConfig consumerConfig) {
 		this.consumerConfig = consumerConfig;
@@ -113,7 +109,7 @@ public class KafkaAsyncReceiverWrapper extends AbstrctReceiveWrapper {
 		}
 		if (reTryCount <= MAX_RECONNET_TIMES) {
 			try {
-				Thread.sleep(3000 * reTryCount);
+				Thread.sleep(5000 * reTryCount);
 				connect();
 			} catch (Exception e) {
 				LOG.error("Kafka Consumer reConncet  " + reTryCount + "  failed!!!");

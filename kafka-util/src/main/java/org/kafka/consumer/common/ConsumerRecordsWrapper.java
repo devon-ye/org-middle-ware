@@ -8,7 +8,7 @@ import org.kafka.common.MessageHeader;
 *@author Devonmusa
 *@date   2017年5月13日
 */
-public class ConsumerRecordWrapper {
+public class ConsumerRecordsWrapper {
 	
 	private ConsumerRecord<MessageHeader,byte[]> consumerRecord;
 
