@@ -40,11 +40,17 @@ public class KafkaAsyncConsumer extends AbstrctReceiveStrategy {
 		kafkaAsyncReceiverWrapper = new KafkaAsyncReceiverWrapper(conumerConfig);
 		partitionInfos = kafkaAsyncReceiverWrapper.getPartitionInfos();
 	}
-
+	
+	public void init() {
+		
+	}
+	
+	
 	@Override
 	public void receive(final  IMessageListener imessageListener) {
 		consumerOffsetCommitedThread = new ConsumerOffsetCommitedThread();
 		consumerRebalanceListener =new ConsumerRebalanceListenerImpl(consumerOffsetCommitedThread);
+		
 		for (PartitionInfo partitionInfo : partitionInfos) {
 			int patition = partitionInfo.partition();
 			ReceiveDataThread receiveThread= partitionRreceiveThreadMap.get(patition);
@@ -53,9 +59,12 @@ public class KafkaAsyncConsumer extends AbstrctReceiveStrategy {
 				receiveThread  = new ReceiveDataThread(receiveWrapper,imessageListener,consumerRebalanceListener);
 				receiveThread.setName("receiveThread-" + patition);
 				receiveThread.start();
+				partitionRreceiveThreadMap.put(patition, receiveThread);
+				LOG.info("Consumer  "+ receiveThread +" started recevier...");
 			}
+			
 		}
-		LOG.info("Consumer start recevier...");
+		
 	}
 
 	@Override

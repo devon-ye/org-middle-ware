@@ -46,9 +46,6 @@ public class ReceiveDataThread extends Thread {
 		try {
 			while (isRunning) {
 				receiveWrapper.receive(imessageListener);
-
-				ConsumerRecords records = kafkaConsumer.poll(10000);
-				// Handle new records
 			}
 		} catch (WakeupException e) {
 			// Ignore exception if closing

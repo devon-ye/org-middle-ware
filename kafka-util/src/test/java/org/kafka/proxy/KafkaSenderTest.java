@@ -39,10 +39,10 @@ public class KafkaSenderTest {
 		System.setProperty("log.home", System.getProperty("user.dir") + "/log");
 		KafkaUtils.initLogback();
 		producerConfig = KafkaProducerConfig.getInstance();
-		//producerConfig.setTopic("YDW.Q");
-		producerConfig.setTopic("DEFAULT_TOPIC.Q");
-		producerConfig.setZookeeperUrl("server1.xdpp.boco:3181");
-		//producerConfig.setZookeeperUrl("192.168.1.10:2182");
+		producerConfig.setTopic("YDW.Q");
+		//producerConfig.setTopic("DEFAULT_TOPIC.Q");
+		//producerConfig.setZookeeperUrl("server1.xdpp.boco:3181");
+		producerConfig.setZookeeperUrl("192.168.1.10:2182");
 		//producerConfig.setZookeeperUrl("123.207.161.145:2182");
 		props = new Properties();
 		producerConfig.setProperties(props);

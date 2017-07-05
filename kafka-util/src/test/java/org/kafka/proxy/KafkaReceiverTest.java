@@ -41,22 +41,21 @@ public class KafkaReceiverTest {
 
 	@Test
 	public void testAsyncReceiver() {
-		while (true) {
-			kafkaReceiverProxy.receive(new IMessageListener() {
 
-				@Override
-				public void onMessage(MessageHeader header, byte[] data) {
-					System.out.println("header:" + header + ",  value:" + data);
-				}
-				
-			});
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		kafkaReceiverProxy.receive(new IMessageListener() {
+			@Override
+			public void onMessage(MessageHeader header, byte[] data) {
+				System.out.println("header:" + header + ",  value:" + data);
 			}
+
+		});
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 	}
 
 	@After
@@ -64,7 +63,6 @@ public class KafkaReceiverTest {
 		try {
 			Thread.sleep(1000 * 500);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		kafkaReceiverProxy.close();
