@@ -8,7 +8,7 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	
-	<groupId>com.utils</groupId>
+	<groupId>org.yutils</groupId>
 	<artifactId>com-middle-ware</artifactId>
 	<packaging>pom</packaging>
 	<version>1.0.0-SNAPSHOT</version>
@@ -42,11 +42,12 @@
 		<!-- <dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> <version>4.12</version> <scope>test</scope> </dependency> -->
 	</dependencies>
 	<modules>
-		<module>infinispan-util</module>
-		<module>kafka-util</module>
-		<module>zookeeper-util</module>
-		<module>dubbo-util</module>
-		<module>ice-util</module>
+		<module>yutil-infinispan</module>
+		<module>yutil-kafka</module>
+		<module>yutil-zookeeper</module>
+		<module>yutil-dubbo</module>
+		<module>yutil-ice</module>
+		<module>yutil-grpc</module>
 	</modules>
 	
 	<build>
@@ -54,13 +55,38 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+		    </plugin> -->
+		    <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+			</plugin>
+	
 		</plugins>
 	</build>
 </project>
