@@ -1,2 +1,7 @@
+.settings/*
+.idea/*
 /target/
-/pom.xml
+.classpath
+.project
+/log/*
+!/log/

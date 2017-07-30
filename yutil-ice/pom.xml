@@ -3,14 +3,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.utils</groupId>
-    <artifactId>com-middle-ware</artifactId>
+    <groupId>org.yutils</groupId>
+    <artifactId>org-middle-ware</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ice-util</artifactId>
+  <artifactId>yutil-ice</artifactId>
  <!--  <version>1.0.0-SNAPSHOT</version> -->
-  <name>ice-util</name>
+  <name>yutil-ice</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

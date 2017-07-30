@@ -1,7 +1,7 @@
-/target/
-*.classpath*
-*.project*
-log/**/*.log
-!log/
 .settings/*
-!doc/
+.idea/*
+/target/
+.classpath
+.project
+/log/*
+!/log/
