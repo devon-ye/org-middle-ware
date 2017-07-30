@@ -3,5 +3,5 @@
 *.project*
 log/**/*.log
 !log/
-*/.settings/*
+.settings/*
 !doc/
