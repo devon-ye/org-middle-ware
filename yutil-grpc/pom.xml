@@ -3,11 +3,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.yutils</groupId>
-		<relativePath>../org-middle-ware/pom.xml</relativePath>
 		<artifactId>org-middle-ware</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<groupId>com.yutils</groupId>
+	<groupId>org.yutils</groupId>
 	<artifactId>yutil-grpc</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>yutil-grpc</name>
