@@ -1,4 +1,7 @@
 package org.yutil.lucene.index.model;
+
+import org.apache.lucene.analysis.Analyzer;
+
 /**
 *
 *@author Devonmusa
@@ -12,6 +15,7 @@ public class ConfigBean {
 	private double indexReopenMinStateSeconds = 0.25;
 	private int indexCommitSeconds = 60;
 	private Analyzer analyzer = new StandarAnalyzer(Version.LUCENE_43);
+	
 	public long getIndexId() {
 		return indexId;
 	}

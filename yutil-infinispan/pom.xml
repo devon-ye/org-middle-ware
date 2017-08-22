@@ -12,9 +12,15 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<infinispan.version>9.0.0.Final</infinispan.version>
+		<infinispan.version>9.1.0.Final</infinispan.version>
 	</properties>
 	<dependencies>
+		
+		<dependency>
+			<groupId>org.infinispan</groupId>
+			<artifactId>infinispan-cloud</artifactId>
+			<version>9.1.0.Final</version>
+		</dependency>
 		<dependency>
 			<groupId>org.infinispan</groupId>
 			<artifactId>infinispan-core</artifactId>
