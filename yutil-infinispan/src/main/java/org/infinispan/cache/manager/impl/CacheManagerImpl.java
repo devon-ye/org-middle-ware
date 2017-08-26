@@ -28,6 +28,7 @@ public class CacheManagerImpl implements ICacheManager{
 	public void init() {
 		defaultCacheManager =new DefaultCacheManager(cacheManagerConfig.getGlobalConfiguration(), cacheManagerConfig.getDefaultConfiguration());
 		defaultCacheManager.addListener(cacheManagerListener);
+		defaultCacheManager.start();
 	}
 
 
