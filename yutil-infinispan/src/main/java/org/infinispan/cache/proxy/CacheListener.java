@@ -1,4 +1,4 @@
-package org.infinispan.cache.listener;
+package org.infinispan.cache.proxy;
 
 
 
@@ -18,8 +18,8 @@ import org.slf4j.LoggerFactory;
 *@date 2017年4月3日
 */
 @Listener
-public class LoggerListener implements IListener{
-	private Logger log =  LoggerFactory.getLogger(LoggerListener.class);
+public class CacheListener implements ICacheListener{
+	private Logger log =  LoggerFactory.getLogger(CacheListener.class);
 
 	@CacheEntryCreated
 	public void observeAdd(CacheEntryCreatedEvent<Object, Object> event) {

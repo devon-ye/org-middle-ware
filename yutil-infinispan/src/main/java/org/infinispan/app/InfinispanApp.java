@@ -1,4 +1,4 @@
-package org.infinispan.cache.monitor;
+package org.infinispan.app;
 /**
 *@see
 *@author  Devonmusa
