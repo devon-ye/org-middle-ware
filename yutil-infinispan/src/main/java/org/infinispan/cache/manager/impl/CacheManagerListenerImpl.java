@@ -5,6 +5,8 @@ import org.infinispan.notifications.cachemanagerlistener.event.CacheStartedEvent
 import org.infinispan.notifications.cachemanagerlistener.event.CacheStoppedEvent;
 import org.infinispan.notifications.cachemanagerlistener.event.MergeEvent;
 import org.infinispan.notifications.cachemanagerlistener.event.ViewChangedEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
 *
@@ -12,28 +14,29 @@ import org.infinispan.notifications.cachemanagerlistener.event.ViewChangedEvent;
 *@date   2017年8月27日
 */
 public class CacheManagerListenerImpl implements ICacheManagerListener {
+	private static Logger logger = LoggerFactory.getLogger(CacheManagerListenerImpl.class);
 
 	@Override
 	public void onCacheStartedEvent(CacheStartedEvent event) {
-		// TODO Auto-generated method stub
+		logger.info("onCacheStartedEvent, CacheStartedEvent=" +event);
 
 	}
 
 	@Override
 	public void onCacheStoppedEvent(CacheStoppedEvent event) {
-		// TODO Auto-generated method stub
+		logger.info("onCacheStoppedEvent, CacheStoppedEvent=" +event);
 
 	}
 
 	@Override
 	public void onViewChangedEvent(ViewChangedEvent event) {
-		// TODO Auto-generated method stub
+		logger.info("onViewChangedEvent, ViewChangedEvent=" +event);
 
 	}
 
 	@Override
 	public void onMergeEvent(MergeEvent event) {
-		// TODO Auto-generated method stub
+		logger.info("onMergeEvent, MergeEvent=" +event);
 
 	}
 

@@ -32,14 +32,6 @@ public class CacheManagerImpl implements ICacheManager{
 	}
 
 
-
-	
-
-	private  DefaultCacheManager getDefaultCacheManager() {
-		return new DefaultCacheManager();
-	}
-
-
 	@Override
 	public void createCache(String cacheName) {
 		// TODO Auto-generated method stub

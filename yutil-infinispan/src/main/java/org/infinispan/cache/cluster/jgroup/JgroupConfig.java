@@ -5,5 +5,7 @@ package org.infinispan.cache.cluster.jgroup;
 *@date   2017年8月27日
 */
 public class JgroupConfig {
+	private String bindServer;
+	
 
 }

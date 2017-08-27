@@ -37,23 +37,32 @@ public class CacheProxyImpl<K,V> implements ICacheProxy{
 		cache.put(key, value);
 	}
 	
-	public void getAsyncCacheValue(K key) {
+	public void getAsyncCacheValue(K key) throws Exception{
 		CompletableFuture<V>  completableFuture= cache.getAsync(key);
+		if(completableFuture == null) {
+			logger.error("getAsyncCacheValue, completableFuture is null!");
+			throw new NullPointerException("getAsyncCacheValue, completableFuture is null!");
+		}
 		try {
 			completableFutureQueue.put(completableFuture);
-		} catch (InterruptedException e) {
+		} catch (InterruptedException e) {			
 			logger.error("getAsyncCacheValue, completableFutureQueue.put is error! InterruptedException:" ,e);
+			throw new InterruptedException("getAsyncCacheValue, completableFutureQueue.put is error");
 		}
 	}
 	
-	public void putAsync(K key,V value){
+	public void putAsync(K key,V value) throws Exception{
 		CompletableFuture<V>  completableFuture= cache.putAsync(key, value);
+		if(completableFuture == null) {
+			logger.error("putAsync, completableFuture is null!");
+			throw new NullPointerException("putAsync, completableFuture is null!");
+		}
 		try {
 			completableFutureQueue.put(completableFuture);
 		} catch (InterruptedException e) {
 			logger.error("putAsync, completableFutureQueue.put is error! InterruptedException:" ,e);
-
-		}
+			throw new InterruptedException("putAsync, completableFutureQueue.put is error");		
+	    }
 	}
 	
 }
