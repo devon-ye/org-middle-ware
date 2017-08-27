@@ -47,6 +47,10 @@
 			<version>${logback.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com</groupId>
 			<artifactId>java-utils</artifactId>
 			<version>1.0.0-SNAPSHOT</version>

@@ -36,7 +36,7 @@ public class CluseterQuery<K, V> {
 	}
 
 	public List<Object> getQueryAll() {
-		matchAllDocsQuery.createWeight(searcher, needsScores);
+	//	matchAllDocsQuery.createWeight(searcher, needsScores);
 
 		clusteredQuery = searchManager.getClusteredQuery(matchAllDocsQuery, Object.class);
 		List<Object> result = clusteredQuery.list();
@@ -44,11 +44,11 @@ public class CluseterQuery<K, V> {
 
 	}
 
-	public Object getQuery() {
-		Query luceneQuery = new Query();
-		clusteredQuery = searchManager.getQuery(luceneQuery, Object.class);
-		FullTextFilter fullTextFilter = clusteredQuery.enableFullTextFilter(name);
-	}
+//	public Object getQuery() {
+//	//	Query luceneQuery = new Query();
+//	//	clusteredQuery = searchManager.getQuery(luceneQuery, Object.class);
+//	//	FullTextFilter fullTextFilter = clusteredQuery.enableFullTextFilter(name);
+//	}
 	
 	public long  getQueryExecutionCount() {
 		return statistics.getSearchQueryExecutionCount();
