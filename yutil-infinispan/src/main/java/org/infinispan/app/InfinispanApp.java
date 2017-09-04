@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
 import org.apache.log4j.PropertyConfigurator;
+import org.infinispan.cache.cluster.jgroup.JgroupConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +29,8 @@ public class InfinispanApp {
 			
 			initLogback(userDir);
 			
+			initJgroupConfig();
+			
  			initCache();
 
 			initHealthyChecks();
@@ -37,7 +40,12 @@ public class InfinispanApp {
 		}
 
 	}
-
+	
+	private static void initJgroupConfig() {
+		JgroupConfig  jgroupConfig=new JgroupConfig("8800");
+		jgroupConfig.init();
+	}
+	
 	private static void initCache() {
 
 	}
