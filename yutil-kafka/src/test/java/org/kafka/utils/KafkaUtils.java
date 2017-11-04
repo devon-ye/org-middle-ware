@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.devonmusa.util.env.EnvironmentUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +11,7 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 
 /**
-*@see
+*
 *@author  Devonmusa
 *@date 2017年4月21日
 */
@@ -22,10 +21,10 @@ public class KafkaUtils {
 	
 	public static void initLogback() throws FileNotFoundException, IOException, Exception {
 		LOG.info("start init logback!");
-		String appHome = EnvironmentUtils.getAppHome();
+		String appHome = System.getProperty("user.dir");
 		System.setProperty("log.home", appHome +"/log");
 		System.setProperty("log.dir", appHome +"/log");
-		String logBackConfig = appHome + "/config/logback.xml";
+		String logBackConfig = appHome + "/config/log/logback.xml";
 		File logBackConfigFile = new File(logBackConfig);
 		if (logBackConfigFile.exists()) {
 			LoggerContext loggerContext = (LoggerContext) org.slf4j.LoggerFactory.getILoggerFactory();
