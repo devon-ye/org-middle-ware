@@ -26,13 +26,15 @@
         <hadoop.version>3.0.0-alpha4</hadoop.version>
         <infinispan.version>9.1.0.Final</infinispan.version>
         <icegrid.version>3.6.2</icegrid.version>
+        <dubbo.version>2.5.6</dubbo.version>
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <spring.version>4.3.10.RELEASE</spring.version>
         <springframework.version>5.0.0.RELEASE</springframework.version>
         <zookeeper.version>3.4.9</zookeeper.version>
+        <zkclient.version>0.10</zkclient.version>
         <kafka.version>0.10.0.2</kafka.version>
         <fastjson.version>1.2.30</fastjson.version>
-        <slf4j.version>1.7.6</slf4j.version>
+        <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.0</logback.version>
         <log4j.version>1.2.17</log4j.version>
         <commons3.version>3.0.0</commons3.version>
@@ -81,7 +83,7 @@
             <dependency>
                 <groupId>com.101tec</groupId>
                 <artifactId>zkclient</artifactId>
-                <version>0.5</version>
+                <version>${zkclient.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>org.slf4j</groupId>
@@ -89,7 +91,7 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-
+            <!-- rpc framework  dependency-->
             <dependency>
                 <groupId>zeroc</groupId>
                 <artifactId>icegridgui</artifactId>
@@ -99,6 +101,11 @@
                 <groupId>zeroc</groupId>
                 <artifactId>ice</artifactId>
                 <version>${icegrid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
             </dependency>
 
             <!-- spring dependency -->
@@ -208,7 +215,11 @@
                 <version>${fastjson.version}</version>
             </dependency>
 
-
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
             <!-- <dependency> </dependency> -->
             <dependency>
                 <groupId>ch.qos.logback</groupId>
@@ -223,6 +234,12 @@
             <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>2.9.0</version>
             </dependency>
 
             <dependency>

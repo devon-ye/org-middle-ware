@@ -5,4 +5,5 @@
 .project
 /log/*
 !/log
-/yutil-kafka/yutil-kafka.iml
+/***/***.iml
+

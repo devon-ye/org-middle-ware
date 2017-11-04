@@ -6,4 +6,4 @@
 /log/*
 !/log/
 /.gitignore
-/**/**.iml
+/yutil-kafka.iml
