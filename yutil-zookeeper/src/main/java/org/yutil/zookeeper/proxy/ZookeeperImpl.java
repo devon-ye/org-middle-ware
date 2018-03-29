@@ -80,7 +80,7 @@ public class ZookeeperImpl implements IZookeeper {
 		try {
 			zooKeeper.create(path, "22".getBytes(), Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
 		} catch (KeeperException e) {
-			LOGGER.error("KeeperException" + e);
+			LOGGER.error("KeeperException" ,e);
 		} catch (InterruptedException e) {
 			LOGGER.error("InterruptedException" + e);
 		}

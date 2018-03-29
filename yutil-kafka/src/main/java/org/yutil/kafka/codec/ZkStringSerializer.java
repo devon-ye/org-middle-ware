@@ -2,6 +2,8 @@ package org.yutil.kafka.codec;
 
 import org.I0Itec.zkclient.exception.ZkMarshallingError;
 import org.I0Itec.zkclient.serialize.ZkSerializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -10,7 +12,7 @@ import org.I0Itec.zkclient.serialize.ZkSerializer;
  */
 public class ZkStringSerializer implements ZkSerializer {
 	
-//	private static final Logger LOG = LoggerFactory.getLogger(ZkStringSerializer.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ZkStringSerializer.class);
 
 	@Override
 	public byte[] serialize(Object data) throws ZkMarshallingError {

@@ -66,6 +66,7 @@ public class KafkaSyncSendWrapper extends AbstractSendWrapper {
 
 	}
 
+	@Override
 	public void send(ProducerRecordWrapper producerRecordWrapper) {
 
 		long key = producerRecordWrapper.getProducerRecord().key().getKey();
