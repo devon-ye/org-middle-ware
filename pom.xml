@@ -34,7 +34,7 @@
         <springframework.version>5.0.0.RELEASE</springframework.version>
         <zookeeper.version>3.4.9</zookeeper.version>
         <zkclient.version>0.10</zkclient.version>
-        <kafka.version>0.10.0.2</kafka.version>
+        <kafka.version>2.1.0</kafka.version>
         <amqp-client.version>5.2.0</amqp-client.version>
         <fastjson.version>1.2.30</fastjson.version>
         <slf4j.version>1.7.25</slf4j.version>
