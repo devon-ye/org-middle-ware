@@ -347,7 +347,7 @@
 
     </repositories>
     <!-- local deploy repository -->
-    <distributionManagement>
+   <!-- <distributionManagement>
         <repository>
             <id>releases</id>
             <name>Nexus Release Repository</name>
@@ -358,7 +358,7 @@
             <name>Nexus Snapshot Repository</name>
             <url> F:/maven/repository/nexus/content/repositories/releases/</url>
         </snapshotRepository>
-    </distributionManagement>
+    </distributionManagement>-->
     <!-- plugins download repository -->
     <pluginRepositories>
         <pluginRepository>
