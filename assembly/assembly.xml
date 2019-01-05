@@ -5,7 +5,6 @@
 		<format>zip</format>
 	</formats>
 	<fileSets>
-
 		<fileSet>
 			<directory>${project.basedir}/config</directory>
 			<outputDirectory>config</outputDirectory>
@@ -62,32 +61,24 @@
 			<outputDirectory>libs</outputDirectory>
 			<scope>runtime</scope>
 			<excludes>
-				<exclude>*utils*</exclude>			
+				<exclude>yutil*</exclude>
 			</excludes>
 		</dependencySet>
 		<dependencySet>
 			<outputDirectory>plugins</outputDirectory>
 			<scope>runtime</scope>
 			<includes>
-			 	<include>*utils</include>
+			 	<include>yutil*</include>
 			</includes>
 			<excludes>
 				<exclude>*sources*</exclude>
 			</excludes>
 		</dependencySet>
 		<dependencySet>
-			<outputDirectory>libs</outputDirectory>
-			<scope>system</scope>
-			<excludes>
-				<exclude>*utils</exclude>
-			</excludes>
-		</dependencySet>
-		
-		<dependencySet>
 			<outputDirectory>plugins</outputDirectory>
 			<scope>system</scope>
 			<includes>
-				<include>*utils</include>
+				<include>yutil*</include>
 			</includes>
 			<excludes>
 				<exclude>*sources*</exclude>
