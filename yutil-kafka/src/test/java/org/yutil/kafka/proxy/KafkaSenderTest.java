@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.yutil.kafka.common.KafkaExecuteStrategy;
 import org.yutil.kafka.common.MessageHeader;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Devonmusa
  * @date 2017年4月2日
  */
+@Ignore
 public class KafkaSenderTest {
 	private static final Logger LOGGER = LoggerFactory.getLogger(KafkaSenderTest.class);
 	private KafkaProducerConfig producerConfig;
