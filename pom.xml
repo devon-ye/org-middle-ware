@@ -330,7 +330,7 @@
             <name>Central Repository</name>
             <url>http://maven.aliyun.com/nexus/content/groups/public</url>
         </repository>
-        <repository>
+       <!-- <repository>
             <id>local_snapshots</id>
             <name>snapshots</name>
             <url>F:/maven/repository/nexus/content/repositories/snapshots/</url>
@@ -343,8 +343,7 @@
                 <enabled>true</enabled>
                 <updatePolicy>never</updatePolicy>
             </snapshots>
-        </repository>
-
+        </repository>-->
     </repositories>
     <!-- local deploy repository -->
    <!-- <distributionManagement>
