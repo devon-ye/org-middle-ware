@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.yutil.grpc.proto.DemoServiceGrpc;
 import org.yutil.grpc.proto.User;
 import org.yutil.grpc.proto.UserId;
-import org.yutil.grpc.proto.UserList;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;

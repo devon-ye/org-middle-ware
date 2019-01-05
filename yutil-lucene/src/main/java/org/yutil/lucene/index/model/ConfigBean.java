@@ -1,6 +1,9 @@
 package org.yutil.lucene.index.model;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.es.SpanishAnalyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.util.Version;
 
 /**
 *
@@ -14,7 +17,7 @@ public class ConfigBean {
 	private double indexReopenMaxStateSeconds = 10;
 	private double indexReopenMinStateSeconds = 0.25;
 	private int indexCommitSeconds = 60;
-	private Analyzer analyzer = new StandarAnalyzer(Version.LUCENE_43);
+	private Analyzer analyzer = new StandardAnalyzer();
 	
 	public long getIndexId() {
 		return indexId;
