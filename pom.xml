@@ -19,11 +19,11 @@
         <module>yutil-ice</module>
         <module>yutil-grpc</module>
         <module>yutil-lucene</module>
-        <module>yutil-rabbitmq</module>
+        <module>build</module>
     </modules>
 
     <properties>
-
+        <yutil.version>1.0.0-SNAPSHOT</yutil.version>
         <hadoop.version>3.0.0-alpha4</hadoop.version>
         <infinispan.version>9.1.0.Final</infinispan.version>
         <icegrid.version>3.6.2</icegrid.version>
@@ -55,6 +55,41 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.yutils</groupId>
+                <artifactId>yutil-dubbo</artifactId>
+                <version>${yutil.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.yutils</groupId>
+                <artifactId>yutil-grpc</artifactId>
+                <version>${yutil.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.yutils</groupId>
+                <artifactId>yutil-ice</artifactId>
+                <version>${yutil.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.yutils</groupId>
+                <artifactId>yutil-infinispan</artifactId>
+                <version>${yutil.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.yutils</groupId>
+                <artifactId>yutil-kafka</artifactId>
+                <version>${yutil.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.yutils</groupId>
+                <artifactId>yutil-lucene</artifactId>
+                <version>${yutil.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.yutils</groupId>
+                <artifactId>yutil-zookeeper</artifactId>
+                <version>${yutil.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.kafka</groupId>
                 <artifactId>kafka_2.10</artifactId>
@@ -361,8 +396,17 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar-plugin.version}</version>
                     <configuration>
-
+                        <archive>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                                <classpathPrefix>lib/</classpathPrefix>
+                            </manifest>
+                            <manifestEntries>
+                                <Class-Path>./</Class-Path>
+                            </manifestEntries>
+                        </archive>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -430,31 +474,5 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-            </plugin>
-        </plugins>
     </build>
 </project>
