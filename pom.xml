@@ -422,7 +422,7 @@
                             <configuration>
                                 <appendAssemblyId>false</appendAssemblyId>
                                 <descriptors>
-                                    <descriptor>${project.basedir}/../../org-middle-ware/assembly/assembly.xml</descriptor>
+                                    <descriptor>${project.basedir}/assembly/assembly.xml</descriptor>
                                 </descriptors>
                             </configuration>
                         </execution>
