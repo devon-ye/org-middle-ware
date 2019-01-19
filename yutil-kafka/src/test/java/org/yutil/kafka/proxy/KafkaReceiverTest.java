@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.yutil.kafka.common.IMessageListener;
 import org.yutil.kafka.common.KafkaExecuteStrategy;
@@ -18,6 +19,7 @@ import org.yutil.kafka.utils.KafkaUtils;
  * @author Devonmusa
  * @date 2017年5月20日
  */
+@Ignore
 public class KafkaReceiverTest {
 	private KafkaConsumerConfig kafkaConsumerConfig;
 	private KafkaReceiveProxy kafkaReceiverProxy;
