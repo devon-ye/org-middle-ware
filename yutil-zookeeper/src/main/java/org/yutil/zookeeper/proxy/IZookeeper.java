@@ -8,12 +8,12 @@ package org.yutil.zookeeper.proxy;
 */
 public interface IZookeeper {
 	
-	public void init();
+	 void init();
 	
-	public void reTryConnect();
+	 void reTryConnect();
 	
-	public void createNodeOfPersistent(String path);
+	 void createNodeOfPersistent(String path);
 	
-	public boolean close();
+	 boolean close();
 	
 }

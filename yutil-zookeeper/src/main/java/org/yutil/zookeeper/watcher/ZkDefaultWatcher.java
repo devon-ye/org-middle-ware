@@ -9,8 +9,6 @@ import org.apache.zookeeper.Watcher.Event.EventType;
 import org.apache.zookeeper.Watcher.Event.KeeperState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.yutil.zookeeper.proxy.ZookeeperImpl;
-
 /**
  * Describetion:
  * 
