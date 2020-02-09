@@ -17,14 +17,15 @@ public class ZkClientTest {
 	private String path = "/mynode/001";
 	@Test
 	public void testZkConnect() throws Exception {
-		zkClient = new ZkClient("192.168.1.21:2181");
+		zkClient = new ZkClient("localhost:2184");
 		zkClient.init();
 		zkClient.setWatcherForChildsNode("/");
 		zkClient.createNode("/mynode");
 		zkClient.setWatcherForChildsNode("/mynode");
 		zkClient.createNode(path);
 		zkClient.setWatcherForParentNode(path);
-		zkClient.deleteNode(path);	
+
+		zkClient.deleteNode(path);
 		zkClient.deleteNode("/mynode");		
 		
 		Thread.sleep(1000 * 10);

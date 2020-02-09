@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.yutils</groupId>
+    <groupId>org.md</groupId>
     <artifactId>org-middle-ware</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
@@ -12,18 +12,18 @@
     <url>http://maven.apache.org</url>
 
     <modules>
-        <module>yutil-infinispan</module>
-        <module>yutil-kafka</module>
-        <module>yutil-zookeeper</module>
-        <module>yutil-dubbo</module>
-        <module>yutil-ice</module>
-        <module>yutil-grpc</module>
-        <module>yutil-lucene</module>
+        <module>md-infinispan</module>
+        <module>md-kafka</module>
+        <module>md-zookeeper</module>
+        <module>md-dubbo</module>
+        <module>md-ice</module>
+        <module>md-grpc</module>
+        <module>md-lucene</module>
         <module>build</module>
     </modules>
 
     <properties>
-        <yutil.version>1.0.0-SNAPSHOT</yutil.version>
+        <md.version>1.0.0-SNAPSHOT</md.version>
         <hadoop.version>3.0.0-alpha4</hadoop.version>
         <infinispan.version>9.1.0.Final</infinispan.version>
         <icegrid.version>[3.7.1,)</icegrid.version>
@@ -57,39 +57,39 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.yutils</groupId>
-                <artifactId>yutil-dubbo</artifactId>
-                <version>${yutil.version}</version>
+                <groupId>org.md</groupId>
+                <artifactId>md-dubbo</artifactId>
+                <version>${md.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.yutils</groupId>
-                <artifactId>yutil-grpc</artifactId>
-                <version>${yutil.version}</version>
+                <groupId>org.md</groupId>
+                <artifactId>md-grpc</artifactId>
+                <version>${md.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.yutils</groupId>
-                <artifactId>yutil-ice</artifactId>
-                <version>${yutil.version}</version>
+                <groupId>org.md</groupId>
+                <artifactId>md-ice</artifactId>
+                <version>${md.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.yutils</groupId>
-                <artifactId>yutil-infinispan</artifactId>
-                <version>${yutil.version}</version>
+                <groupId>org.md</groupId>
+                <artifactId>md-infinispan</artifactId>
+                <version>${md.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.yutils</groupId>
-                <artifactId>yutil-kafka</artifactId>
-                <version>${yutil.version}</version>
+                <groupId>org.md</groupId>
+                <artifactId>md-kafka</artifactId>
+                <version>${md.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.yutils</groupId>
-                <artifactId>yutil-lucene</artifactId>
-                <version>${yutil.version}</version>
+                <groupId>org.md</groupId>
+                <artifactId>md-lucene</artifactId>
+                <version>${md.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.yutils</groupId>
-                <artifactId>yutil-zookeeper</artifactId>
-                <version>${yutil.version}</version>
+                <groupId>org.md</groupId>
+                <artifactId>md-zookeeper</artifactId>
+                <version>${md.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.kafka</groupId>
