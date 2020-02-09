@@ -8,9 +8,9 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <groupId>org.mw</groupId>
-    <artifactId>yutil-grpc</artifactId>
+    <artifactId>mw-grpc</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>yutil-grpc</name>
+    <name>mw-grpc</name>
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

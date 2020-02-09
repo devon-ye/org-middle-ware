@@ -8,9 +8,9 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>yutil-ice</artifactId>
+  <artifactId>mw-ice</artifactId>
  <!--  <version>1.0.0-SNAPSHOT</version> -->
-  <name>yutil-ice</name>
+  <name>mw-ice</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

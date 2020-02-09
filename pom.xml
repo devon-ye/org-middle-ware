@@ -57,37 +57,37 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.md</groupId>
+                <groupId>org.mw</groupId>
                 <artifactId>mw-dubbo</artifactId>
                 <version>${mw.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.md</groupId>
+                <groupId>org.mw</groupId>
                 <artifactId>mw-grpc</artifactId>
                 <version>${mw.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.md</groupId>
+                <groupId>org.mw</groupId>
                 <artifactId>mw-ice</artifactId>
                 <version>${mw.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.md</groupId>
+                <groupId>org.mw</groupId>
                 <artifactId>mw-infinispan</artifactId>
                 <version>${mw.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.md</groupId>
+                <groupId>org.mw</groupId>
                 <artifactId>mw-kafka</artifactId>
                 <version>${mw.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.md</groupId>
+                <groupId>org.mw</groupId>
                 <artifactId>mw-lucene</artifactId>
                 <version>${mw.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.md</groupId>
+                <groupId>org.mw</groupId>
                 <artifactId>mw-zookeeper</artifactId>
                 <version>${mw.version}</version>
             </dependency>
