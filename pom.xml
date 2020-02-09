@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.md</groupId>
+    <groupId>org.mw</groupId>
     <artifactId>org-middle-ware</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
@@ -12,18 +12,18 @@
     <url>http://maven.apache.org</url>
 
     <modules>
-        <module>md-infinispan</module>
-        <module>md-kafka</module>
-        <module>md-zookeeper</module>
-        <module>md-dubbo</module>
-        <module>md-ice</module>
-        <module>md-grpc</module>
-        <module>md-lucene</module>
+        <module>mw-infinispan</module>
+        <module>mw-kafka</module>
+        <module>mw-zookeeper</module>
+        <module>mw-dubbo</module>
+        <module>mw-ice</module>
+        <module>mw-grpc</module>
+        <module>mw-lucene</module>
         <module>build</module>
     </modules>
 
     <properties>
-        <md.version>1.0.0-SNAPSHOT</md.version>
+        <mw.version>1.0.0-SNAPSHOT</mw.version>
         <hadoop.version>3.0.0-alpha4</hadoop.version>
         <infinispan.version>9.1.0.Final</infinispan.version>
         <icegrid.version>[3.7.1,)</icegrid.version>
@@ -58,38 +58,38 @@
         <dependencies>
             <dependency>
                 <groupId>org.md</groupId>
-                <artifactId>md-dubbo</artifactId>
-                <version>${md.version}</version>
+                <artifactId>mw-dubbo</artifactId>
+                <version>${mw.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.md</groupId>
-                <artifactId>md-grpc</artifactId>
-                <version>${md.version}</version>
+                <artifactId>mw-grpc</artifactId>
+                <version>${mw.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.md</groupId>
-                <artifactId>md-ice</artifactId>
-                <version>${md.version}</version>
+                <artifactId>mw-ice</artifactId>
+                <version>${mw.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.md</groupId>
-                <artifactId>md-infinispan</artifactId>
-                <version>${md.version}</version>
+                <artifactId>mw-infinispan</artifactId>
+                <version>${mw.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.md</groupId>
-                <artifactId>md-kafka</artifactId>
-                <version>${md.version}</version>
+                <artifactId>mw-kafka</artifactId>
+                <version>${mw.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.md</groupId>
-                <artifactId>md-lucene</artifactId>
-                <version>${md.version}</version>
+                <artifactId>mw-lucene</artifactId>
+                <version>${mw.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.md</groupId>
-                <artifactId>md-zookeeper</artifactId>
-                <version>${md.version}</version>
+                <artifactId>mw-zookeeper</artifactId>
+                <version>${mw.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.kafka</groupId>
