@@ -1,7 +1,7 @@
-package org.md.zookeeper.client;
+package org.mw.zookeeper.client;
 
 import org.apache.zookeeper.KeeperException;
-import org.md.zookeeper.proxy.ZkProxy;
+import org.mw.zookeeper.proxy.ZkProxy;
 
 /**
  * Describetion:

@@ -1,4 +1,4 @@
-package org.md.zookeeper.util;
+package org.mw.zookeeper.util;
 /**
 *@Describetion
 *@author  Devonmusa

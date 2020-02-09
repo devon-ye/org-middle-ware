@@ -1,4 +1,4 @@
-package org.md.zookeeper.watcher;
+package org.mw.zookeeper.watcher;
 
 
 import java.util.concurrent.LinkedBlockingQueue;

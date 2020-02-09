@@ -1,9 +1,9 @@
-package org.md.zookeeper.demo;
+package org.mw.zookeeper.demo;
 
 
 
 import org.junit.Test;
-import org.md.zookeeper.client.ZkClient;
+import org.mw.zookeeper.client.ZkClient;
 
 /**
 *@see Describetion:
