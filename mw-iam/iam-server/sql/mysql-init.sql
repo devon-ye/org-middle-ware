@@ -18,7 +18,7 @@ CREATE TABLE user
   DEFAULT CHARSET = utf8;
 
 DROP TABLE IF EXISTS group_info;
-CREATE TABLE group_
+CREATE TABLE group_info
 (
     id   int(32) NOT NULL UNIQUE,
     name varchar(128),
@@ -32,6 +32,7 @@ CREATE TABLE resource
 (
     id   int(32) NOT NULL UNIQUE,
     name varchar(128),
+    type tinyint(1),
     PRIMARY KEY (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
