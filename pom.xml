@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.yutils</groupId>
+    <groupId>org.mw</groupId>
     <artifactId>org-middle-ware</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
@@ -12,18 +12,19 @@
     <url>http://maven.apache.org</url>
 
     <modules>
-        <module>yutil-infinispan</module>
-        <module>yutil-kafka</module>
-        <module>yutil-zookeeper</module>
-        <module>yutil-dubbo</module>
-        <module>yutil-ice</module>
-        <module>yutil-grpc</module>
-        <module>yutil-lucene</module>
+        <module>mw-infinispan</module>
+        <module>mw-kafka</module>
+        <module>mw-zookeeper</module>
+        <module>mw-dubbo</module>
+        <module>mw-ice</module>
+        <module>mw-grpc</module>
+        <module>mw-lucene</module>
         <module>build</module>
+        <module>mw-iam</module>
     </modules>
 
     <properties>
-        <yutil.version>1.0.0-SNAPSHOT</yutil.version>
+        <mw.version>1.0.0-SNAPSHOT</mw.version>
         <hadoop.version>3.0.0-alpha4</hadoop.version>
         <infinispan.version>9.1.0.Final</infinispan.version>
         <icegrid.version>[3.7.1,)</icegrid.version>
@@ -32,14 +33,14 @@
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <spring.version>[4.3.18,)</spring.version>
         <springframework.version>5.0.0.RELEASE</springframework.version>
-        <zookeeper.version>3.4.9</zookeeper.version>
+        <zookeeper.version>[3.4.14,)</zookeeper.version>
         <zkclient.version>0.10</zkclient.version>
         <kafka.version>2.1.0</kafka.version>
         <amqp-client.version>5.2.0</amqp-client.version>
         <fastjson.version>1.2.30</fastjson.version>
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.0</logback.version>
-        <log4j.version>1.2.17</log4j.version>
+        <log4j.version>1.2.27</log4j.version>
         <commons3.version>3.0.0</commons3.version>
         <protobuf.version>3.2.0</protobuf.version>
         <jdk.version>1.8</jdk.version>
@@ -57,39 +58,39 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.yutils</groupId>
-                <artifactId>yutil-dubbo</artifactId>
-                <version>${yutil.version}</version>
+                <groupId>org.mw</groupId>
+                <artifactId>mw-dubbo</artifactId>
+                <version>${mw.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.yutils</groupId>
-                <artifactId>yutil-grpc</artifactId>
-                <version>${yutil.version}</version>
+                <groupId>org.mw</groupId>
+                <artifactId>mw-grpc</artifactId>
+                <version>${mw.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.yutils</groupId>
-                <artifactId>yutil-ice</artifactId>
-                <version>${yutil.version}</version>
+                <groupId>org.mw</groupId>
+                <artifactId>mw-ice</artifactId>
+                <version>${mw.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.yutils</groupId>
-                <artifactId>yutil-infinispan</artifactId>
-                <version>${yutil.version}</version>
+                <groupId>org.mw</groupId>
+                <artifactId>mw-infinispan</artifactId>
+                <version>${mw.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.yutils</groupId>
-                <artifactId>yutil-kafka</artifactId>
-                <version>${yutil.version}</version>
+                <groupId>org.mw</groupId>
+                <artifactId>mw-kafka</artifactId>
+                <version>${mw.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.yutils</groupId>
-                <artifactId>yutil-lucene</artifactId>
-                <version>${yutil.version}</version>
+                <groupId>org.mw</groupId>
+                <artifactId>mw-lucene</artifactId>
+                <version>${mw.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.yutils</groupId>
-                <artifactId>yutil-zookeeper</artifactId>
-                <version>${yutil.version}</version>
+                <groupId>org.mw</groupId>
+                <artifactId>mw-zookeeper</artifactId>
+                <version>${mw.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.kafka</groupId>

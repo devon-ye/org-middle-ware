@@ -4,41 +4,41 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>org-middle-ware</artifactId>
-        <groupId>org.yutils</groupId>
+        <groupId>org.mw</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>yutil</artifactId>
+    <artifactId>mw</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
-            <groupId>org.yutils</groupId>
-            <artifactId>yutil-dubbo</artifactId>
+            <groupId>org.mw</groupId>
+            <artifactId>mw-dubbo</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.yutils</groupId>
-            <artifactId>yutil-grpc</artifactId>
+            <groupId>org.mw</groupId>
+            <artifactId>mw-grpc</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.yutils</groupId>
-            <artifactId>yutil-ice</artifactId>
+            <groupId>org.mw</groupId>
+            <artifactId>mw-ice</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.yutils</groupId>
-            <artifactId>yutil-infinispan</artifactId>
+            <groupId>org.mw</groupId>
+            <artifactId>mw-infinispan</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.yutils</groupId>
-            <artifactId>yutil-kafka</artifactId>
+            <groupId>org.mw</groupId>
+            <artifactId>mw-kafka</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.yutils</groupId>
-            <artifactId>yutil-lucene</artifactId>
+            <groupId>org.mw</groupId>
+            <artifactId>mw-lucene</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.yutils</groupId>
-            <artifactId>yutil-zookeeper</artifactId>
+            <groupId>org.mw</groupId>
+            <artifactId>mw-zookeeper</artifactId>
         </dependency>
     </dependencies>
     <build>

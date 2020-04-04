@@ -1,9 +1,0 @@
-.settings/*
-.idea/*
-/target/
-.classpath
-.project
-/log/*
-!/log/
-/.gitignore
-/yutil-kafka.iml
