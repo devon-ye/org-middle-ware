@@ -55,3 +55,5 @@ CREATE TABLE action
     PRIMARY KEY (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+
