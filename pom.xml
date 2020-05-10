@@ -21,6 +21,8 @@
         <module>mw-lucene</module>
         <module>build</module>
         <module>mw-iam</module>
+        <module>mw-pool</module>
+        <module>mw-netty</module>
     </modules>
 
     <properties>
