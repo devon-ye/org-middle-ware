@@ -1,6 +1,5 @@
 package org.mw.grpc.service;
 
-import java.io.IOException;
 
 import org.junit.Test;
 
@@ -16,14 +15,8 @@ public class DemoServiceServerTest {
 		DemoServer server = new DemoServer();
 		try {
 			server.start();
-			try {
-				Thread.sleep(1000 * 100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
+
 			e.printStackTrace();
 		}
 	}

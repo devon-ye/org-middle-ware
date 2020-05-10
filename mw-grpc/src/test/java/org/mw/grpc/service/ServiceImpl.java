@@ -8,7 +8,6 @@ import org.mw.grpc.proto.UserList;
 import io.grpc.stub.StreamObserver;
 
 /**
- *
  * @author Devonmusa
  * @date 2017年7月29日
  */
@@ -17,6 +16,7 @@ public class ServiceImpl extends DemoServiceGrpc.DemoServiceImplBase {
 
 	@Override
 	public void getUser(UserId request, StreamObserver<User> responseObserver) {
+		System.out.println("###############you can call server################");
 		long id = request.getId();
 		if (id == 1L) {
 
@@ -27,25 +27,48 @@ public class ServiceImpl extends DemoServiceGrpc.DemoServiceImplBase {
 
 	@Override
 	public void findUserList(UserId request, StreamObserver<User> responseObserver) {
-		responseObserver.onNext(checkFeature(request));
-		System.out.println("###############you can call server################");
+		long requestId = request.getId();
+		System.out.println("server processing... request,requestId:" + requestId);
+
+		if (requestId % 3 == 0) {
+			//responseObserver.onError(new RuntimeException("service call fail! id:" + requestId));
+		} else if (requestId % 5 == 0) {
+			responseObserver.onCompleted();
+			return;
+		} else {
+			User user =checkFeature(request);
+			responseObserver.onNext(user);
+			System.out.println("server responsed... data:" + user);
+
+			return;
+		}
 		responseObserver.onCompleted();
 	}
 
 	private User checkFeature(UserId userId) {
-		System.out.println("###################### userId = " + userId);
-		if (userId.getId() == 1) {
-			UserList.Builder userList = users.newBuilder();
-			
-			User.Builder user = User.newBuilder();
-			user.setId(9999);
-			user.setName("TEST_USER");
-			userList.setUsers(user);
-			while (userList.hasUsers()) {
-				System.out.println(" ################# userList=" + userList);
-				return userList.getUsers();
+
+		UserList.Builder userList = users.newBuilder();
+		if (userId.getId() % 2 == 0) {
+			int i = 0;
+			while (i < 2) {
+				User.Builder user = User.newBuilder();
+				user.setId(userId.getId());
+				user.setName("TEST_USER_" + userId.getId() + "_" + i);
+				userList.setUsers(user).build();
+
+				i++;
 			}
+		} else {
+			User.Builder user = User.newBuilder();
+			user.setId(userId.getId());
+			user.setName("TEST_USER_" + userId.getId() + "_#");
+			userList.setUsers(user);
 		}
+		while (userList.hasUsers()) {
+			System.out.println(" ################# userList=" + userList);
+			return userList.getUsers();
+		}
+
 		return null;
 	}
 
