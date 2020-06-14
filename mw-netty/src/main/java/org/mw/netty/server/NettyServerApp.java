@@ -1,4 +1,4 @@
-package org.mw.netty;
+package org.mw.netty.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -53,7 +53,7 @@ public class NettyServerApp {
 		 */
 		ChannelFuture channelFuture = null;
 		try {
-			channelFuture = serverBootstrap.bind(18080).sync();
+			channelFuture = serverBootstrap.bind(18081).sync();
 			channelFuture.channel().closeFuture().sync();
 		} catch (InterruptedException e) {
 			e.printStackTrace();

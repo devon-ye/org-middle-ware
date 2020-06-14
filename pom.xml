@@ -46,6 +46,9 @@
         <commons3.version>3.0.0</commons3.version>
         <protobuf.version>3.2.0</protobuf.version>
         <jdk.version>1.8</jdk.version>
+
+        <docker.host>127.0.0.1</docker.host>
+        <docker.maven.plugin.version>1.1.0</docker.maven.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.encoding>UTF-8</project.build.encoding>
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
