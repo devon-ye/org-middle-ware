@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/assembly-1.0.0.xsd">
 	<id>package</id>
 	<formats>
-		<format>jar</format>
+		<format>tar.gz</format>
 	</formats>
 	<includeBaseDirectory>true</includeBaseDirectory>
 	<fileSets>
@@ -18,8 +18,22 @@
 			<directory>./lib</directory>
 			<outputDirectory>lib</outputDirectory>
 		</fileSet>
-
+		<fileSet>
+			<directory>target/classes/</directory>
+			<includes>
+				<include>*.properties</include>
+				<include>*.xml</include>
+				<include>*.txt</include>
+			</includes>
+			<outputDirectory>conf</outputDirectory>
+		</fileSet>
 	</fileSets>
+	<files>
+		<file>
+			<source>target/${project.artifactId}-${project.version}.jar</source>
+			<outputDirectory>.</outputDirectory>
+		</file>
+	</files>
 	<dependencySets>
 		<dependencySet>
 			<outputDirectory>lib</outputDirectory>

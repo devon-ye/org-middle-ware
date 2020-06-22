@@ -94,6 +94,8 @@
                             <mainClass>org.mw.netty.server.NettyServerApp</mainClass>
                         </manifest>
                     </archive>
+                    <!--                    <descriptorRefs>${project.basedir}/assembly/assembly.xml</descriptorRefs>-->
+
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
@@ -126,8 +128,8 @@
                     <imageName>devonmusa/${project.artifactId}:${project.version}</imageName>
                     <!-- docker file path -->
                     <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-<!--                    <baseImage>williamyeh/java8:latest</baseImage>-->
-<!--                    <entryPoint>["java", "-jar", "-Denv=prod","/${project.build.finalName}.jar"]</entryPoint>-->
+                    <!--                    <baseImage>williamyeh/java8:latest</baseImage>-->
+                    <!--                    <entryPoint>["java", "-jar", "-Denv=prod","/${project.build.finalName}.jar"]</entryPoint>-->
                     <forceTags>true</forceTags>
                     <resources>
                         <resource>
@@ -137,7 +139,7 @@
                         </resource>
                     </resources>
                     <!-- 以下两行是为了docker push到DockerHub使用的。 -->
-<!--                    <dockerHost>${docker.host}</dockerHost>-->
+                    <!--                    <dockerHost>${docker.host}</dockerHost>-->
                     <serverId>docker-hub</serverId>
                     <registryUrl>https://index.docker.io/v1/</registryUrl>
                 </configuration>
