@@ -41,12 +41,13 @@
         <amqp-client.version>5.2.0</amqp-client.version>
         <fastjson.version>1.2.30</fastjson.version>
         <slf4j.version>1.7.25</slf4j.version>
+        <over-slf4j.version>1.7.30</over-slf4j.version>
         <logback.version>1.2.0</logback.version>
-<!--        <log4j.version>1.2.28</log4j.version>-->
         <commons3.version>3.0.0</commons3.version>
         <protobuf.version>3.2.0</protobuf.version>
         <jdk.version>1.8</jdk.version>
 
+        <file_encoding>UTF-8</file_encoding>
         <docker.host>127.0.0.1</docker.host>
         <docker.maven.plugin.version>1.1.0</docker.maven.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -56,7 +57,7 @@
         <maven-war-plugin.version>3.0.0</maven-war-plugin.version>
         <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
-        <maven-assembly-plugin.version>3.0.0</maven-assembly-plugin.version>
+        <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M1</maven-enforcer-plugin.version>
     </properties>
 
@@ -277,21 +278,22 @@
                 <artifactId>logback-classic</artifactId>
                 <version>${logback.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>log4j-over-slf4j</artifactId>
-                <version>1.7.30</version>
+                <version>${over-slf4j.version}</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>log4j</groupId>-->
-<!--                <artifactId>log4j</artifactId>-->
-<!--                <version>${log4j.version}</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>org.apache.logging.log4j</groupId>-->
-<!--                <artifactId>log4j-core</artifactId>-->
-<!--                <version>2.9.0</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${over-slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jul-to-slf4j</artifactId>
+                <version>${over-slf4j.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>junit</groupId>
@@ -341,34 +343,34 @@
             <name>Central Repository</name>
             <url>http://maven.aliyun.com/nexus/content/groups/public</url>
         </repository>
-       <!-- <repository>
-            <id>local_snapshots</id>
-            <name>snapshots</name>
-            <url>F:/maven/repository/nexus/content/repositories/snapshots/</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-        </repository>-->
+        <!-- <repository>
+             <id>local_snapshots</id>
+             <name>snapshots</name>
+             <url>F:/maven/repository/nexus/content/repositories/snapshots/</url>
+             <layout>default</layout>
+             <releases>
+                 <enabled>true</enabled>
+                 <updatePolicy>never</updatePolicy>
+             </releases>
+             <snapshots>
+                 <enabled>true</enabled>
+                 <updatePolicy>never</updatePolicy>
+             </snapshots>
+         </repository>-->
     </repositories>
     <!-- local deploy repository -->
-   <!-- <distributionManagement>
-        <repository>
-            <id>releases</id>
-            <name>Nexus Release Repository</name>
-            <url> F:/maven/repository/nexus/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <name>Nexus Snapshot Repository</name>
-            <url> F:/maven/repository/nexus/content/repositories/releases/</url>
-        </snapshotRepository>
-    </distributionManagement>-->
+    <!-- <distributionManagement>
+         <repository>
+             <id>releases</id>
+             <name>Nexus Release Repository</name>
+             <url> F:/maven/repository/nexus/content/repositories/releases/</url>
+         </repository>
+         <snapshotRepository>
+             <id>snapshots</id>
+             <name>Nexus Snapshot Repository</name>
+             <url> F:/maven/repository/nexus/content/repositories/releases/</url>
+         </snapshotRepository>
+     </distributionManagement>-->
     <!-- plugins download repository -->
     <pluginRepositories>
         <pluginRepository>
@@ -398,7 +400,8 @@
                                         <message>
                                             <![CDATA[You are running an older version of Java. This application requires at least JDK ${java.version}.]]>
                                         </message>
-                                        <version>[${java.version}.0,)</version>   －－JDK版本规则
+                                        <version>[${java.version}.0,)</version>
+                                        －－JDK版本规则
                                     </requireJavaVersion>
                                 </rules>
                             </configuration>
@@ -414,7 +417,7 @@
                             <format>html</format>
                             <format>xml</format>
                         </formats>
-                        <check />
+                        <check/>
                     </configuration>
                 </plugin>
                 <plugin>
