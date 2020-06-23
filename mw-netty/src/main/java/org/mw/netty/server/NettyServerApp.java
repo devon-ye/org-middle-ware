@@ -5,7 +5,6 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
-import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -32,13 +31,14 @@ public class NettyServerApp {
         LOG.info("osName:{}", osName);
         EventLoopGroup bossEventLoopGroup = null;
         EventLoopGroup workEventLoopGroup = null;
-        if (LINUX.equals(osName)) {
-            bossEventLoopGroup = new EpollEventLoopGroup();
-            workEventLoopGroup = new EpollEventLoopGroup();
-        } else {
+//        if (!LINUX.equals(osName)) {
+              //TODO ONLY EXCUTION LINUX OPERATOR SYSTEM EPOLL
+//            bossEventLoopGroup = new EpollEventLoopGroup();
+//            workEventLoopGroup = new EpollEventLoopGroup();
+//        } else {
             bossEventLoopGroup = new NioEventLoopGroup();
             workEventLoopGroup = new NioEventLoopGroup();
-        }
+        //}
 
         serverBootstrap.group(bossEventLoopGroup, workEventLoopGroup)
                 .channel(NioServerSocketChannel.class)
