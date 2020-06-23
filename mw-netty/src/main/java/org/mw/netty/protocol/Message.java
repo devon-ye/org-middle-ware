@@ -1,17 +1,22 @@
 package org.mw.netty.protocol;
 
+
 /**
+ * ---------------------------------------------------------------------------------------------------------------------------------------------------
+ * |       4      |  8                    | 2      |   2     |   n              |    4         |                                                     |
+ * ---------------------------------------------------------------------------------------------------------------------------------------------------
+ * | headerLength | seq                  | cmd     |version | header key value  | bodyLength   | body                                                |
+ * |-------------------------------------------------------------------------------------------------------------------------------------------------|
+ *
  * @author devon.ye@foxmail.com
  * @datetime 2020/5/11 4:17 PM
  * @description
  */
 public class Message implements IMessage {
-
-
-    private long seq; //指令id
-    private int cmd; //指令类型
-    private int version;
     private int headerLength;
+    private long seq; //指令id
+    private short cmd; //指令类型
+    private short version;
     private byte[] header;
     private int bodyLength;
     private byte[] body;
@@ -29,7 +34,7 @@ public class Message implements IMessage {
         return cmd;
     }
 
-    public void setCmd(int cmd) {
+    public void setCmd(short cmd) {
         this.cmd = cmd;
     }
 
@@ -37,7 +42,7 @@ public class Message implements IMessage {
         return version;
     }
 
-    public void setVersion(int version) {
+    public void setVersion(short version) {
         this.version = version;
     }
 
