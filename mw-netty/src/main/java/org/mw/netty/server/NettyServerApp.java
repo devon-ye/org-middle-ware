@@ -55,7 +55,7 @@ public class NettyServerApp {
          */
         ChannelFuture channelFuture = null;
         try {
-            channelFuture = serverBootstrap.bind(18081).sync();
+            channelFuture = serverBootstrap.bind(18082).sync();
             channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();
