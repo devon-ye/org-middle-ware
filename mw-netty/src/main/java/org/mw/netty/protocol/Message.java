@@ -3,7 +3,7 @@ package org.mw.netty.protocol;
 
 /**
  * ---------------------------------------------------------------------------------------------------------------------------------------------------
- * |       4      |  8                    | 2      |   2     |   n              |    4         |                                                     |
+ * |       4      |  8                    | 1     |   1     |   n              |    4         |                                                     |
  * ---------------------------------------------------------------------------------------------------------------------------------------------------
  * | headerLength | seq                  | cmd     |version | header key value  | bodyLength   | body                                                |
  * |-------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -15,12 +15,20 @@ package org.mw.netty.protocol;
 public class Message implements IMessage {
     private int headerLength;
     private long seq; //指令id
-    private short cmd; //指令类型
-    private short version;
+    private byte cmd; //指令类型
+    private byte version;
     private byte[] header;
     private int bodyLength;
     private byte[] body;
 
+
+    public int getHeaderLength() {
+        return headerLength;
+    }
+
+    public void setHeaderLength(int headerLength) {
+        this.headerLength = headerLength;
+    }
 
     public long getSeq() {
         return seq;
@@ -30,28 +38,20 @@ public class Message implements IMessage {
         this.seq = seq;
     }
 
-    public int getCmd() {
+    public byte getCmd() {
         return cmd;
     }
 
-    public void setCmd(short cmd) {
+    public void setCmd(byte cmd) {
         this.cmd = cmd;
     }
 
-    public int getVersion() {
+    public byte getVersion() {
         return version;
     }
 
-    public void setVersion(short version) {
+    public void setVersion(byte version) {
         this.version = version;
-    }
-
-    public int getHeaderLength() {
-        return headerLength;
-    }
-
-    public void setHeaderLength(int headerLength) {
-        this.headerLength = headerLength;
     }
 
     public byte[] getHeader() {
