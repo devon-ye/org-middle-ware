@@ -31,7 +31,7 @@ public class MessageDecode extends ByteToMessageDecoder {
      */
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf byteBuf, List<Object> out) throws Exception {
-        int length = byteBuf.readableBytes();
+        int length = byteBuf.readInt();
         if (length <= PROTOCOL_HEADER_LENGTH) {
             return;
         }

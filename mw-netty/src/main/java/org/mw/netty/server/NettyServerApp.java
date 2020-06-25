@@ -6,10 +6,14 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.ServerSocketChannel;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import org.mw.netty.handler.HttpServerHandler;
+import org.mw.netty.handler.MessageSocketServerHandler;
+import org.mw.netty.serializer.MessageDecode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,25 +23,30 @@ import org.slf4j.LoggerFactory;
  * @since
  */
 public class NettyServerApp {
-    private static  Logger LOG = LoggerFactory.getLogger(NettyServerApp.class);
+    private static Logger LOG = LoggerFactory.getLogger(NettyServerApp.class);
     private static final String OS_NAME = "os.name";
     private static final String LINUX = "Linux";
 
 
     public static void main(String[] args) {
+
         ServerBootstrap serverBootstrap = new ServerBootstrap();
-        LOG.info("properties:{}",System.getProperties());
+        LOG.info("------------------------------------system config start-----------------------------------------");
+
+        LOG.info("-------------------------properties:{}", System.getProperties());
         String osName = System.getProperty(OS_NAME);
-        LOG.info("osName:{}", osName);
+        LOG.info("-------------------------osName:{}", osName);
+        LOG.info("------------------------------------system config end-----------------------------------------");
+
         EventLoopGroup bossEventLoopGroup = null;
         EventLoopGroup workEventLoopGroup = null;
 //        if (!LINUX.equals(osName)) {
-              //TODO ONLY EXCUTION LINUX OPERATOR SYSTEM EPOLL
+        //TODO ONLY EXCUTION LINUX OPERATOR SYSTEM EPOLL
 //            bossEventLoopGroup = new EpollEventLoopGroup();
 //            workEventLoopGroup = new EpollEventLoopGroup();
 //        } else {
-            bossEventLoopGroup = new NioEventLoopGroup();
-            workEventLoopGroup = new NioEventLoopGroup();
+        bossEventLoopGroup = new NioEventLoopGroup();
+        workEventLoopGroup = new NioEventLoopGroup();
         //}
 
         serverBootstrap.group(bossEventLoopGroup, workEventLoopGroup)
@@ -47,7 +56,9 @@ public class NettyServerApp {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
                         ChannelPipeline pipeline = ch.pipeline();
-                        pipeline.addLast(new LoggingHandler(LogLevel.DEBUG));
+                        pipeline.addLast(new MessageDecode());
+                        pipeline.addLast(new MessageSocketServerHandler());
+                        pipeline.addLast(new HttpServerHandler());
                     }
                 });
         /**
@@ -55,7 +66,7 @@ public class NettyServerApp {
          */
         ChannelFuture channelFuture = null;
         try {
-            channelFuture = serverBootstrap.bind(18082).sync();
+            channelFuture = serverBootstrap.bind(19999).sync();
             channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();
