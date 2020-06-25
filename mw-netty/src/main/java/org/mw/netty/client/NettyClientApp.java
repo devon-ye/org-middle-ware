@@ -11,8 +11,11 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import org.mw.netty.protocol.CmdType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -61,14 +64,19 @@ public class NettyClientApp {
         for (int seq = 0; seq < 20; seq++) {
             int length = 16 + 40;
             ByteBuf byteBuf = PooledByteBufAllocator.DEFAULT.buffer(length);
-            byteBuf.writeInt(18);
-            byteBuf.writeInt(seq);
-            byteBuf.writeShort(1); //cmd
-            byteBuf.writeShort(1000);  //version
+            byteBuf.writeInt(64);
+            byteBuf.writeLong(seq);
+            byteBuf.writeByte(CmdType.CHAT.ordinal()); //cmd
+            byteBuf.writeByte(36);  //version
             byteBuf.writeBytes(new byte[20]);  //header
             byteBuf.writeInt(30); //bodyLength;
             byteBuf.writeBytes(new byte[30]);
             channelFuture.channel().writeAndFlush(byteBuf);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
     }

@@ -13,6 +13,7 @@ package org.mw.netty.protocol;
  * @description
  */
 public class Message implements IMessage {
+    private byte magic;
     private int headerLength;
     private long seq; //指令id
     private byte cmd; //指令类型

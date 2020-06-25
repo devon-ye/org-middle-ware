@@ -18,7 +18,7 @@ public class MessageDecode extends ByteToMessageDecoder {
     private static final Logger LOG = LoggerFactory.getLogger(MessageDecode.class);
 
     private static final int PROTOCOL_HEADER_LENGTH = 20;
-    private static final int PROTOCOL_BODY_MAX_LENGTH = 64;
+    private static final int PROTOCOL_BODY_MAX_LENGTH = 1024 * 1024;
 
 
     /**
@@ -31,7 +31,7 @@ public class MessageDecode extends ByteToMessageDecoder {
      */
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf byteBuf, List<Object> out) throws Exception {
-        int length = byteBuf.readInt();
+        int length = byteBuf.readableBytes();
         if (length <= PROTOCOL_HEADER_LENGTH) {
             return;
         }
@@ -39,8 +39,14 @@ public class MessageDecode extends ByteToMessageDecoder {
         if (length > PROTOCOL_BODY_MAX_LENGTH) {
             return;
         }
-        int bodyLength = byteBuf.readableBytes();
 
-        out.add(byteBuf.readerIndex(PROTOCOL_BODY_MAX_LENGTH + bodyLength));
+        int headerLength = byteBuf.readInt();
+        long seq =byteBuf.readLong();
+        int cmdType =byteBuf.readByte();
+        int version =byteBuf.readByte();
+        ByteBuf  hedaerData = byteBuf.readBytes(new byte[headerLength-10]);
+        int bodyLength = byteBuf.readInt();
+        ByteBuf  body = byteBuf.readBytes(new byte[bodyLength]);
+         out.add(byteBuf.readerIndex(PROTOCOL_BODY_MAX_LENGTH + bodyLength));
     }
 }

@@ -23,6 +23,8 @@
         <module>mw-iam</module>
         <module>mw-pool</module>
         <module>mw-netty</module>
+        <module>protocol</module>
+        <module>protocol</module>
     </modules>
 
     <properties>
