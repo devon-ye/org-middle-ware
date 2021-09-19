@@ -16,7 +16,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.encoding>UTF-8</project.build.encoding>
         <jdk.version>1.8</jdk.version>
-        <grpc.version>1.17.0</grpc.version>
     </properties>
     <dependencies>
         <dependency>

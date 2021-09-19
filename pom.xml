@@ -23,8 +23,7 @@
         <module>mw-iam</module>
         <module>mw-pool</module>
         <module>mw-netty</module>
-        <module>protocol</module>
-        <module>protocol</module>
+        <module>mw-protocol</module>
     </modules>
 
     <properties>
@@ -42,6 +41,8 @@
         <kafka.version>2.1.0</kafka.version>
         <amqp-client.version>5.2.0</amqp-client.version>
         <fastjson.version>1.2.30</fastjson.version>
+        <grpc.version>1.30.0</grpc.version>
+
         <slf4j.version>1.7.25</slf4j.version>
         <over-slf4j.version>1.7.30</over-slf4j.version>
         <logback.version>1.2.0</logback.version>
@@ -61,6 +62,7 @@
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
         <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M1</maven-enforcer-plugin.version>
+        <os-maven-plugin.version>1.6.2</os-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -300,7 +302,7 @@
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>4.12</version>
+                <version>4.13.2</version>
                 <scope>test</scope>
             </dependency>
 
