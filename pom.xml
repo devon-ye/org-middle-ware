@@ -32,7 +32,7 @@
         <infinispan.version>9.1.0.Final</infinispan.version>
         <icegrid.version>[3.7.1,)</icegrid.version>
         <lucene.version>[7.1.0,)</lucene.version>
-        <dubbo.version>2.5.6</dubbo.version>
+        <dubbo.version>2.6.9</dubbo.version>
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <spring.version>[4.3.18,)</spring.version>
         <springframework.version>5.0.0.RELEASE</springframework.version>
